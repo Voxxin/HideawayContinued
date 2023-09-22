@@ -18,7 +18,7 @@ import plus.hideaway.mod.Prompt;
 import plus.hideaway.mod.mixins.accessors.GameMenuScreenAccessor;
 import plus.hideaway.mod.mixins.accessors.ScreenAccessor;
 
-@Mixin(GameMenuScreen.class)
+@Mixin(value=GameMenuScreen.class, priority = 999)
 public class GameMenuScreenMixin {
 
     private static final Text RETURN_TO_GAME_TEXT = Text.translatable("menu.returnToGame");
