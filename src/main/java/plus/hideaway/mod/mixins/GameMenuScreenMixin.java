@@ -33,7 +33,7 @@ public class GameMenuScreenMixin {
      * God, this method is an absolute fucking mess
      */
     @Inject(method = "initWidgets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/GridWidget;refreshPositions()V", shift = At.Shift.BY, by = -2), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    public void initWidgets(CallbackInfo ci, GridWidget.Adder adder) {
+    public void initWidgets(CallbackInfo ci, GridWidget gridWidget, GridWidget.Adder adder, Text text) {
         if (HideawayPlus.connected()) {
             // literally the only thing I added :sob:
             adder.add(ButtonWidget.builder(Text.literal("Hideaway+ Settings"), button -> {
