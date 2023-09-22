@@ -17,7 +17,6 @@
     "ScreenHandlerMixin",
     "SoundEventMixin",
     "TickMixin",
-    "accessors.GameMenuScreenAccessor",
-    "accessors.ScreenAccessor"
+    "accessors.GameMenuScreenAccessor"
   ]
 }
