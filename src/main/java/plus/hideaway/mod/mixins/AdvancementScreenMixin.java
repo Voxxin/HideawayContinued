@@ -1,5 +1,6 @@
 package plus.hideaway.mod.mixins;
 
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +18,7 @@ public class AdvancementScreenMixin {
      * @reason Advancements break Hideaway ew
      */
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (HideawayPlus.connected()) {
             ci.cancel();
         }
