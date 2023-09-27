@@ -1,6 +1,7 @@
 package continued.hideaway.mod;
 
 import continued.hideaway.mod.feat.api.API;
+import continued.hideaway.mod.feat.command.ClientCommands;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.discord.DiscordManager;
 import continued.hideaway.mod.feat.jukebox.Jukebox;
@@ -110,6 +111,8 @@ public class HideawayPlus implements ClientModInitializer {
                 }, 100))
                 .add(Task.of(API::modTeam, 50))
                 .add(Task.of(Wardrobe::tick, 0));
+
+        ClientCommands.initCommands();
     }
 
     public static boolean connected() {
