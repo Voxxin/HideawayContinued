@@ -35,7 +35,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void onRender(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
-        if (HideawayPlus.jukebox().currentTrack != null) {
+        if (HideawayPlus.jukebox() != null && HideawayPlus.jukebox().currentTrack != null) {
             guiGraphics.drawString(
                     Minecraft.getInstance().font,
                     Component.empty()

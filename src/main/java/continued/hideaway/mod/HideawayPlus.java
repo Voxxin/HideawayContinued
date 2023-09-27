@@ -65,7 +65,12 @@ public class HideawayPlus implements ClientModInitializer {
         // initialization should be initialized here.
         new KeyboardManager();
 
-        if (config().discordRPC()) DISCORD_MANAGER = new DiscordManager().start();
+        try {
+            if (config().discordRPC()) DISCORD_MANAGER = new DiscordManager().start();
+        } catch (Error err) {
+            HideawayPlus.logger().info(err);
+            return;
+        }
         JUKEBOX = new Jukebox();
         SHOP = new Shop();
 

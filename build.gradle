@@ -4,7 +4,7 @@ plugins {
     id 'io.github.juuxel.loom-quiltflower' version '1.9.+'
 }
 
-version = "$mod_version+build.$build_number-$project.minecraft_version"
+version = "$mod_version-$release_type+build.$build_number-$project.minecraft_version"
 group = project.maven_group
 
 base {
@@ -57,6 +57,9 @@ processResources {
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+    filesMatching("Constants.java") {
         expand "version": project.version
     }
 }
