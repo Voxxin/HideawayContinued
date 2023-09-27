@@ -1,10 +1,10 @@
 [versions]
-    minecraft = "1.20.1"
-    quilt_mappings = "1.20.1+build.23"
+    minecraft = "1.20.2"
+    quilt_mappings = "1.20.2+build.2"
     fabric-loader = "0.14.22"
     parchment = "2023.09.03"
-    fabric = "0.89.0+1.20.1"
-    owolib = "0.11.1+1.20"
+    fabric = "0.89.0+1.20.2"
+    owolib = "0.11.2-pre.9+1.20"
 [libraries]
     minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
     fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader"}

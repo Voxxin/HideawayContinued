@@ -130,7 +130,7 @@ public class HideawayPlus implements ClientModInitializer {
     }
 
     public static Logger logger() { return LOGGER; }
-    public static boolean debug() { return debugUsers.contains(Minecraft.getInstance().getUser().getUuid()); }
+    public static boolean debug() { return debugUsers.contains(Minecraft.getInstance().getUser().getProfileId().toString()); }
     public static Minecraft client() { return Minecraft.getInstance(); }
     public static LocalPlayer player() { return client().player; }
     public static Queue<Component> toastStack() { return TOAST_STACK; }

@@ -13,7 +13,7 @@
     "BossHealthOverlayMixin",
     "CapeLayerMixin",
     "ChatComponentMixin",
-    "ClientAdvancementsMixin",
+    "AbstractClientPlayerMixin",
     "DisplayNameMixin",
     "EntityRendererMixin",
     "GameMenuScreenMixin",
