@@ -26,6 +26,7 @@
     "PlayerMixin",
     "SoundEventMixin",
     "SplashRendererMixin",
+    "TickMixin",
     "ext.GridLayoutAccessor",
     "ext.SoundEventAccessor"
   ]
