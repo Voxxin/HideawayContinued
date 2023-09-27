@@ -16,6 +16,7 @@ import continued.hideaway.mod.util.StaticValues;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
@@ -110,6 +111,8 @@ public class HideawayPlus implements ClientModInitializer {
                 }, 100))
                 .add(Task.of(API::modTeam, 50))
                 .add(Task.of(Wardrobe::tick, 0));
+
+        initClientEvents();
     }
 
     public static boolean connected() {
@@ -139,4 +142,10 @@ public class HideawayPlus implements ClientModInitializer {
     public static Location location() { return LOCATION; }
 
     public static void setLocation(Location l) { LOCATION = l; }
+
+    public static void initClientEvents(){
+        ClientTickEvents.START_CLIENT_TICK.register(client -> {
+            HideawayPlus.lifecycle().tick();
+        });
+    }
 }
