@@ -21,7 +21,7 @@ public class ClientAdvancementsMixin {
     @Inject(at = @At("TAIL"), method = "update")
     private void update(ClientboundUpdateAdvancementsPacket packet, CallbackInfo ci) {
         this.advancements.getAllAdvancements().forEach((advancement) -> {
-            if (advancement.getDisplay().getTitle().getString().contains("\uE256") && advancement.getDisplay().getTitle().getString().contains("Added")) StaticValues.friendsCheck = false;
+            if (advancement.getDisplay() != null && advancement.getDisplay().getTitle().getString().contains("\uE256") && advancement.getDisplay().getTitle().getString().contains("Added")) StaticValues.friendsCheck = false;
         });
     }
 }
