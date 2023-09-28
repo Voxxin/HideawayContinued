@@ -30,5 +30,8 @@
   "depends": {
     "fabricloader": ">=0.14.20",
     "minecraft": "1.20.1"
+  },
+  "breaks": {
+    "optifabric": "*"
   }
 }
