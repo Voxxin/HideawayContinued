@@ -32,6 +32,7 @@ public class Shop {
         }
 
         if (("fruit".equals(shopName) || "fish".equals(shopName)) && (HideawayPlus.config().autoSell() || fill)) {
+            StaticValues.shopIterationNum = 0;
             fill = false;
             List<Slot> emptyChestSlots = new ArrayList<>();
             List<Slot> playerEmptySlots = new ArrayList<>();
