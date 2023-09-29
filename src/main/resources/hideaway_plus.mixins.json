@@ -7,7 +7,7 @@
     "defaultRequire": 1
   },
   "client": [
-    "AbstractContainerScreenMixin",
+      "ContainerScreenMixin",
     "AdvancementScreenMixin",
     "ArmourStandMobMixin",
     "BossHealthOverlayMixin",

@@ -54,7 +54,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
     )
     public void experienceBarPercent(GuiGraphics guiGraphics, int x, CallbackInfo ci, int i, String string, int textSize, int textPos) {
         if (HideawayPlus.connected()) {
-            if (!overlayMessageString.getString().contains("\uE2C3")) return;
+            if (overlayMessageString != null && !overlayMessageString.getString().contains("\uE2C3")) return;
 
             string = (Math.round(this.minecraft.player.experienceProgress * 10000) / 100.0) + "%";
             textSize = (this.screenWidth - this.getFont().width(string)) / 2;

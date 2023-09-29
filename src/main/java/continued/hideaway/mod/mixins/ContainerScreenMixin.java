@@ -18,9 +18,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ContainerScreen.class)
-public abstract class AbstractContainerScreenMixin extends AbstractContainerScreen<ChestMenu> implements AbstractContainerScreenAccessor {
+public abstract class ContainerScreenMixin extends AbstractContainerScreen<ChestMenu> implements AbstractContainerScreenAccessor {
 
-    public AbstractContainerScreenMixin(ChestMenu menu, Inventory playerInventory, Component title) {
+    public ContainerScreenMixin(ChestMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
     }
 
@@ -40,7 +40,6 @@ public abstract class AbstractContainerScreenMixin extends AbstractContainerScre
                     int r = (color >> 16) & 0xFF;
                     int g = (color >> 8) & 0xFF;
                     int b = color & 0xFF;
-
 
                     int itemColour = FastColor.ARGB32.color(150, r, g, b);
                     int leftX = leftPos + slot.x;
