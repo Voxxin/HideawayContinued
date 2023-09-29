@@ -3,7 +3,7 @@
 
     "key.hp.menu": "Otwórz menu Hideaway+",
     "key.hp.jukebox": "Otwórz szafę grającą",
-    "key.hp.autoSell": "Automatycznie uzupełnij ekran sprzedaży",
+    "key.hp.autoSell": "Automatycznie uzupełnij okno sprzedaży",
     "key.hp.luggage": "Bagaż",
     "key.hp.wardrobe": "Szafa",
     "key.hp.profile": "Profil",
@@ -28,7 +28,7 @@
     "text.config.hp-config.option.hideCosmetics": "Ukryj elementy kosmetyczne",
     "text.config.hp-config.option.inventoryRarities": "Kolor rzadkości przedmiotów",
     "text.config.hp-config.option.discordRPC": "Używaj bogatego statusu aktywności (Rich Presence)",
-    "text.config.hp-config.option.autoSell": "Automatycznie wypełnij ekran sprzedaży",
+    "text.config.hp-config.option.autoSell": "Automatycznie wypełnij okno sprzedaży",
     "text.config.hp-config.option.autoEnableEditor": "Automatycznie włącz tryb edytora",
     "text.config.hp-config.option.jukebox": "Użyj szafy grającej",
     "text.config.hp-config.option.noAmbientSounds": "Pozwalaj na dzwięki otoczenia",
