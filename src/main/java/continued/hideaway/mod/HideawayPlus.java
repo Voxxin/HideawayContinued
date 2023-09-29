@@ -91,6 +91,7 @@ public class HideawayPlus implements ClientModInitializer {
                     if (HideawayPlus.connected() && HideawayPlus.client().screen instanceof ContainerScreen) {
                         HideawayPlus.shop().tick();
                     } else if (StaticValues.shopScreenWasFilled) {
+                        HideawayPlus.shop().oldShopName = null;
                         StaticValues.shopIterationNum = 0;
                         StaticValues.shopScreenWasFilled = false;
                     }

@@ -26,9 +26,13 @@ public class FriendsListUI {
     private static boolean calledProper = false;
 
     public static void tick() {
-        if (HideawayPlus.client().screen != null && HideawayPlus.client().screen instanceof ContainerScreen && ((ContainerScreen) HideawayPlus.client().screen).getMenu().getItems().stream().filter(itemStack -> itemStack.getItem() == Items.PLAYER_HEAD).count() > StaticValues.friendsUsernames.size() - 1) StaticValues.friendsCheck = false;
-        if (!StaticValues.friendsUUID.contains(HideawayPlus.client().player.getStringUUID())) StaticValues.friendsUUID.add(HideawayPlus.client().player.getStringUUID());
-        if (!StaticValues.friendsUsernames.contains(HideawayPlus.client().player.getName().getString())) StaticValues.friendsUsernames.add(HideawayPlus.client().player.getName().getString());
+        if (HideawayPlus.client().screen != null && HideawayPlus.client().screen instanceof ContainerScreen && ((ContainerScreen) HideawayPlus.client().screen).getMenu().getItems().stream().filter(itemStack -> itemStack.getItem() == Items.PLAYER_HEAD).count() > StaticValues.friendsUsernames.size() - 1)
+            StaticValues.friendsCheck = false;
+
+        if (!StaticValues.friendsUUID.contains(HideawayPlus.client().player.getStringUUID()))
+            StaticValues.friendsUUID.add(HideawayPlus.client().player.getStringUUID());
+        if (!StaticValues.friendsUsernames.contains(HideawayPlus.client().player.getName().getString()))
+            StaticValues.friendsUsernames.add(HideawayPlus.client().player.getName().getString());
         if (StaticValues.friendsCheck) return;
         if (HideawayPlus.client().screen instanceof ContainerScreen abstractContainerScreen) {
             ChestMenu menu = abstractContainerScreen.getMenu();
@@ -51,7 +55,8 @@ public class FriendsListUI {
                                 String uuid = UUIDUtil.uuidFromIntArray(uuidIntArray).toString();
                                 if (!StaticValues.friendsUUID.contains(uuid)) StaticValues.friendsUUID.add(uuid);
                                 String name = itemStack.getTag().getCompound("SkullOwner").getString("Name");
-                                if (!StaticValues.friendsUsernames.contains(name)) StaticValues.friendsUsernames.add(name);
+                                if (!StaticValues.friendsUsernames.contains(name))
+                                    StaticValues.friendsUsernames.add(name);
                             }
                         }
                     })

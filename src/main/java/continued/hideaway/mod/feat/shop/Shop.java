@@ -22,11 +22,16 @@ import java.util.List;
 public class Shop {
 
     private static boolean fill;
+    public String oldShopName = null;
 
     public void tick() {
         if (HideawayPlus.client().screen == null || !(HideawayPlus.client().screen instanceof ContainerScreen containerScreen)) return;
 
-        if (getShopName() == null) return;
+        if (getShopName() == null) {
+            oldShopName = null;
+            return;
+        }
+
         String shopName = getShopName();
 
         if (GLFW.glfwGetKey(GLFW.glfwGetCurrentContext(), KeyBindingHelper.getBoundKeyOf(KeyboardManager.autoSell).getValue()) == GLFW.GLFW_PRESS) {
@@ -34,7 +39,8 @@ public class Shop {
         }
 
         if (("fruit".equals(shopName) || "fish".equals(shopName)) && (HideawayPlus.config().autoSell() || fill)) {
-            StaticValues.shopIterationNum = 0;
+            if (oldShopName != null && !oldShopName.equals(shopName)) StaticValues.shopIterationNum = 0;
+            oldShopName = shopName;
             fill = false;
             List<Slot> emptyChestSlots = new ArrayList<>();
             List<Slot> playerEmptySlots = new ArrayList<>();

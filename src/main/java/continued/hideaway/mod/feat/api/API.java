@@ -20,7 +20,8 @@ public class API {
 
     public static void live() {
         if (!enabled || serverUnreachable) return;
-        if (!living) QueryURL.asyncCreateUser(HideawayPlus.player().getStringUUID(), HideawayPlus.player().getName().getString());
+        if (!API_KEY.isEmpty()) living = true;
+        if (!living || API_KEY.isEmpty()) QueryURL.asyncCreateUser(HideawayPlus.player().getStringUUID(), HideawayPlus.player().getName().getString());
         QueryURL.asyncLifePing(HideawayPlus.player().getStringUUID(), API_KEY);
         QueryURL.asyncPlayerList();
     }

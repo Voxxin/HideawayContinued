@@ -50,16 +50,20 @@ public class QueryURL {
                             switch (jsonObject.get("message").getAsString()) {
                                 case "User not alive" -> {
                                     API.living = false;
+                                    API.API_KEY = "";
                                 }
                                 case "Invalid UUID or code" -> {
                                     HideawayPlus.logger().error("API Error: " + jsonObject.get("message").getAsString());
                                     API.living = false;
+                                    API.API_KEY = "";
                                 }
                             }
                         }
                     }
                 }
             } catch (IOException | ParseException | JsonSyntaxException e) {
+                API.living = false;
+                API.API_KEY = "";
                 if (e instanceof IOException) {
                     HideawayPlus.logger().error("API Error: " + e.getMessage() + "\n"
                             + "Checking back in 30 seconds..." + "\n"

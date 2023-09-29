@@ -22,10 +22,10 @@
 
     {
       "type": "bitmap",
-      "file": "hideaway_plus:icon.png",
+      "file": "hideaway_plus:badge/user.png",
       "chars": [ "\uEF01" ],
-      "height": 15,
-      "ascent": 12
+      "height": 10,
+      "ascent": 9
     },
 
     {
