@@ -12,17 +12,18 @@ import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractContainerScreen.class)
-public abstract class AbstractContainerScreenMixin {
+public abstract class AbstractContainerScreenMixin implements AbstractContainerScreenAccessor {
 
     @Final @Shadow protected AbstractContainerMenu menu;
     @Shadow protected int leftPos;
     @Shadow protected int topPos;
+
+    @Shadow protected Slot hoveredSlot;
 
     @Inject(method = "render", at = @At("TAIL"))
     public void renderSlotRarity(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
@@ -50,4 +51,7 @@ public abstract class AbstractContainerScreenMixin {
             }
         }
     }
+
+    @Override
+    public Slot hp$getHoveredSlot() { return this.hoveredSlot; }
 }

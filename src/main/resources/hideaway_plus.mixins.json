@@ -7,13 +7,13 @@
     "defaultRequire": 1
   },
   "client": [
-    "ContainerScreenMixin",
     "AbstractContainerScreenMixin",
     "ArmourStandMobMixin",
     "BossHealthOverlayMixin",
     "CapeLayerMixin",
     "ChatComponentMixin",
     "ClientAdvancementsMixin",
+    "ContainerScreenMixin",
     "DisplayNameMixin",
     "EntityRendererMixin",
     "GameMenuScreenMixin",
@@ -26,6 +26,7 @@
     "SoundEventMixin",
     "SplashRendererMixin",
     "TickMixin",
+    "TooltipRenderUtilMixin",
     "ext.GridLayoutAccessor",
     "ext.SoundEventAccessor"
   ]
