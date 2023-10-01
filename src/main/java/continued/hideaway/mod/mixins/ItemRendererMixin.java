@@ -28,7 +28,7 @@ public class ItemRendererMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(ItemStack itemStack, ItemDisplayContext displayContext, boolean leftHand, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, BakedModel model, CallbackInfo ci) {
         if ((minecraft.player != null && displayContext != ItemDisplayContext.GUI && HideawayPlus.connected())) {
-            if (HideawayPlus.config().hideCosmetics() || minecraft.options.getCameraType().isFirstPerson()) {
+            if (HideawayPlus.config().hideCosmetics() || (minecraft.options.getCameraType().isFirstPerson() && minecraft.screen == null)) {
                 CompoundTag playerChestNbt = minecraft.player.getItemBySlot(EquipmentSlot.CHEST).getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
                 CompoundTag playerHeadNbt = minecraft.player.getItemBySlot(EquipmentSlot.HEAD).getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
 
