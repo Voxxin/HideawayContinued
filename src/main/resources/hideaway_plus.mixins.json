@@ -8,7 +8,6 @@
   },
   "client": [
     "AbstractClientPlayerMixin",
-    "AbstractContainerScreenMixin",
     "ArmourStandMobMixin",
     "BossHealthOverlayMixin",
     "CapeLayerMixin",

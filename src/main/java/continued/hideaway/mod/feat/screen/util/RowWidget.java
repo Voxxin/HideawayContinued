@@ -12,6 +12,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -60,14 +61,19 @@ public class RowWidget extends AbstractWidget {
         buttonPoints[2] = minY;
         buttonPoints[3] = maxY;
 
-        if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS ) clicked(mouseX, mouseY);
-        if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) == GLFW.GLFW_PRESS && btnRightReleased) continuePlayerAnim(mouseX, mouseY);
-        else if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) != GLFW.GLFW_PRESS) btnRightReleased = true;
+        if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS)
+            clicked(mouseX, mouseY);
+        if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) == GLFW.GLFW_PRESS && btnRightReleased)
+            continuePlayerAnim(mouseX, mouseY);
+        else if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) != GLFW.GLFW_PRESS)
+            btnRightReleased = true;
 
         if (tutDisplay > 0) {
-            System.out.println(Component.translatable("widget.model_slider.tutorial").copy().getString());
-            int startingPos = (this.width - HideawayPlus.client().font.width(Component.translatable("widget.model_slider.tutorial").copy().getString())) / 2;
-            guiGraphics.drawString(HideawayPlus.client().font, Component.translatable("widget.model_slider.tutorial").copy().getString(), startingPos, maxY - 10, Color.WHITE.getRGB(), true);
+            String tut = Component.translatable("widget.model_slider.tutorial").getString();
+            int startingPos = ((width - HideawayPlus.client().font.width(tut)) / 2);
+            System.out.println(HideawayPlus.client().font.width(tut));
+
+            guiGraphics.drawString(HideawayPlus.client().font, tut, startingPos, maxY - 10, Color.WHITE.getRGB(), true);
             tutDisplay--;
         } else if (tutDisplay == 0) tutDisplay = -2;
 

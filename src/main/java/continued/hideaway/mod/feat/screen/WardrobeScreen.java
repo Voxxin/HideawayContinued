@@ -38,8 +38,6 @@ public class WardrobeScreen extends Screen {
 
     @Override
     public void onClose() {
-        System.out.println("Closed");
-
         HideawayPlus.player().connection.send(new ServerboundPlayerInputPacket(0, 0, false, true));
         HideawayPlus.client().setScreen(null);
     }
