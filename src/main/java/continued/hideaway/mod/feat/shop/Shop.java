@@ -23,7 +23,6 @@ public class Shop {
 
     private static boolean fill;
     public String oldShopName = null;
-
     public void tick() {
         if (HideawayPlus.client().screen == null || !(HideawayPlus.client().screen instanceof ContainerScreen containerScreen)) return;
 
@@ -41,7 +40,6 @@ public class Shop {
         if (("fruit".equals(shopName) || "fish".equals(shopName)) && (HideawayPlus.config().autoSell() || fill)) {
             if (oldShopName != null && !oldShopName.equals(shopName)) StaticValues.shopIterationNum = 0;
             oldShopName = shopName;
-            fill = false;
             List<Slot> emptyChestSlots = new ArrayList<>();
             List<Slot> playerEmptySlots = new ArrayList<>();
             ChestMenu chestMenu = containerScreen.getMenu();
@@ -71,8 +69,8 @@ public class Shop {
                 }
 
                 if (emptyChestSlots.isEmpty()) StaticValues.shopIterationNum++;
-                if (i == playerEmptySlots.size() -1) StaticValues.shopScreenWasFilled = true;
-                if (StaticValues.shopIterationNum >= playerEmptySlots.size()) StaticValues.shopScreenWasFilled = true;
+                if (i == playerEmptySlots.size() -1) {StaticValues.shopScreenWasFilled = true; fill = false;}
+                if (StaticValues.shopIterationNum >= playerEmptySlots.size()) {StaticValues.shopScreenWasFilled = true; fill = false;}
             }
         }
     }

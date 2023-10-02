@@ -74,14 +74,14 @@ public class FriendsListUI {
                 LastSeenMessages.Update messages = new LastSeenMessages.Update(0, new BitSet());
 
                 Instant now = Instant.now();
-                HideawayPlus.client().player.connection.send(
-                        new ServerboundChatCommandPacket(
-                                "friend",
-                                now,
-                                0L,
-                                ArgumentSignatures.EMPTY,
-                                messages)
-                );
+//                HideawayPlus.client().player.connection.send(
+//                        new ServerboundChatCommandPacket(
+//                                "friend",
+//                                now,
+//                                0L,
+//                                ArgumentSignatures.EMPTY,
+//                                messages)
+//                );
             } else {
                 ticker++;
                 calledProper = false;

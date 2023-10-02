@@ -28,27 +28,30 @@ public class ItemRendererMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(ItemStack itemStack, ItemDisplayContext displayContext, boolean leftHand, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, BakedModel model, CallbackInfo ci) {
         if ((minecraft.player != null && displayContext != ItemDisplayContext.GUI && HideawayPlus.connected())) {
-            if (HideawayPlus.config().hideCosmetics() || minecraft.options.getCameraType().isFirstPerson()) {
-                CompoundTag playerChestNbt = minecraft.player.getItemBySlot(EquipmentSlot.CHEST).getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
-                CompoundTag playerHeadNbt = minecraft.player.getItemBySlot(EquipmentSlot.HEAD).getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
+            CompoundTag stackNbt = itemStack.getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
 
-                CompoundTag stackNbt = itemStack.getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
+            if (stackNbt != null) {
+                String stackId = stackNbt.getString(Constants.hideawayId("random"));
 
-                if (stackNbt != null && playerChestNbt != null) {
-                    String stackId = stackNbt.getString(Constants.hideawayId("random"));
-                    String itemId = playerChestNbt.getString(Constants.hideawayId("random"));
+                if (HideawayPlus.config().hideCosmetics() || minecraft.options.getCameraType().isFirstPerson()) {
+                    CompoundTag playerChestNbt = minecraft.player.getItemBySlot(EquipmentSlot.CHEST).getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
+                    if (playerChestNbt != null) {
+                        String itemId = playerChestNbt.getString(Constants.hideawayId("random"));
 
-                    if (stackId.equals(itemId)) {
-                        ci.cancel();
+                        if (stackId.equals(itemId)) {
+                            ci.cancel();
+                        }
                     }
                 }
 
-                if (stackNbt != null && playerHeadNbt != null) {
-                    String stackId = stackNbt.getString(Constants.hideawayId("random"));
-                    String itemId = playerHeadNbt.getString(Constants.hideawayId("random"));
+                if (HideawayPlus.config().hideCosmetics()) {
+                    CompoundTag playerHeadNbt = minecraft.player.getItemBySlot(EquipmentSlot.HEAD).getTagElement(Constants.PUBLIC_BUKKIT_VALUES);
+                    if (playerHeadNbt != null) {
+                        String itemId = playerHeadNbt.getString(Constants.hideawayId("random"));
 
-                    if (stackId.equals(itemId)) {
-                        ci.cancel();
+                        if (stackId.equals(itemId)) {
+                            ci.cancel();
+                        }
                     }
                 }
             }

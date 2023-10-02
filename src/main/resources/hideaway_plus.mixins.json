@@ -7,13 +7,14 @@
     "defaultRequire": 1
   },
   "client": [
-    "ContainerScreenMixin",
-    "AdvancementScreenMixin",
+    "AbstractClientPlayerMixin",
+    "AbstractContainerScreenMixin",
     "ArmourStandMobMixin",
     "BossHealthOverlayMixin",
     "CapeLayerMixin",
     "ChatComponentMixin",
     "ClientAdvancementsMixin",
+    "ContainerScreenMixin",
     "DisplayNameMixin",
     "EntityRendererMixin",
     "GameMenuScreenMixin",
@@ -21,12 +22,12 @@
     "ItemRendererMixin",
     "LogoRendererMixin",
     "MinecraftClientMixin",
-    "PlayerInfoMixin",
-    "PlayerInventoryMixin",
     "PlayerMixin",
     "SoundEventMixin",
     "SplashRendererMixin",
     "TickMixin",
+    "TooltipRenderUtilMixin",
+    "EntityMixin",
     "ext.GridLayoutAccessor",
     "ext.SoundEventAccessor"
   ]

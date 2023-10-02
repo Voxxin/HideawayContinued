@@ -20,13 +20,10 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import static continued.hideaway.mod.util.StaticValues.friendsCheck;
 import static continued.hideaway.mod.util.StaticValues.friendsUUID;
@@ -43,8 +40,6 @@ public class HideawayPlus implements ClientModInitializer {
     private static final HideawayPlusConfig CONFIG = HideawayPlusConfig.createAndLoad();
     private static Location LOCATION = Location.UNKNOWN;
     private static Lifecycle LIFECYCLE;
-
-    private static final Queue<Component> TOAST_STACK = new LinkedList<>();
 
     @Override
     public void onInitializeClient() {
@@ -138,7 +133,6 @@ public class HideawayPlus implements ClientModInitializer {
     public static boolean debug() { return debugUsers.contains(Minecraft.getInstance().getUser().getUuid()); }
     public static Minecraft client() { return Minecraft.getInstance(); }
     public static LocalPlayer player() { return client().player; }
-    public static Queue<Component> toastStack() { return TOAST_STACK; }
 
     public static HideawayPlusConfig config() { return CONFIG; }
     public static DiscordManager discord() { return DISCORD_MANAGER; }

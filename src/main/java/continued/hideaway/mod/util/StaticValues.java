@@ -20,4 +20,6 @@ public class StaticValues {
 
     public static ArrayList<String> wardrobeEntity = new ArrayList<>();
     public static ArrayList<String> wardrobeArmourStand = new ArrayList<>();
+
+    public static boolean playerRotationSet = false;
 }
