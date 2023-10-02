@@ -32,5 +32,11 @@
     "text.config.hp-config.option.autoEnableEditor": "Automatically Enable Editor",
     "text.config.hp-config.option.jukebox": "Use Jukebox",
     "text.config.hp-config.option.noAmbientSounds": "Allow Ambient Sounds",
-    "text.config.hp-config.option.noActivitySongs": "Allow Activity Songs"
+    "text.config.hp-config.option.noActivitySongs": "Allow Activity Songs",
+
+    "narration.widget.model_slider": "Model Slider",
+
+    "widget.model_slider.title": "Model Slider",
+    "widget.model_slider.tutorial": "Click LEFT to continue the animation"
+
 }

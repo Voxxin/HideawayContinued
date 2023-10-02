@@ -2,6 +2,8 @@ package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
+import continued.hideaway.mod.feat.location.Location;
+import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.util.Chars;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -35,6 +37,8 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void onRender(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
+        if (Wardrobe.wardrobePlayer != null) overlayMessageString = Component.empty();
+
         if (HideawayPlus.jukebox() != null && HideawayPlus.jukebox().currentTrack != null) {
             guiGraphics.drawString(
                     Minecraft.getInstance().font,
@@ -43,6 +47,13 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
                             .append(Component.literal("Now playing: " + HideawayPlus.jukebox().currentTrack.name)),
                     10, 10, 0xffffff, true
             );
+        }
+    }
+
+    @Inject(at = @At("HEAD"), method = "renderExperienceBar", cancellable = true)
+    public void renderExperienceBar(GuiGraphics guiGraphics, int x, CallbackInfo ci) {
+        if (HideawayPlus.connected() && HideawayPlus.location() == Location.WARDROBE_WHEEL) {
+            ci.cancel();
         }
     }
 

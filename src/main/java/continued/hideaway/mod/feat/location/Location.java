@@ -193,7 +193,7 @@ public enum Location {
         String bossBarName;
 
         // Location-based
-        if (location.closerThan(new Vec3(66.5f, 5f, -130.5f), 5)) HideawayPlus.setLocation(WARDROBE_WHEEL);
+        if (location.closerThan(new Vec3(71.5f, 5f, -135.5f), 5)) HideawayPlus.setLocation(WARDROBE_WHEEL);
         else if (location.closerThan(new Vec3(-77.5f, 6f, -263.5f), 7)) HideawayPlus.setLocation(MONKEY_BROTHERS);
         else if (location.closerThan(new Vec3(-28.5f, 5f, -120.5f), 20)) HideawayPlus.setLocation(FURNITURE_FUNCTIONATOR);
         else if (location.closerThan(new Vec3(54.5f, 5f, -119.5f), 20)) HideawayPlus.setLocation(ISLAND_EMPORIUM);
