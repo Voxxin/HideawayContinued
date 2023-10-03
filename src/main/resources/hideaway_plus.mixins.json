@@ -8,13 +8,16 @@
   },
   "client": [
     "AbstractClientPlayerMixin",
+    "AbstractContainerScreenMixin",
     "ArmourStandMobMixin",
     "BossHealthOverlayMixin",
     "CapeLayerMixin",
     "ChatComponentMixin",
     "ClientAdvancementsMixin",
     "ContainerScreenMixin",
+    "CustomHeadLayerMixin",
     "DisplayNameMixin",
+    "EntityMixin",
     "EntityRendererMixin",
     "GameMenuScreenMixin",
     "InGameHudMixin",
@@ -26,7 +29,6 @@
     "SplashRendererMixin",
     "TickMixin",
     "TooltipRenderUtilMixin",
-    "EntityMixin",
     "ext.GridLayoutAccessor",
     "ext.SoundEventAccessor"
   ]

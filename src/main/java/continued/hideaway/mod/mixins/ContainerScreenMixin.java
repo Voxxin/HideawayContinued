@@ -21,9 +21,4 @@ public abstract class ContainerScreenMixin extends AbstractContainerScreen<Chest
     public void hp$slotChange(Slot slot, int slotId, int mouseButton, ClickType type) {
         slotClicked(slot, slotId, mouseButton, type);
     }
-
-    @Override
-    public Slot hp$getHoveredSlot() {
-        return this.hoveredSlot;
-    }
 }
