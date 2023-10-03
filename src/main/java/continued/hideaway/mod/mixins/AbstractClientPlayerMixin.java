@@ -41,7 +41,6 @@ public class AbstractClientPlayerMixin {
 
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 ItemStack stack = player.getItemBySlot(slot);
-                System.out.println(slot + " " + stack);
                 fakePlayer.setItemSlot(slot, stack);
             }
 
