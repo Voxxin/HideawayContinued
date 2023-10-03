@@ -59,9 +59,8 @@ public abstract class AbstractContainerScreenMixin implements AbstractContainerS
             int r = (color >> 16) & 0xFF;
             int g = (color >> 8) & 0xFF;
             int b = color & 0xFF;
+            int itemColour = FastColor.ARGB32.color(255, r, g, b);
 
-
-            int itemColour = FastColor.ARGB32.color(150, r, g, b);
             int leftX = slot.x;
             int leftY = slot.y;
 
