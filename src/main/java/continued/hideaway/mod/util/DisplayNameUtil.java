@@ -2,6 +2,7 @@ package continued.hideaway.mod.util;
 
 import net.minecraft.client.Minecraft;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,15 +89,14 @@ public class DisplayNameUtil {
     }
 
     public static String modPlayerID(String username) {
-        if (StaticValues.users.containsValue(username)) {
-            for (String key : StaticValues.users.keySet()) {
-                if (key != null && StaticValues.users.get(key).equals(username)) {
-                    return key;
-                }
+        for (Map.Entry<String, String> entry : StaticValues.users.entrySet()) {
+            if (entry.getValue().equals(username)) {
+                return entry.getKey();
             }
         }
         return null;
     }
+
 
     public static String nameFromChatMessage(String chatMessage) {
         String username = chatMessage.replaceAll(":(.*)", "");

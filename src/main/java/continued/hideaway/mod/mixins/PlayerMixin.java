@@ -32,6 +32,7 @@ public abstract class PlayerMixin implements EntityAccessor {
     @Mutable
     @Shadow @Final private GameProfile gameProfile;
     @Unique private ItemStack oldHeadStack = null;
+    @Unique private ItemStack oldChestplateStack = null;
     @Unique private Player player = ((Player) (Object) this);
     @Inject(at = @At("HEAD"), method = "tick", cancellable = true)
     private void tick(CallbackInfo ci) {
@@ -41,13 +42,21 @@ public abstract class PlayerMixin implements EntityAccessor {
             player.getEntityData().set(DATA_PLAYER_MODE_CUSTOMISATION, b);
         }
 
-        if (!StaticValues.wardrobeEntity.contains(player.getStringUUID()) && (Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID()))) {
-            boolean hasCosmetic = player.getItemBySlot(EquipmentSlot.HEAD).getItem() == Items.LEATHER_HORSE_ARMOR;
-            if (hasCosmetic) oldHeadStack = player.getItemBySlot(EquipmentSlot.HEAD);
-            if (hasCosmetic && HideawayPlus.connected() && HideawayPlus.config().hideCosmetics())
+        if (!(Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID()))) {
+            boolean hasHeadCosmetic = player.getItemBySlot(EquipmentSlot.HEAD).getItem() == Items.LEATHER_HORSE_ARMOR;
+            boolean hasChestCosmetic = player.getItemBySlot(EquipmentSlot.CHEST).getItem() == Items.LEATHER_HORSE_ARMOR;
+
+            if (hasHeadCosmetic) oldHeadStack = player.getItemBySlot(EquipmentSlot.HEAD);
+            if (hasHeadCosmetic && HideawayPlus.connected() && HideawayPlus.config().hideCosmetics())
                 this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-            if (!hasCosmetic && HideawayPlus.connected() && !HideawayPlus.config().hideCosmetics() && oldHeadStack != null)
+            if (!hasHeadCosmetic && HideawayPlus.connected() && !HideawayPlus.config().hideCosmetics() && oldHeadStack != null)
                 this.setItemSlot(EquipmentSlot.HEAD, oldHeadStack);
+
+            if (hasChestCosmetic) oldChestplateStack = player.getItemBySlot(EquipmentSlot.CHEST);
+            if (hasChestCosmetic && HideawayPlus.connected() && HideawayPlus.config().hideCosmetics())
+                this.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
+            if (!hasChestCosmetic && HideawayPlus.connected() && !HideawayPlus.config().hideCosmetics() && oldChestplateStack != null)
+                this.setItemSlot(EquipmentSlot.CHEST, oldChestplateStack);
         }
 
         if (!StaticValues.playerRotationSet && Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID())) ((EntityAccessor)Wardrobe.wardrobePlayer).hp$addRot(2.5F);
