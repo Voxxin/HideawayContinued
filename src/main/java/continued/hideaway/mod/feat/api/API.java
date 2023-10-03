@@ -13,7 +13,7 @@ public class API {
         if (!enabled || serverUnreachable) return;
         if (living || !API_KEY.isEmpty()) return;
         if (checkingUser) return;
-        QueryURL.asyncCreateUser(HideawayPlus.player().getStringUUID(), HideawayPlus.player().getName().getString());
+        QueryURL.asyncCreateUser(HideawayPlus.player().getStringUUID(), HideawayPlus.player().getName().getString()); checkingUser = true;
         QueryURL.asyncPlayerList();
         QueryURL.asyncTeam();
     }
@@ -22,7 +22,7 @@ public class API {
         if (!enabled || serverUnreachable) return;
         if (!API_KEY.isEmpty()) living = true;
         if (checkingUser) return;
-        if ((!living || API_KEY.isEmpty())) QueryURL.asyncCreateUser(HideawayPlus.player().getStringUUID(), HideawayPlus.player().getName().getString());
+        if ((!living || API_KEY.isEmpty())) QueryURL.asyncCreateUser(HideawayPlus.player().getStringUUID(), HideawayPlus.player().getName().getString()); checkingUser = true;
         QueryURL.asyncLifePing(HideawayPlus.player().getStringUUID(), API_KEY);
         QueryURL.asyncPlayerList();
     }
