@@ -43,9 +43,6 @@ public class HideawayPlusConfig {
             for (File file : outfitsFiles) {
                 if (file.isFile()) {
                     importOutfits(file);
-                    if (!file.delete()) {
-                        System.out.println("Failed to delete file: " + file.getName());
-                    }
                 }
             }
 
@@ -67,7 +64,6 @@ public class HideawayPlusConfig {
         File file = new File(configDir, "mod.json");
         try (FileWriter fileWriter = new FileWriter(file)) {
             gson.toJson(object, fileWriter);
-            System.out.println("Saved mod config file");
         } catch (IOException e) {
             throw new RuntimeException("Error saving mod config file: " + e.getMessage());
         }
@@ -137,20 +133,12 @@ public class HideawayPlusConfig {
     }
 
     public static void updateModConfig() {
-        System.out.println("Updating mod config file");
-
         JsonObject JSONedFile = new JsonObject();
         for (ModConfigModel config : ModConfigModel.values()) {
             JSONedFile.addProperty(config.name, config.value);
         }
 
-        System.out.println(JSONedFile);
-
         modConfigFileWriter(JSONedFile);
         init();
-    }
-
-    public ModConfigModel[] getModConfig() {
-        return ModConfigModel.values();
     }
 }

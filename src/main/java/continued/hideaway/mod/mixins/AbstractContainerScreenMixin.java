@@ -1,6 +1,6 @@
 package continued.hideaway.mod.mixins;
 
-import blue.endless.jankson.annotation.Nullable;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -27,7 +27,7 @@ public abstract class AbstractContainerScreenMixin implements AbstractContainerS
     @Inject(method = "renderSlot", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;renderItem(Lnet/minecraft/world/item/ItemStack;III)V"))
     public void renderSlot(GuiGraphics guiGraphics, Slot slot, CallbackInfo ci) {
         TextColor itemColor = slot.getItem().getHoverName().getStyle().getColor();
-        if (itemColor != null) {
+        if (itemColor != null && ModConfigModel.INVENTORY_RARITIES.value) {
             int color = itemColor.getValue();
             int r = (color >> 16) & 0xFF;
             int g = (color >> 8) & 0xFF;
@@ -46,7 +46,6 @@ public abstract class AbstractContainerScreenMixin implements AbstractContainerS
     }
 
     @Override
-    @Nullable
     public Slot hp$getHoveredSlot() { return this.hoveredSlot; }
 
     @Override
