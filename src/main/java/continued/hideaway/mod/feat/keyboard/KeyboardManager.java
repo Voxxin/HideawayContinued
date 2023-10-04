@@ -2,6 +2,7 @@ package continued.hideaway.mod.feat.keyboard;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ui.InventorySlotsUI;
 import continued.hideaway.mod.feat.ui.JukeboxUI;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -48,7 +49,7 @@ public class KeyboardManager {
                 ));
             }
             while (autoSell.consumeClick()) {
-                if (!HideawayPlus.config().autoSell() && HideawayPlus.client().screen != null) {
+                if (!ModConfigModel.AUTO_SELL.value && HideawayPlus.client().screen != null) {
                     HideawayPlus.shop().tick();
                 }
             }
@@ -66,5 +67,9 @@ public class KeyboardManager {
         KeyBindingHelper.registerKeyBinding(journal);
         KeyBindingHelper.registerKeyBinding(palmPlate);
         KeyBindingHelper.registerKeyBinding(mail);
+    }
+
+    public static boolean isKeyPressed(int button) {
+        return (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), button) == GLFW.GLFW_PRESS);
     }
 }

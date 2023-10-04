@@ -2,6 +2,7 @@ package continued.hideaway.mod;
 
 import continued.hideaway.mod.feat.api.API;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.discord.DiscordManager;
 import continued.hideaway.mod.feat.jukebox.Jukebox;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
@@ -37,7 +38,7 @@ public class HideawayPlus implements ClientModInitializer {
     public static Jukebox JUKEBOX;
     public static Shop SHOP;
 
-    private static final HideawayPlusConfig CONFIG = HideawayPlusConfig.createAndLoad();
+    private static final HideawayPlusConfig CONFIG = new HideawayPlusConfig();
     private static Location LOCATION = Location.UNKNOWN;
     private static Lifecycle LIFECYCLE;
 
@@ -59,8 +60,10 @@ public class HideawayPlus implements ClientModInitializer {
         // initialization should be initialized here.
         new KeyboardManager();
 
+        new HideawayPlusConfig();
+
         try {
-            if (config().discordRPC()) DISCORD_MANAGER = new DiscordManager().start();
+            if (ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER = new DiscordManager().start();
         } catch (Error err) {
             HideawayPlus.logger().info(err);
             return;
@@ -75,8 +78,8 @@ public class HideawayPlus implements ClientModInitializer {
                 .add(Task.of(() -> {
                     try {
                         if (DiscordManager.active) DISCORD_MANAGER.update();
-                        if (DiscordManager.active && !HideawayPlus.config().discordRPC()) DISCORD_MANAGER.stop();
-                        if (!DiscordManager.active && HideawayPlus.config().discordRPC()) DISCORD_MANAGER.start();
+                        if (DiscordManager.active && !ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.stop();
+                        if (!DiscordManager.active && ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.start();
                     } catch (Error err) {
                         HideawayPlus.logger().error(err);
                     }

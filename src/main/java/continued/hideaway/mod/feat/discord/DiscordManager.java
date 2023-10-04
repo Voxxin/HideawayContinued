@@ -8,6 +8,7 @@ import com.jagrosh.discordipc.entities.Packet;
 import com.jagrosh.discordipc.entities.RichPresence;
 import com.jagrosh.discordipc.entities.User;
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.util.HUDUtil;
 
@@ -21,7 +22,7 @@ public class DiscordManager {
     private static Instant start;
 
     public DiscordManager start() {
-        if (!active && HideawayPlus.config().discordRPC()) {
+        if (!active && ModConfigModel.DISCORD_RPC.value) {
             HideawayPlus.logger().info("Starting Discord RPC client...");
             client = new IPCClient(1136888078510858323L);
             client.setListener(new IPCListener() {
@@ -77,7 +78,7 @@ public class DiscordManager {
     }
 
     public void update() {
-        if (active && HideawayPlus.config().discordRPC()) {
+        if (active && ModConfigModel.DISCORD_RPC.value) {
             Location loc = HideawayPlus.location();
             RichPresence.Builder builder = new RichPresence.Builder();
 

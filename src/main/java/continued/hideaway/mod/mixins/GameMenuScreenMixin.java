@@ -1,7 +1,6 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.ui.ConfigUI;
 import continued.hideaway.mod.mixins.ext.GridLayoutAccessor;
 import continued.hideaway.mod.util.Chars;
 import continued.hideaway.mod.util.Constants;
@@ -59,7 +58,7 @@ public abstract class GameMenuScreenMixin extends Screen {
             final List<LayoutElement> buttons = ((GridLayoutAccessor) gridLayout).getChildren();
             if (HideawayPlus.connected()) {
                 buttons.add(Button.builder(Chars.settingsIcon(), button -> {
-                            this.minecraft.setScreen(new ConfigUI());
+//                            this.minecraft.setScreen(new ConfigUI());
                         })
                         .bounds(x, y, 20, 20)
                         .build());

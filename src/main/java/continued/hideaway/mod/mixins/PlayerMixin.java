@@ -2,11 +2,13 @@ package continued.hideaway.mod.mixins;
 
 import com.mojang.authlib.GameProfile;
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ext.EntityAccessor;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.util.StaticValues;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.util.Mth;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,8 +34,12 @@ public abstract class PlayerMixin implements EntityAccessor {
 
     @Mutable
     @Shadow @Final private GameProfile gameProfile;
+
+    @Shadow public abstract ItemStack eat(Level level, ItemStack food);
+
     @Unique private ItemStack oldHeadStack = null;
     @Unique private ItemStack oldChestplateStack = null;
+    @Unique private boolean setLooking = false;
     @Unique private Player player = ((Player) (Object) this);
     @Inject(at = @At("HEAD"), method = "tick", cancellable = true)
     private void tick(CallbackInfo ci) {
@@ -47,18 +54,24 @@ public abstract class PlayerMixin implements EntityAccessor {
             boolean hasChestCosmetic = player.getItemBySlot(EquipmentSlot.CHEST).getItem() == Items.LEATHER_HORSE_ARMOR;
 
             if (hasHeadCosmetic) oldHeadStack = player.getItemBySlot(EquipmentSlot.HEAD);
-            if (hasHeadCosmetic && HideawayPlus.connected() && HideawayPlus.config().hideCosmetics())
+            if (hasHeadCosmetic && HideawayPlus.connected() && ModConfigModel.HIDE_COSMETIC.value)
                 this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-            if (!hasHeadCosmetic && HideawayPlus.connected() && !HideawayPlus.config().hideCosmetics() && oldHeadStack != null)
+            if (!hasHeadCosmetic && HideawayPlus.connected() && !ModConfigModel.HIDE_COSMETIC.value && oldHeadStack != null)
                 this.setItemSlot(EquipmentSlot.HEAD, oldHeadStack);
 
             if (hasChestCosmetic) oldChestplateStack = player.getItemBySlot(EquipmentSlot.CHEST);
-            if (hasChestCosmetic && HideawayPlus.connected() && HideawayPlus.config().hideCosmetics())
+            if (hasChestCosmetic && HideawayPlus.connected() && ModConfigModel.HIDE_COSMETIC.value)
                 this.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
-            if (!hasChestCosmetic && HideawayPlus.connected() && !HideawayPlus.config().hideCosmetics() && oldChestplateStack != null)
+            if (!hasChestCosmetic && HideawayPlus.connected() && !ModConfigModel.HIDE_COSMETIC.value && oldChestplateStack != null)
                 this.setItemSlot(EquipmentSlot.CHEST, oldChestplateStack);
         }
 
+        if (Wardrobe.wardrobePlayer != null && !setLooking && HideawayPlus.client().screen == null) {
+            HideawayPlus.player().lookAt(EntityAnchorArgument.Anchor.EYES, Wardrobe.wardrobePlayer.position());
+            setLooking = true;
+            System.out.println("Set looking");
+        }
+        else if (Wardrobe.wardrobePlayer == null && setLooking && HideawayPlus.client().screen == null) setLooking = false;
         if (!StaticValues.playerRotationSet && Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID())) ((EntityAccessor)Wardrobe.wardrobePlayer).hp$addRot(2.5F);
     }
 

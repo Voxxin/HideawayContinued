@@ -1,23 +1,21 @@
-package continued.hideaway.mod.feat.screen.util;
+package continued.hideaway.mod.feat.rendering.screen.util;
 
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.ext.EntityAccessor;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.util.StaticValues;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 
-public class RowWidget extends AbstractWidget {
+public class RotationSliderWidget extends AbstractWidget {
 
     int tutDisplay = -1;
     boolean btnRightReleased = true;
@@ -28,7 +26,7 @@ public class RowWidget extends AbstractWidget {
 
     private int[] buttonPoints = new int[4];
     private int[] rotPoints = new int[3];
-    public RowWidget(int x, int y, int width, int height, Component message) {
+    public RotationSliderWidget(int x, int y, int width, int height, Component message) {
         super(x, y, width, height, message);
 
         this.width = width;
@@ -61,17 +59,16 @@ public class RowWidget extends AbstractWidget {
         buttonPoints[2] = minY;
         buttonPoints[3] = maxY;
 
-        if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS)
+        if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT))
             clicked(mouseX, mouseY);
-        if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) == GLFW.GLFW_PRESS && btnRightReleased)
+        if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT) && btnRightReleased)
             continuePlayerAnim(mouseX, mouseY);
-        else if (GLFW.glfwGetMouseButton(HideawayPlus.client().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) != GLFW.GLFW_PRESS)
+        else if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT))
             btnRightReleased = true;
 
         if (tutDisplay > 0) {
             String tut = Component.translatable("widget.model_slider.tutorial").getString();
             int startingPos = ((width - HideawayPlus.client().font.width(tut)) / 2);
-            System.out.println(HideawayPlus.client().font.width(tut));
 
             guiGraphics.drawString(HideawayPlus.client().font, tut, startingPos, maxY - 10, Color.WHITE.getRGB(), true);
             tutDisplay--;

@@ -1,6 +1,7 @@
 package continued.hideaway.mod.feat.shop;
 
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
 import continued.hideaway.mod.feat.ui.FriendsListUI;
@@ -37,7 +38,7 @@ public class Shop {
             fill = true;
         }
 
-        if (("fruit".equals(shopName) || "fish".equals(shopName)) && (HideawayPlus.config().autoSell() || fill)) {
+        if (("fruit".equals(shopName) || "fish".equals(shopName)) && (ModConfigModel.AUTO_SELL.value || fill)) {
             if (oldShopName != null && !oldShopName.equals(shopName)) StaticValues.shopIterationNum = 0;
             oldShopName = shopName;
             List<Slot> emptyChestSlots = new ArrayList<>();

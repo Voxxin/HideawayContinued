@@ -1,6 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -21,7 +22,7 @@ public abstract class TooltipRenderUtilMixin {
     private static void renderTooltipRarity(GuiGraphics guiGraphics, int x, int y, int width, int height, int z, CallbackInfo ci) {
         Screen screen = HideawayPlus.client().screen;
 
-        if (screen instanceof AbstractContainerScreen && HideawayPlus.config().inventoryRarities()) {
+        if (screen instanceof AbstractContainerScreen && ModConfigModel.INVENTORY_RARITIES.value) {
             AbstractContainerScreenAccessor containerScreen = (AbstractContainerScreenAccessor) screen;
             Slot slot = containerScreen.hp$getHoveredSlot();
 

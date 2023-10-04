@@ -1,20 +1,13 @@
-package continued.hideaway.mod.feat.screen;
+package continued.hideaway.mod.feat.rendering.screen;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.ext.EntityAccessor;
-import continued.hideaway.mod.feat.screen.util.RowWidget;
-import continued.hideaway.mod.feat.wardrobe.Wardrobe;
-import continued.hideaway.mod.util.StaticValues;
+import continued.hideaway.mod.feat.rendering.screen.util.ButtonScreenWidget;
+import continued.hideaway.mod.feat.rendering.screen.util.RotationSliderWidget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.components.TabButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.level.block.Rotation;
 
 public class WardrobeScreen extends Screen {
     private final Minecraft minecraft = HideawayPlus.client();
@@ -28,7 +21,10 @@ public class WardrobeScreen extends Screen {
     public void init() {
         super.init();
         assert HideawayPlus.client().screen != null;
-        this.addRenderableWidget(new RowWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 150, 17, Component.translatable("widget.model_slider.title")));
+        int ScreenButtonsSize = 40;
+
+        this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 150, 17, Component.translatable("widget.model_slider.title")));
+        this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2, ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeOutfitScreen()));
     }
 
     @Override
