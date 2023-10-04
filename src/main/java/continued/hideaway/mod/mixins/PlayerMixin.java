@@ -41,7 +41,7 @@ public abstract class PlayerMixin implements EntityAccessor {
     @Unique private ItemStack oldChestplateStack = null;
     @Unique private boolean setLooking = false;
     @Unique private Player player = ((Player) (Object) this);
-    @Inject(at = @At("HEAD"), method = "tick", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "tick")
     private void tick(CallbackInfo ci) {
         if ((!StaticValues.wardrobeEntity.isEmpty() && StaticValues.wardrobeEntity.contains(player.getStringUUID())) || (Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID()))) {
             if (HideawayPlus.client().player == null) return;

@@ -22,9 +22,7 @@ public class CapeLayerMixin {
         if (HideawayPlus.connected()) {
             if (!ModConfigModel.HIDE_COSMETIC.value) {
                 ItemStack playerChestplate = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-                if (playerChestplate != ItemStack.EMPTY) {
-                    info.cancel();
-                }
+                if (playerChestplate != ItemStack.EMPTY) info.cancel();
             } else if (StaticValues.wardrobeEntity.contains(livingEntity.getStringUUID())) {
                 if (!StaticValues.wardrobeArmourStand.isEmpty()) info.cancel();
             }
