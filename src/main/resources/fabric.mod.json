@@ -20,6 +20,9 @@
   "entrypoints": {
     "client": [
       "continued.hideaway.mod.HideawayPlus"
+    ],
+    "modmenu": [
+      "continued.hideaway.mod.feat.config.ModMenuImplementation"
     ]
   },
   "accessWidener": "hideaway_plus.accesswidener",

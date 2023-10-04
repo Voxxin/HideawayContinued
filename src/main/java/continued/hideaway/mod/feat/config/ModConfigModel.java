@@ -3,31 +3,31 @@ package continued.hideaway.mod.feat.config;
 public enum ModConfigModel {
     HIDE_COSMETIC (
             false,
-            "hideCosmetics"
+            "config.hp-config.general.hide_cosmetics"
     ),
     DISCORD_RPC (
             true,
-            "discordRPC"
+            "config.hp-config.general.discord_rpc"
     ),
     INVENTORY_RARITIES (
             true,
-            "inventoryRarities"
+            "config.hp-config.general.inventory_rarities"
     ),
     AUTO_SELL (
             false,
-            "autoSell"
+            "config.hp-config.general.auto_sell"
     ),
     NO_AMBIENT_SOUNDS (
-            true,
-            "noAmbientSounds"
+            false,
+            "config.hp-config.general.no_ambient_sounds"
     ),
     NO_ACTIVITY_SONGS (
-            true,
-            "noActivitySongs"
+            false,
+            "config.hp-config.general.no_activity_songs"
     );
 
     public Boolean value;
-    final String name;
+    public final String name;
 
     ModConfigModel(boolean value, String name) {
         this.name = name;
