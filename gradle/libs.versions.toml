@@ -3,12 +3,6 @@
     quilt_mappings = "1.20.1+build.23"
     fabric-loader = "0.14.22"
     parchment = "2023.09.03"
-    fabric = "0.89.0+1.20.1"
 [libraries]
     minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
     fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader"}
-
-    fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric" }
-    fabric_api_deprecated = { module = "net.fabricmc.fabric-api:fabric-api-deprecated", version.ref = "fabric" }
-[bundles]
-    fabric = ["fabric_api", "fabric_api_deprecated"]

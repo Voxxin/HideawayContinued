@@ -3,10 +3,10 @@ package continued.hideaway.mod.feat.shop;
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
+import continued.hideaway.mod.feat.ext.KeyMappingAccessor;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
 import continued.hideaway.mod.feat.ui.FriendsListUI;
 import continued.hideaway.mod.util.StaticValues;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ChestMenu;
@@ -34,7 +34,7 @@ public class Shop {
 
         String shopName = getShopName();
 
-        if (GLFW.glfwGetKey(GLFW.glfwGetCurrentContext(), KeyBindingHelper.getBoundKeyOf(KeyboardManager.autoSell).getValue()) == GLFW.GLFW_PRESS) {
+        if (GLFW.glfwGetKey(GLFW.glfwGetCurrentContext(), ((KeyMappingAccessor)KeyboardManager.autoSell).getKey().getValue()) == GLFW.GLFW_PRESS) {
             fill = true;
         }
 

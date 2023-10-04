@@ -20,8 +20,10 @@
     "EntityRendererMixin",
     "GameMenuScreenMixin",
     "InGameHudMixin",
+    "KeyMappingsMixin",
     "LogoRendererMixin",
     "MinecraftClientMixin",
+    "OptionsMixin",
     "PlayerMixin",
     "PlayerRendererMixin",
     "SoundEventMixin",
@@ -29,6 +31,7 @@
     "TickMixin",
     "TooltipRenderUtilMixin",
     "ext.GridLayoutAccessor",
+    "ext.KeyBindingAccessor",
     "ext.SoundEventAccessor"
   ]
 }
