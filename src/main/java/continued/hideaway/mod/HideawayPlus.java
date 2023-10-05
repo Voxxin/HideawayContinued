@@ -2,7 +2,7 @@ package continued.hideaway.mod;
 
 import continued.hideaway.mod.feat.api.API;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.config.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.discord.DiscordManager;
 import continued.hideaway.mod.feat.jukebox.Jukebox;
 import continued.hideaway.mod.feat.keyboard.HPKeybinds;

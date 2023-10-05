@@ -8,7 +8,7 @@ import com.jagrosh.discordipc.entities.Packet;
 import com.jagrosh.discordipc.entities.RichPresence;
 import com.jagrosh.discordipc.entities.User;
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.util.HUDUtil;
 

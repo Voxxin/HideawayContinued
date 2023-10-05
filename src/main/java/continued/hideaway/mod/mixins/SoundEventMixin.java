@@ -1,7 +1,6 @@
 package continued.hideaway.mod.mixins;
 
-import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.mixins.ext.SoundEventAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

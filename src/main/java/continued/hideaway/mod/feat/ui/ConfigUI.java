@@ -1,7 +1,7 @@
 package continued.hideaway.mod.feat.ui;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.rendering.screen.util.ButtonOptionWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;

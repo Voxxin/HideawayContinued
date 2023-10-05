@@ -1,7 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;

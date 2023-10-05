@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import continued.hideaway.mod.util.Constants;
 import net.fabricmc.loader.api.FabricLoader;
@@ -21,7 +22,7 @@ public class HideawayPlusConfig {
     private static final File outfitsDir = new File(modDir, "outfits");
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static continued.hideaway.mod.feat.config.ModConfigModel ModConfigModel;
+    private static continued.hideaway.mod.feat.config.model.ModConfigModel ModConfigModel;
 
     public HideawayPlusConfig() {
         init();

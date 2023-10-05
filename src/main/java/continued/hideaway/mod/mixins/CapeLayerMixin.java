@@ -1,7 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import continued.hideaway.mod.feat.config.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.util.StaticValues;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;

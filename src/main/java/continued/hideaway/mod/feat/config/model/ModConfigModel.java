@@ -1,4 +1,4 @@
-package continued.hideaway.mod.feat.config;
+package continued.hideaway.mod.feat.config.model;
 
 public enum ModConfigModel {
     HIDE_COSMETIC (
