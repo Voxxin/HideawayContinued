@@ -59,11 +59,11 @@ public class RotationSliderWidget extends AbstractWidget {
         buttonPoints[2] = minY;
         buttonPoints[3] = maxY;
 
-        if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT))
+        if (KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_LEFT))
             clicked(mouseX, mouseY);
-        if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT) && btnRightReleased)
+        if (KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_RIGHT) && btnRightReleased)
             continuePlayerAnim(mouseX, mouseY);
-        else if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT))
+        else if (KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_RIGHT))
             btnRightReleased = true;
 
         if (tutDisplay > 0) {

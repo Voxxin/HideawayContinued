@@ -40,10 +40,10 @@ public class ButtonOptionWidget extends AbstractWidget {
         int checkMarkY = sizeY - 3;
 
 
-        if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT) && rightBtnReleased && WidgetUtil.overlaying(mouseX, mouseY, this.pos[0] - sizeX, this.pos[1] - sizeY, this.pos[0] + sizeX, this.pos[1] + sizeY)) {
+        if (KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_LEFT) && rightBtnReleased && WidgetUtil.overlaying(mouseX, mouseY, this.pos[0] - sizeX, this.pos[1] - sizeY, this.pos[0] + sizeX, this.pos[1] + sizeY)) {
             clicked();
         }
-        else if (!KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !rightBtnReleased) rightBtnReleased = true;
+        else if (!KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !rightBtnReleased) rightBtnReleased = true;
 
         // Background
         guiGraphics.fill(this.pos[0] - sizeX, this.pos[1] - sizeY, this.pos[0] + sizeX, this.pos[1] + sizeY, 0x80FFFFFF);

@@ -1,6 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
@@ -64,7 +65,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
                     from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I", ordinal = 1))
     )
     public void experienceBarPercent(GuiGraphics guiGraphics, int x, CallbackInfo ci, int i, String string, int textSize, int textPos) {
-        if (HideawayPlus.connected()) {
+        if (HideawayPlus.connected() && ModConfigModel.EXP_PERCENT.value) {
             if (overlayMessageString != null && !overlayMessageString.getString().contains("\uE2C3")) return;
 
             string = (Math.round(this.minecraft.player.experienceProgress * 10000) / 100.0) + "%";

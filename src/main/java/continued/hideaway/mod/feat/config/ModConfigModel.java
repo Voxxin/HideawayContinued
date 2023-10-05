@@ -9,6 +9,10 @@ public enum ModConfigModel {
             true,
             "config.hp-config.general.discord_rpc"
     ),
+    EXP_PERCENT (
+            true,
+            "config.hp-config.general.xp_percent"
+    ),
     INVENTORY_RARITIES (
             true,
             "config.hp-config.general.inventory_rarities"

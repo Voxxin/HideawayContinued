@@ -42,7 +42,7 @@ public class ButtonScreenWidget extends AbstractWidget {
         int sizeX = this.width / 2;
         int sizeY = this.height / 2;
 
-        if (KeyboardManager.isKeyPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT) && WidgetUtil.overlaying(mouseX, mouseY, posX - sizeX, posY - sizeY, posX + sizeX, posY + sizeY)) {
+        if (KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_LEFT) && WidgetUtil.overlaying(mouseX, mouseY, posX - sizeX, posY - sizeY, posX + sizeX, posY + sizeY)) {
             clicked();
         }
 

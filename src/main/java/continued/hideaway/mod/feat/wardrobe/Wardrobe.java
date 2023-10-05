@@ -37,9 +37,9 @@ public class Wardrobe {
     private static boolean setChestS = false;
     private static boolean setHoldableS = false;
 
-    private static ChestMenu oldMenu = null;
-
     public static WardrobeOutfit outfit = null;
+
+    static int tickCounter = 0;
 
     public static void tick() {
         if (HideawayPlus.location() != Location.WARDROBE_WHEEL) {
@@ -50,6 +50,7 @@ public class Wardrobe {
             StaticValues.playerRotationSet = false;
             resetWardrobe();
             outfit = null;
+            timerR();
             return;
         }
 
@@ -103,14 +104,17 @@ public class Wardrobe {
         if (GuiUtils.getChestMenu() == null) return;
         ChestMenu menu = GuiUtils.getChestMenu();
 
-        if (oldMenu != null && oldMenu == menu) return;
+        String screenName = HideawayPlus.client().screen.getTitle().getString();
 
         if (!headWearB) {
+            setHeadS = (screenName.contains("\uE249") || screenName.contains("\uE243"));
+            if (!timer()) {timer(); return;}
+
             if (!setHeadS) {
                 Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Hats & Hair")).findFirst().orElse(null);
                 if (slotPaper == null) return;
+
                 GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
-                setHeadS = true;
                 return;
             }
 
@@ -122,13 +126,15 @@ public class Wardrobe {
 
             if (GuiUtils.containsNextButton(menu)) {
                 GuiUtils.nextAndPress(menu);
-            } else headWearB = true;
+            } else {headWearB = true; timerR();}
         } else if (!chestWearB) {
+            setChestS = (screenName.contains("\uE244") || screenName.contains("\uE24A"));
+            if (!timer()) {timer(); return;}
+
             if (!setChestS) {
                 Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Trinkets")).findFirst().orElse(null);
                 if (slotPaper == null) return;
                 GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
-                setChestS = true;
                 return;
             }
 
@@ -140,14 +146,16 @@ public class Wardrobe {
 
             if (GuiUtils.containsNextButton(menu)) {
                 GuiUtils.nextAndPress(menu);
-            } else chestWearB = true;
+            } else {chestWearB = true; timerR();}
 
         } else if (!holdableB) {
+            setHoldableS = (screenName.contains("\uE245") || screenName.contains("\uE24B"));
+            if (!timer()) {timer(); return;}
+
             if (!setHoldableS) {
                 Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Items")).findFirst().orElse(null);
                 if (slotPaper == null) return;
                 GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
-                setHoldableS = true;
                 return;
             }
 
@@ -159,11 +167,8 @@ public class Wardrobe {
 
             if (GuiUtils.containsNextButton(menu)) {
                 GuiUtils.nextAndPress(menu);
-            } else holdableB = true;
+            } else {holdableB = true; timerR();}
         }
-
-        oldMenu = menu;
-
     }
 
     private static void resetWardrobe() {
@@ -188,8 +193,6 @@ public class Wardrobe {
 
         if (HideawayPlus.client().screen == null || GuiUtils.getChestMenu() == null) return;
         ChestMenu menu = GuiUtils.getChestMenu();
-
-        if (oldMenu != null && oldMenu == menu) return;
 
         boolean setSlot = false;
         String[] categories = {"Hats & Hair", "Trinkets", "Items"};
@@ -221,7 +224,19 @@ public class Wardrobe {
                 }
             }
         }
+    }
 
-        oldMenu = menu;
+    private static boolean timer() {
+        if (tickCounter >= 10) {
+            tickCounter = 0;
+            return true;
+        } else {
+            tickCounter++;
+            return false;
+        }
+    }
+
+    private static void timerR() {
+        tickCounter = 0;
     }
 }

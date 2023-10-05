@@ -5,6 +5,7 @@ import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.config.ModConfigModel;
 import continued.hideaway.mod.feat.discord.DiscordManager;
 import continued.hideaway.mod.feat.jukebox.Jukebox;
+import continued.hideaway.mod.feat.keyboard.HPKeybinds;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
 import continued.hideaway.mod.feat.lifecycle.Lifecycle;
 import continued.hideaway.mod.feat.lifecycle.Task;
@@ -58,9 +59,9 @@ public class HideawayPlus implements ClientModInitializer {
 
         // Managers and services that do not need to be retained after
         // initialization should be initialized here.
-        new KeyboardManager();
 
         new HideawayPlusConfig();
+        new HPKeybinds();
 
         try {
             if (ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER = new DiscordManager().start();
@@ -73,6 +74,7 @@ public class HideawayPlus implements ClientModInitializer {
 
         // Lifecycle tasks should be initialized here.
         lifecycle()
+                .add(Task.of(() -> {if (HideawayPlus.client().getWindow() != null) { new KeyboardManager();}}, 0))
                 .add(Task.of(() -> {if (!HideawayPlus.connected() && API.enabled) {API.end();}}, 0))
                 .add(Task.of(Location::check, 20))
                 .add(Task.of(() -> {
