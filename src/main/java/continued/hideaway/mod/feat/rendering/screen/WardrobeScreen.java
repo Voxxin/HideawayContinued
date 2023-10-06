@@ -9,10 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 
 public class WardrobeScreen extends Screen {
     private final Minecraft minecraft = HideawayPlus.client();
@@ -28,7 +26,7 @@ public class WardrobeScreen extends Screen {
         assert HideawayPlus.client().screen != null;
         int ScreenButtonsSize = 40;
 
-        this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 150, 17, Component.translatable("widget.model_slider.title")));
+        this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 168, 20, Component.translatable("widget.model_slider.title")));
         this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2, ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeOutfitScreen()));
     }
 

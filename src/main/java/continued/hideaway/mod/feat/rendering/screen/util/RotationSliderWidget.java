@@ -11,6 +11,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -23,6 +24,8 @@ public class RotationSliderWidget extends AbstractWidget {
     private int startY = 0;
     private int width = 0;
     private int height = 0;
+
+    private static final ResourceLocation SLIDER_TEXTURE = new ResourceLocation("hideaway_plus", "textures/slider.png");
 
     private int[] buttonPoints = new int[4];
     private int[] rotPoints = new int[3];
@@ -53,11 +56,12 @@ public class RotationSliderWidget extends AbstractWidget {
         int maxX = this.startX + this.width / 2;
         int minY = this.startY;
         int maxY = this.startY - this.height;
+        int innerOffset = 5;
 
-        buttonPoints[0] = minX;
-        buttonPoints[1] = maxX;
-        buttonPoints[2] = minY;
-        buttonPoints[3] = maxY;
+        buttonPoints[0] = minX + innerOffset;
+        buttonPoints[1] = maxX - innerOffset;
+        buttonPoints[2] = minY - innerOffset;
+        buttonPoints[3] = maxY + innerOffset;
 
         if (KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_LEFT))
             clicked(mouseX, mouseY);
@@ -77,12 +81,13 @@ public class RotationSliderWidget extends AbstractWidget {
         int percentDone = (int) (Wardrobe.wardrobePlayer.yBodyRot % 360);
         float percentage = percentDone / 360.0f;
         if (percentage <= 0f) percentage = 1.0f + percentage;
-        int currentPosition = (int) (minX + (maxX - minX) * percentage);
+        int currentPosition = (int) (buttonPoints[0] + (buttonPoints[1] - buttonPoints[0]) * percentage);
 
-        guiGraphics.fill(minX, minY, maxX, maxY, 0x80FFFFFF);
-
+        guiGraphics.blit(SLIDER_TEXTURE, minX, minY - height, 0, 0, width, 20, 168, 40);
         // % done (in green)
-        guiGraphics.fill(minX, minY, currentPosition, maxY, 0x8000FF00);
+        guiGraphics.fill(buttonPoints[0], buttonPoints[2], currentPosition, buttonPoints[3], 0x8000FF00);
+
+        guiGraphics.blit(SLIDER_TEXTURE, currentPosition - 3, minY - height, 0, 20, 5, 20, 168, 40);
     }
 
     @Override
