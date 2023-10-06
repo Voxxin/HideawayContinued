@@ -83,11 +83,9 @@ public class RotationSliderWidget extends AbstractWidget {
         if (percentage <= 0f) percentage = 1.0f + percentage;
         int currentPosition = (int) (buttonPoints[0] + (buttonPoints[1] - buttonPoints[0]) * percentage);
 
-        guiGraphics.blit(SLIDER_TEXTURE, minX, minY - height, 0, 0, width, 20, 168, 40);
-        // % done (in green)
-        guiGraphics.fill(buttonPoints[0], buttonPoints[2], currentPosition, buttonPoints[3], 0x8000FF00);
-
-        guiGraphics.blit(SLIDER_TEXTURE, currentPosition - 3, minY - height, 0, 20, 5, 20, 168, 40);
+        guiGraphics.blit(SLIDER_TEXTURE, minX, minY - height, 0, 0, width, height, 175, 30);
+        guiGraphics.blit(SLIDER_TEXTURE, buttonPoints[0], buttonPoints[2] - 10, 0, 20, (int) (160 * percentage), 10, 175, 30);
+        guiGraphics.blit(SLIDER_TEXTURE, currentPosition - 3, minY - height, 170, 0, 5, 20, 175, 30);
     }
 
     @Override

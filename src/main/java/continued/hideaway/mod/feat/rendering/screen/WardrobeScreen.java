@@ -26,7 +26,7 @@ public class WardrobeScreen extends Screen {
         assert HideawayPlus.client().screen != null;
         int ScreenButtonsSize = 40;
 
-        this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 168, 20, Component.translatable("widget.model_slider.title")));
+        this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 170, 20, Component.translatable("widget.model_slider.title")));
         this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2, ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeOutfitScreen()));
     }
 
