@@ -68,7 +68,6 @@ public class Wardrobe {
             if (!headWear.isEmpty() && headWear == holdable) { headWear.clear(); holdable.clear(); headWearB = false; holdableB = false; setupWardrobe(); return;}
             if (!chestWear.isEmpty() && chestWear == holdable) { chestWear.clear(); holdable.clear(); chestWearB = false; holdableB = false; setupWardrobe(); return;}
 
-
             if (GuiUtils.getChestMenu() != null) {
                 ChestMenu menu = GuiUtils.getChestMenu();
                 Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Close")).findFirst().orElse(null);
@@ -130,6 +129,7 @@ public class Wardrobe {
 
             for (ItemStack itemStack : menu.getItems()) {
                 if (itemStack.getItem() == Items.PAPER) continue;
+                if (itemStack.getItem() == Items.AIR) continue;
                 if (headWear.contains(itemStack)) continue;
                 headWear.add(itemStack);
             }
@@ -150,6 +150,7 @@ public class Wardrobe {
 
             for (ItemStack itemStack : menu.getItems()) {
                 if (itemStack.getItem() == Items.PAPER) continue;
+                if (itemStack.getItem() == Items.AIR) continue;
                 if (chestWear.contains(itemStack)) continue;
                 chestWear.add(itemStack);
             }
@@ -171,6 +172,7 @@ public class Wardrobe {
 
             for (ItemStack itemStack : menu.getItems()) {
                 if (itemStack.getItem() == Items.PAPER) continue;
+                if (itemStack.getItem() == Items.AIR) continue;
                 if (holdable.contains(itemStack)) continue;
                 holdable.add(itemStack);
             }

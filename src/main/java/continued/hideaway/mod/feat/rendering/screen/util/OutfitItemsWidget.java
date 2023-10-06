@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -371,7 +372,7 @@ public class OutfitItemsWidget extends AbstractWidget {
         // Outfit name
         guiGraphics.fill(startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY, 0x80FFFFFF);
         if (nameBar == null)
-            nameBar = new NameBar(thisOutfit == null ? "Outfit Name" : thisOutfit.title, startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
+            nameBar = new NameBar(thisOutfit == null ? Component.translatable("widget.outfit_editor.basic_outfit_name").getString() : thisOutfit.title, startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
         else nameBar = new NameBar(nameBar.text, startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
 
         int tickTotal = 60;
@@ -396,7 +397,7 @@ public class OutfitItemsWidget extends AbstractWidget {
                 buttons.add(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY));
         }
 
-        if (thisOutfit == null) {
+        if (Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.HEAD).getItem() != Items.AIR || Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.CHEST).getItem() != Items.AIR || Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem() != Items.AIR) {
             guiGraphics.fill(clearButton - (sizeOfButtons*2), xPos + (sizeOfButtons*2), clearButton + sizeOfButtons, xPos + (sizeOfButtons*3), 0x80FFFFFF);
             if (!buttons.contains(new Button("clear", clearButton - (sizeOfButtons*2), xPos + (sizeOfButtons*2), clearButton + sizeOfButtons, xPos + (sizeOfButtons*3))))
                 buttons.add(new Button("clear", clearButton - (sizeOfButtons*2), xPos + (sizeOfButtons*2), clearButton + sizeOfButtons, xPos + (sizeOfButtons*3)));
