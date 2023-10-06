@@ -42,6 +42,7 @@ public class HideawayPlus implements ClientModInitializer {
     private static final HideawayPlusConfig CONFIG = new HideawayPlusConfig();
     private static Location LOCATION = Location.UNKNOWN;
     private static Lifecycle LIFECYCLE;
+    private static final HPKeybinds KEYBINDS = new HPKeybinds();
 
     @Override
     public void onInitializeClient() {
@@ -61,7 +62,6 @@ public class HideawayPlus implements ClientModInitializer {
         // initialization should be initialized here.
 
         new HideawayPlusConfig();
-        new HPKeybinds();
 
         try {
             if (ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER = new DiscordManager().start();
@@ -119,7 +119,12 @@ public class HideawayPlus implements ClientModInitializer {
                     }
                 }, 100))
                 .add(Task.of(API::modTeam, 50))
-                .add(Task.of(Wardrobe::tick, 0));
+                .add(Task.of(Wardrobe::tick, 0))
+                .add(Task.of(() -> {
+                    if (HideawayPlus.connected()) {
+                        KEYBINDS.tick();
+                    }
+                }, 0));
     }
 
     public static boolean connected() {

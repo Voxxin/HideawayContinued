@@ -3,8 +3,6 @@ package continued.hideaway.mod.feat.shop;
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
-import continued.hideaway.mod.feat.ext.KeyMappingAccessor;
-import continued.hideaway.mod.feat.keyboard.HPKeybinds;
 import continued.hideaway.mod.feat.keyboard.model.KeybindModel;
 import continued.hideaway.mod.feat.ui.FriendsListUI;
 import continued.hideaway.mod.util.StaticValues;
@@ -15,7 +13,6 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,7 +32,7 @@ public class Shop {
 
         String shopName = getShopName();
 
-        if (GLFW.glfwGetKey(GLFW.glfwGetCurrentContext(), ((KeyMappingAccessor) KeybindModel.AUTO_SELL.keyMapping).getKey().getValue()) == GLFW.GLFW_PRESS) {
+        if (KeybindModel.AUTO_SELL.isDown()) {
             fill = true;
         }
 

@@ -1,6 +1,7 @@
 package continued.hideaway.mod.feat.keyboard.model;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import continued.hideaway.mod.feat.ext.KeyMappingAccessor;
 import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
@@ -65,6 +66,10 @@ public enum KeybindModel {
     public final int keyCode;
     public final String category;
     public final KeyMapping keyMapping;
+
+    public boolean isDown() {
+        return GLFW.glfwGetKey(GLFW.glfwGetCurrentContext(), ((KeyMappingAccessor) this.keyMapping).getKey().getValue()) == GLFW.GLFW_PRESS;
+    }
 
     KeybindModel(String translationString, InputConstants.Type type, int keyCode, String category) {
         this.translationString = translationString;
