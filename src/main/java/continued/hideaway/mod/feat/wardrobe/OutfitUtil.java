@@ -15,6 +15,12 @@ public class OutfitUtil {
         Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.OFFHAND, outfit.holdable);
     }
 
+    public static void clearOutfit() {
+        Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.HEAD, Items.AIR.getDefaultInstance());
+        Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.CHEST, Items.AIR.getDefaultInstance());
+        Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.OFFHAND, Items.AIR.getDefaultInstance());
+    }
+
     public static String applyOutfitName(int wardrobeIndex) {
         if (StaticValues.wardrobeOutfits.isEmpty()) return "";
         else return StaticValues.wardrobeOutfits.get(wardrobeIndex).title;

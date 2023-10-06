@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import continued.hideaway.mod.util.Constants;
+import continued.hideaway.mod.util.ParseItemName;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.TagParser;
@@ -111,6 +112,8 @@ public class HideawayPlusConfig {
                 }
                 continue;
             }
+
+            if (outfitsCopy.stream().filter(o -> ParseItemName.getItemId(o.head).equals(ParseItemName.getItemId(thisOutfit.head)) && ParseItemName.getItemId(o.chest).equals(ParseItemName.getItemId(thisOutfit.chest)) && ParseItemName.getItemId(o.holdable).equals(ParseItemName.getItemId(thisOutfit.holdable))).count() > 1) continue;
 
             String fileName = !thisOutfit.fileName.isEmpty() ? thisOutfit.fileName : thisOutfit.title.toLowerCase() + ".json";
 

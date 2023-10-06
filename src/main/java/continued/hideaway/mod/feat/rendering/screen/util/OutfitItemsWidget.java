@@ -11,6 +11,7 @@ import continued.hideaway.mod.util.GuiUtils;
 import continued.hideaway.mod.util.ParseItemName;
 import continued.hideaway.mod.util.StaticValues;
 import continued.hideaway.mod.util.WidgetUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -29,22 +30,33 @@ import static continued.hideaway.mod.util.ParseItemName.getItemId;
 
 public class OutfitItemsWidget extends AbstractWidget {
     private static String selectedItemCategory = "head";
-    private static int rowsOfSlots[] = new int[]{0, 10};
+    private static int screenWidth;
+    private int screenHeight;
+    private static int[] rowsOfSlots = new int[]{0, 10};
 
-    private static int sizeofSlots[] = new int[]{0, 0};
+    private static int[] sizeofSlots = new int[]{0, 0};
 
     private static int[] startingPosItems = new int[]{16, 32};
 
-    private int screenWidth = HideawayPlus.client().screen.width;
-    private int screenHeight = HideawayPlus.client().screen.height;
+    private static int[] rowsOfSlotsO = new int[]{0, 10};
+
+    private static int[] sizeofSlotsO = new int[]{0, 0};
+
+    private static int[] startingPosItemsO = new int[]{16, 32};
 
     private static int scrollRow = 0;
+    private static int scrollRowO = 0;
     private ArrayList<Slot> slots = new ArrayList<>();
 
     private ArrayList<Category> categories = new ArrayList<>();
 
     private ArrayList<Button> buttons = new ArrayList<>();
+
+    private ArrayList<OutfitSlot> outfits = new ArrayList<>();
+
     private NameBar nameBar;
+
+    private NameBar nameBarOutfit;
 
     private boolean nameBarSelected = false;
     private int nameBarBlob = 0;
@@ -73,7 +85,11 @@ public class OutfitItemsWidget extends AbstractWidget {
         setupSlots(guiGraphics);
         setupCategories(guiGraphics);
         setupItems(guiGraphics);
-        setupOutfitNameAndSave(guiGraphics);
+        setupOutfitNameAndButtons(guiGraphics);
+
+        setupOutfitSlots(guiGraphics);
+        setupOutfitItems(guiGraphics);
+        setupOutfitsNameHover(guiGraphics);
 
         switch (selectedItemCategory) {
             case "head" -> {
@@ -99,12 +115,23 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         if (isHovered && !KeyboardManager.isMouseKey(GLFW.GLFW_MOUSE_BUTTON_1)) {
             Slot slot = slots.stream().filter(thisSlot -> thisSlot.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
+            OutfitSlot outfitSlot = outfits.stream().filter(thisOutfitSlot -> thisOutfitSlot.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
+
             Category category = categories.stream().filter(thisCategory -> thisCategory.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
 
             if (slot != null) {
                 int[] pos = slot.getPos();
                 guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
             }
+
+            if (outfitSlot != null) {
+                int indexOfSlot = outfits.indexOf(outfitSlot);
+                if (StaticValues.wardrobeOutfits.size() > indexOfSlot) nameBarOutfit.text = StaticValues.wardrobeOutfits.get(indexOfSlot + (scrollRowO * rowsOfSlotsO[0])).title;
+                else nameBarOutfit.text = "";
+
+                int[] pos = outfitSlot.getPos();
+                guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
+            } else nameBarOutfit.text = "";
 
             if (category != null) {
                 int[] pos = category.getPos();
@@ -116,18 +143,32 @@ public class OutfitItemsWidget extends AbstractWidget {
             this.playDownSound(Minecraft.getInstance().getSoundManager());
 
             Slot slot = slots.stream().filter(thisSlot -> thisSlot.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
+            OutfitSlot outfitSlot = outfits.stream().filter(thisOutfitSlot -> thisOutfitSlot.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
+
             Category category = categories.stream().filter(thisCategory -> thisCategory.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
             Button button = buttons.stream().filter(thisButton -> thisButton.isOverlaying((int) mouseX, (int) mouseY)).findFirst().orElseGet(() -> null);
 
 
             if (slot != null) {
                 int indexOfSlot = slots.indexOf(slot);
+                if (indexOfSlot == -1) return;
                 int[] pos = slot.getPos();
 
-                if (getItemsList().size() > indexOfSlot) applyItem(getItemsList().get(indexOfSlot + (scrollRow * 9)));
+                if (getItemsList().size() > indexOfSlot) applyItem(getItemsList().get(indexOfSlot + (scrollRow * rowsOfSlots[0])));
 
                 guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
             }
+
+            if (outfitSlot != null) {
+                int indexOfSlot = outfits.indexOf(outfitSlot);
+                int[] pos = outfitSlot.getPos();
+
+                if (StaticValues.wardrobeOutfits.size() > indexOfSlot) applyOutfit(indexOfSlot + (scrollRowO * rowsOfSlotsO[0]));
+                if (StaticValues.wardrobeOutfits.size() > indexOfSlot) nameBarOutfit.text = StaticValues.wardrobeOutfits.get(indexOfSlot + (scrollRowO * rowsOfSlotsO[0])).title;
+                else nameBarOutfit.text = "";
+
+                guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
+            } else nameBarOutfit.text = "";
 
             if (category != null) {
                 int[] pos = category.getPos();
@@ -143,6 +184,8 @@ public class OutfitItemsWidget extends AbstractWidget {
                 } else if (button.type.equals("delete")) {
                     OutfitUtil.getOutfit().caseName = "remove";
                     HideawayPlusConfig.updateOutfits();
+                } else if (button.type.equals("clear")) {
+                    OutfitUtil.clearOutfit();
                 }
                 guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
             }
@@ -180,7 +223,7 @@ public class OutfitItemsWidget extends AbstractWidget {
         int originalWidth = (screenWidth / sizeOfSlot) / 6;
         rowsOfSlots[0] = originalWidth + (categoryList.length - (originalWidth % categoryList.length));
 
-        int availableHeight = screenHeight - startingPosItems[1] - 32;
+        int availableHeight = screenHeight - startingPosItems[1] - 46;
         rowsOfSlots[1] = availableHeight / sizeOfSlot;
         int totalSlots = rowsOfSlots[1] * rowsOfSlots[0];
 
@@ -202,6 +245,46 @@ public class OutfitItemsWidget extends AbstractWidget {
 
                 if (!slots.contains(new Slot(startX, startY, endX, endY)))
                     slots.add(new Slot(startX, startY, endX, endY));
+
+                guiGraphics.fill(startX, startY, endX, endY, 0x80FFFFFF);
+            }
+        }
+    }
+
+    private void setupOutfitSlots(GuiGraphics guiGraphics) {
+        int sizeOfSlot = 32;
+        int edgeMargin = 16;
+
+        int originalWidth = (screenWidth / sizeOfSlot) / 6;
+        rowsOfSlotsO[0] = originalWidth + (categoryList.length - (originalWidth % categoryList.length));
+
+        startingPosItemsO[0] = edgeMargin;
+
+        int availableHeight = screenHeight - startingPosItemsO[1] - 32;
+        rowsOfSlotsO[1] = availableHeight / sizeOfSlot;
+        int totalSlots = rowsOfSlotsO[1] * rowsOfSlotsO[0];
+
+        sizeofSlotsO[0] = rowsOfSlotsO[0] * sizeOfSlot;
+        sizeofSlotsO[1] = rowsOfSlotsO[1] * sizeOfSlot;
+
+        outfits.clear();
+
+        if (getItemsSize() > totalSlots) {
+        } else scrollRow = 0;
+
+        // Calculate the starting position for slots on the opposite side of the screen
+        int startXOpposite = screenWidth - sizeofSlotsO[0] - edgeMargin; // Adjusted to be 16 pixels from the edge
+        int startYOpposite = startingPosItemsO[1];
+
+        for (int i = 0; i < rowsOfSlotsO[1]; i++) {
+            for (int j = 0; j < rowsOfSlotsO[0]; j++) {
+                int startX = startXOpposite + (j * sizeOfSlot);
+                int startY = startYOpposite + (i * sizeOfSlot);
+                int endX = startX + sizeOfSlot;
+                int endY = startY + sizeOfSlot;
+
+                if (!outfits.contains(new Slot(startX, startY, endX, endY)))
+                    outfits.add(new OutfitSlot(startX, startY, endX, endY));
 
                 guiGraphics.fill(startX, startY, endX, endY, 0x80FFFFFF);
             }
@@ -234,7 +317,39 @@ public class OutfitItemsWidget extends AbstractWidget {
         }
     }
 
-    private void setupOutfitNameAndSave(GuiGraphics guiGraphics) {
+    private void setupOutfitItems(GuiGraphics guiGraphics) {
+        int sizeOfSlot = 16;
+
+        for (OutfitSlot outfitSlot : outfits) {
+            int indexOfSlot = outfits.indexOf(outfitSlot);
+            if (StaticValues.wardrobeOutfits.size() <= indexOfSlot) break;
+
+            WardrobeOutfit outfit = StaticValues.wardrobeOutfits.get(indexOfSlot + (scrollRowO * rowsOfSlotsO[0]));
+            if (outfit == null) break;
+
+            int startX = outfitSlot.aX;
+            int startY = outfitSlot.aY;
+            int endX = outfitSlot.bX;
+            int endY = outfitSlot.bY;
+
+            for (int i = 0; i < 3; i++) {
+                if (i == 1) startX += sizeOfSlot;
+                if (i == 2) startY += sizeOfSlot;
+
+                ItemStack itemStack = null;
+                switch (i) {
+                    case 0 -> itemStack = outfit.head;
+                    case 1 -> itemStack = outfit.chest;
+                    case 2 -> itemStack = outfit.holdable;
+                }
+                if (itemStack == null) continue;
+                guiGraphics.renderItem(itemStack, startX, startY, 42);
+            }
+
+        }
+    }
+
+    private void setupOutfitNameAndButtons(GuiGraphics guiGraphics) {
         WardrobeOutfit thisOutfit = OutfitUtil.outfitExists() ? OutfitUtil.getOutfit() : null;
         if (thisOutfit != null && oldOutfit == null) {oldOutfit = thisOutfit; nameBar = null;}
         else if (oldOutfit != null) {oldOutfit = null; nameBar = null;}
@@ -251,6 +366,7 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         int saveBtn = startPosName + sizeOfNameY + spacing;
         int deleteBtn = (screenWidth / 2 + sizeOfNameY / 2) - sizeOfNameY - spacing;
+        int clearButton = startPosName + sizeOfNameY/2;
 
         // Outfit name
         guiGraphics.fill(startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY, 0x80FFFFFF);
@@ -268,7 +384,6 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         buttons.clear();
 
-        // Save button
         if (thisOutfit == null && OutfitUtil.validOutfit(nameBar.text)) {
             guiGraphics.fill(saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
             if (!buttons.contains(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY)))
@@ -276,13 +391,35 @@ public class OutfitItemsWidget extends AbstractWidget {
         }
 
         if (thisOutfit != null) {
-            // Delete button
             guiGraphics.fill(deleteBtn, xPos, deleteBtn - sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
             if (!buttons.contains(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY)))
                 buttons.add(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY));
         }
 
+        if (thisOutfit == null) {
+            guiGraphics.fill(clearButton - (sizeOfButtons*2), xPos + (sizeOfButtons*2), clearButton + sizeOfButtons, xPos + (sizeOfButtons*3), 0x80FFFFFF);
+            if (!buttons.contains(new Button("clear", clearButton - (sizeOfButtons*2), xPos + (sizeOfButtons*2), clearButton + sizeOfButtons, xPos + (sizeOfButtons*3))))
+                buttons.add(new Button("clear", clearButton - (sizeOfButtons*2), xPos + (sizeOfButtons*2), clearButton + sizeOfButtons, xPos + (sizeOfButtons*3)));
+        }
 
+
+    }
+
+    private void setupOutfitsNameHover(GuiGraphics guiGraphics) {
+        int sizeOfNameX = sizeofSlotsO[0];
+        int sizeOfNameY = 16;
+
+        int startXOpposite = screenWidth - sizeofSlotsO[0] - startingPosItemsO[0];
+        int startYOpposite = startingPosItemsO[1];
+        int endX = startXOpposite + sizeOfNameX;
+        int endY = startYOpposite - sizeOfNameY;
+
+        if (nameBarOutfit == null) {
+            nameBarOutfit = new NameBar("", startXOpposite, startYOpposite, endX, endY);
+        } else nameBarOutfit = new NameBar(nameBarOutfit.text, startXOpposite, startYOpposite, endX, endY);
+
+        guiGraphics.fill(nameBarOutfit.aX, nameBarOutfit.aY, nameBarOutfit.bX, nameBarOutfit.bY, 0x80FFFFFF);
+        guiGraphics.drawString(HideawayPlus.client().font, Component.literal("").append(nameBarOutfit.text).withStyle(ChatFormatting.ITALIC), nameBarOutfit.aX + 2, nameBarOutfit.aY - sizeOfNameY + 2, Color.WHITE.getRGB(), true);
     }
 
     private static int getItemsSize() {
@@ -327,6 +464,13 @@ public class OutfitItemsWidget extends AbstractWidget {
                 Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.OFFHAND, item);
             }
         }
+    }
+
+    private static void applyOutfit(int index) {
+        WardrobeOutfit outfit = StaticValues.wardrobeOutfits.get(index);
+        Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.HEAD, outfit.head);
+        Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.CHEST, outfit.chest);
+        Wardrobe.wardrobePlayer.setItemSlot(EquipmentSlot.OFFHAND, outfit.holdable);
     }
 
 
@@ -414,6 +558,28 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         public NameBar(String text, int aX, int aY, int bX, int bY) {
             this.text = text;
+            this.aX = aX;
+            this.aY = aY;
+            this.bX = bX;
+            this.bY = bY;
+        }
+
+        public int[] getPos() {
+            return new int[]{aX, aY, bX, bY};
+        }
+
+        public boolean isOverlaying(int mouseX, int mouseY) {
+            return mouseX >= aX && mouseX <= bX && mouseY >= aY && mouseY <= bY;
+        }
+    }
+
+    private static class OutfitSlot {
+        int aX;
+        int aY;
+        int bX;
+        int bY;
+
+        public OutfitSlot(int aX, int aY, int bX, int bY) {
             this.aX = aX;
             this.aY = aY;
             this.bX = bX;
