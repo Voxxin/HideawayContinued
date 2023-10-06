@@ -39,6 +39,8 @@ public class Wardrobe {
 
     public static WardrobeOutfit outfit = null;
 
+    public static boolean applyingOutfit = false;
+
     static int tickCounter = 0;
 
     public static void tick() {
@@ -62,6 +64,11 @@ public class Wardrobe {
                 return;
             }
 
+            if (!headWear.isEmpty() && headWear == chestWear) { headWear.clear(); chestWear.clear(); headWearB = false;  chestWearB = false; setupWardrobe(); return;}
+            if (!headWear.isEmpty() && headWear == holdable) { headWear.clear(); holdable.clear(); headWearB = false; holdableB = false; setupWardrobe(); return;}
+            if (!chestWear.isEmpty() && chestWear == holdable) { chestWear.clear(); holdable.clear(); chestWearB = false; holdableB = false; setupWardrobe(); return;}
+
+
             if (GuiUtils.getChestMenu() != null) {
                 ChestMenu menu = GuiUtils.getChestMenu();
                 Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Close")).findFirst().orElse(null);
@@ -72,6 +79,9 @@ public class Wardrobe {
             initiated = true;
             initializeWardrobe();
         }
+
+        if (initiated && outfit == null) {headWearB = false; chestWearB = false; holdableB = false;}
+        if (applyingOutfit && outfit != null) applyOutfit();
 
         int distance = 5;
         AABB boundingBox = new AABB(HideawayPlus.player().position().x() + distance, HideawayPlus.player().position().y() + distance, HideawayPlus.player().position().z() + distance, HideawayPlus.player().position().x() - distance, HideawayPlus.player().position().y() - distance, HideawayPlus.player().position().z() - distance);
@@ -186,42 +196,120 @@ public class Wardrobe {
     }
 
     public static void applyOutfit() {
-        List<ItemStack> allOutfitItems = new ArrayList<>();
-        if (outfit.head != null) allOutfitItems.add(outfit.head);
-        if (outfit.chest != null) allOutfitItems.add(outfit.chest);
-        if (outfit.holdable != null) allOutfitItems.add(outfit.holdable);
+        applyingOutfit = true;
 
-        if (HideawayPlus.client().screen == null || GuiUtils.getChestMenu() == null) return;
+        if (HideawayPlus.client().screen == null) {
+            HideawayPlus.player().swing(InteractionHand.MAIN_HAND);
+        }
+        if (GuiUtils.getChestMenu() == null) return;
+
         ChestMenu menu = GuiUtils.getChestMenu();
 
-        boolean setSlot = false;
-        String[] categories = {"Hats & Hair", "Trinkets", "Items"};
+        String screenName = HideawayPlus.client().screen.getTitle().getString();
 
-        for (String category : categories) {
-            if (!setSlot) {
-                Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains(category)).findFirst().orElse(null);
-                if (slotPaper != null) {
-                    GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
-                    setSlot = true;
+        if (!headWearB) {
+            setHeadS = (screenName.contains("\uE249") || screenName.contains("\uE243"));
+            if (!timer()) {timer(); return;}
+
+            if (!setHeadS) {
+                Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Hats & Hair")).findFirst().orElse(null);
+                if (slotPaper == null) return;
+
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
+                return;
+            }
+
+            for (Slot slot : menu.slots) {
+                ItemStack itemStack = slot.getItem();
+                if (!itemStack.hasTag()) continue;
+                if (outfit.head.getItem() == Items.AIR) {
+                    if (!itemStack.getTag().getAsString().contains("Currently equipped")) continue;
+                    GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slot);
+                    break;
                 }
-            } else {
-                for (Slot itemSlot : menu.slots) {
-                    ItemStack itemStack = itemSlot.getItem();
-                    if (allOutfitItems.contains(itemStack)) {
-                        GuiUtils.pressSlot(GuiUtils.getContainerScreen(), itemSlot);
-                    }
+
+                String itemName = itemStack.getDisplayName().getString();
+                String outfitName = outfit.head.getDisplayName().getString();
+
+                if (!itemName.equals(outfitName)) continue;
+                if (itemStack.getTag().getAsString().contains("Currently equipped")) continue;
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slot);
+            }
+
+            if (GuiUtils.containsNextButton(menu)) {
+                GuiUtils.nextAndPress(menu);
+            } else {headWearB = true; timerR();}
+        } else if (!chestWearB) {
+            setChestS = (screenName.contains("\uE244") || screenName.contains("\uE24A"));
+            if (!timer()) {timer(); return;}
+
+            if (!setChestS) {
+                Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Trinkets")).findFirst().orElse(null);
+                if (slotPaper == null) return;
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
+                return;
+            }
+
+            for (Slot slot : menu.slots) {
+                ItemStack itemStack = slot.getItem();
+                if (!itemStack.hasTag()) continue;
+                if (outfit.chest.getItem() == Items.AIR) {
+                    if (!itemStack.getTag().getAsString().contains("Currently equipped")) continue;
+                    GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slot);
+                    break;
                 }
-                if (GuiUtils.containsNextButton(menu)) {
-                    GuiUtils.nextAndPress(menu);
-                } else {
-                    if (category.equals("Hats & Hair")) {
-                        headWearB = true;
-                    } else if (category.equals("Trinkets")) {
-                        chestWearB = true;
-                    } else if (category.equals("Items")) {
-                        holdableB = true;
-                    }
+
+                String itemName = itemStack.getDisplayName().getString();
+                String outfitName = outfit.chest.getDisplayName().getString();
+
+                if (!itemName.equals(outfitName)) continue;
+                if (itemStack.getTag().getAsString().contains("Currently equipped")) continue;
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slot);
+            }
+
+            if (GuiUtils.containsNextButton(menu)) {
+                GuiUtils.nextAndPress(menu);
+            } else {chestWearB = true; timerR();}
+
+        } else if (!holdableB) {
+
+            setHoldableS = (screenName.contains("\uE245") || screenName.contains("\uE24B"));
+            if (!timer()) {timer(); return;}
+
+            if (!setHoldableS) {
+                Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Items")).findFirst().orElse(null);
+                if (slotPaper == null) return;
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
+                return;
+            }
+
+            for (Slot slot : menu.slots) {
+                ItemStack itemStack = slot.getItem();
+                if (!itemStack.hasTag()) continue;
+                if (outfit.holdable.getItem() == Items.AIR) {
+                    if (!itemStack.getTag().getAsString().contains("Currently equipped")) continue;
+                    GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slot);
+                    break;
                 }
+                String itemName = itemStack.getDisplayName().getString();
+                String outfitName = outfit.holdable.getDisplayName().getString();
+
+                if (!itemName.equals(outfitName)) continue;
+                if (itemStack.getTag().getAsString().contains("Currently equipped")) continue;
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slot);
+            }
+
+            if (GuiUtils.containsNextButton(menu)) {
+                GuiUtils.nextAndPress(menu);
+            } else {holdableB = true; timerR();}
+        }
+
+        if (headWearB && chestWearB && holdableB) {
+            applyingOutfit = false;
+            outfit = null;
+            if (GuiUtils.getChestMenu() != null) {
+                Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Close")).findFirst().orElse(null);
+                GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
             }
         }
     }

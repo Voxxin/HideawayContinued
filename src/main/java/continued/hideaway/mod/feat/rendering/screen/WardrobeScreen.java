@@ -3,11 +3,16 @@ package continued.hideaway.mod.feat.rendering.screen;
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.rendering.screen.util.ButtonScreenWidget;
 import continued.hideaway.mod.feat.rendering.screen.util.RotationSliderWidget;
+import continued.hideaway.mod.feat.wardrobe.Wardrobe;
+import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 
 public class WardrobeScreen extends Screen {
     private final Minecraft minecraft = HideawayPlus.client();
@@ -34,7 +39,10 @@ public class WardrobeScreen extends Screen {
 
     @Override
     public void onClose() {
-        HideawayPlus.player().connection.send(new ServerboundPlayerInputPacket(0, 0, false, true));
+//        HideawayPlus.player().connection.send(new ServerboundPlayerInputPacket(0, 0, false, true));
         HideawayPlus.client().setScreen(null);
+        Player wardrobePlayer = Wardrobe.wardrobePlayer;
+        Wardrobe.outfit = new WardrobeOutfit("","", "", Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.HEAD), Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.CHEST), Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.OFFHAND));
+        Wardrobe.applyOutfit();
     }
 }

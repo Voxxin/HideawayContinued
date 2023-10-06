@@ -1,10 +1,15 @@
 package continued.hideaway.mod.feat.rendering.screen.util;
 
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.keyboard.KeyboardEventInstance;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
+import continued.hideaway.mod.feat.wardrobe.OutfitUtil;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
+import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import continued.hideaway.mod.util.GuiUtils;
+import continued.hideaway.mod.util.ParseItemName;
+import continued.hideaway.mod.util.StaticValues;
 import continued.hideaway.mod.util.WidgetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,13 +25,17 @@ import org.lwjgl.glfw.GLFW;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static continued.hideaway.mod.util.ParseItemName.getItemId;
+
 public class OutfitItemsWidget extends AbstractWidget {
     private static String selectedItemCategory = "head";
-    private static int rowsOfSlots = 10;
+    private static int rowsOfSlots[] = new int[]{0, 10};
+
+    private static int sizeofSlots[] = new int[]{0, 0};
 
     private static int[] startingPosItems = new int[]{16, 32};
 
-    private static int screenWidth = HideawayPlus.client().screen.width;
+    private int screenWidth = HideawayPlus.client().screen.width;
     private int screenHeight = HideawayPlus.client().screen.height;
 
     private static int scrollRow = 0;
@@ -40,11 +49,17 @@ public class OutfitItemsWidget extends AbstractWidget {
     private boolean nameBarSelected = false;
     private int nameBarBlob = 0;
 
+    private WardrobeOutfit oldOutfit = null;
+
     private final KeyboardEventInstance keyboardEvents = new KeyboardEventInstance();
+
+    private final String[] categoryList = {"head", "chest", "holdable"};
 
 
     public OutfitItemsWidget(int width, int height, Component message) {
-        super(0, 0, HideawayPlus.client().screen.width, HideawayPlus.client().screen.height, message);
+        super(0, 0, width, height, message);
+        this.screenHeight = height;
+        this.screenWidth = width;
     }
 
     @Override
@@ -122,13 +137,13 @@ public class OutfitItemsWidget extends AbstractWidget {
 
             if (button != null) {
                 int[] pos = button.getPos();
-//                if (button.type.equals("save")) {
-//                    Wardrobe.applyOutfit();
-//                    HideawayPlus.client().setScreen(null);
-//                } else if (button.type.equals("delete")) {
-//                    Wardrobe.outfit = null;
-//                    HideawayPlus.client().setScreen(null);
-//                }
+                if (button.type.equals("save")) {
+                    if (OutfitUtil.validOutfit(nameBar.text) && !OutfitUtil.outfitExists()) StaticValues.wardrobeOutfits.add(new WardrobeOutfit(nameBar.text, "", "", Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.HEAD), Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.CHEST), Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.OFFHAND)));
+                    HideawayPlusConfig.updateOutfits();
+                } else if (button.type.equals("delete")) {
+                    OutfitUtil.getOutfit().caseName = "remove";
+                    HideawayPlusConfig.updateOutfits();
+                }
                 guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
             }
 
@@ -139,17 +154,14 @@ public class OutfitItemsWidget extends AbstractWidget {
     }
 
     private void setupCategories(GuiGraphics guiGraphics) {
-        int sizeOfSlotX = 48;
+        int sizeOfSlotX = sizeofSlots[0]/categoryList.length;
         int sizeOfSlotY = 16;
-        int slotsY = 3;
 
         categories.clear();
 
-        String[] categoryList = {"head", "chest", "holdable"};
-
         for (int i = 0; i < categoryList.length; i++) {
             int startX = startingPosItems[0] + (i * sizeOfSlotX);
-            int startY = startingPosItems[1] - 16;
+            int startY = startingPosItems[1] - sizeOfSlotY; // Adjust the Y position to fit within the slot size
             int endX = startX + sizeOfSlotX;
             int endY = startY + sizeOfSlotY;
 
@@ -160,20 +172,29 @@ public class OutfitItemsWidget extends AbstractWidget {
         }
     }
 
+
     private void setupSlots(GuiGraphics guiGraphics) {
         int sizeOfSlot = 16;
-        int slotsY = 9;
+
+        // Calculate rowsOfSlots[0] to be divisible by 3 while maintaining the same size
+        int originalWidth = (screenWidth / sizeOfSlot) / 6;
+        rowsOfSlots[0] = originalWidth + (categoryList.length - (originalWidth % categoryList.length));
+
         int availableHeight = screenHeight - startingPosItems[1] - 32;
-        rowsOfSlots = availableHeight / sizeOfSlot;
-        int totalSlots = rowsOfSlots * slotsY;
+        rowsOfSlots[1] = availableHeight / sizeOfSlot;
+        int totalSlots = rowsOfSlots[1] * rowsOfSlots[0];
+
+        sizeofSlots[0] = rowsOfSlots[0] * sizeOfSlot;
+        sizeofSlots[1] = rowsOfSlots[1] * sizeOfSlot;
 
         slots.clear();
 
         if (getItemsSize() > totalSlots) {
+            // Implement scrolling functionality if needed
         } else scrollRow = 0;
 
-        for (int i = 0; i < rowsOfSlots; i++) {
-            for (int j = 0; j < slotsY; j++) {
+        for (int i = 0; i < rowsOfSlots[1]; i++) {
+            for (int j = 0; j < rowsOfSlots[0]; j++) {
                 int startX = startingPosItems[0] + (j * sizeOfSlot);
                 int startY = startingPosItems[1] + (i * sizeOfSlot);
                 int endX = startX + sizeOfSlot;
@@ -187,17 +208,17 @@ public class OutfitItemsWidget extends AbstractWidget {
         }
     }
 
+
     private void setupItems(GuiGraphics guiGraphics) {
         int sizeOfSlot = 16;
-        int slotsY = 9;
         int availableHeight = screenHeight - startingPosItems[1] - 32;
-        rowsOfSlots = availableHeight / sizeOfSlot;
-        int totalSlots = rowsOfSlots * slotsY;
+        rowsOfSlots[1] = availableHeight / sizeOfSlot;
+        int totalSlots = rowsOfSlots[1] * rowsOfSlots[0];
 
         int itemIterator = -1;
 
-        for (int i = 0; i < rowsOfSlots; i++) {
-            for (int j = 0; j < slotsY; j++) {
+        for (int i = 0; i < rowsOfSlots[1]; i++) {
+            for (int j = 0; j < rowsOfSlots[0]; j++) {
                 itemIterator++;
 
                 int startX = startingPosItems[0] + (j * sizeOfSlot);
@@ -214,6 +235,10 @@ public class OutfitItemsWidget extends AbstractWidget {
     }
 
     private void setupOutfitNameAndSave(GuiGraphics guiGraphics) {
+        WardrobeOutfit thisOutfit = OutfitUtil.outfitExists() ? OutfitUtil.getOutfit() : null;
+        if (thisOutfit != null && oldOutfit == null) {oldOutfit = thisOutfit; nameBar = null;}
+        else if (oldOutfit != null) {oldOutfit = null; nameBar = null;}
+
         int sizeOfNameY = 128;
         int sizeOfButtons = 16;
         int sizingY = 16;
@@ -230,26 +255,32 @@ public class OutfitItemsWidget extends AbstractWidget {
         // Outfit name
         guiGraphics.fill(startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY, 0x80FFFFFF);
         if (nameBar == null)
-            nameBar = new NameBar("Outfit Name", startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
+            nameBar = new NameBar(thisOutfit == null ? "Outfit Name" : thisOutfit.title, startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
+        else nameBar = new NameBar(nameBar.text, startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
 
-        if (nameBar != null) {
-            int tickTotal = 60;
+        int tickTotal = 60;
+        nameBar.text = keyboardEvents.update(nameBar.text);
+        String name = nameBar.text;
+        if (nameBarSelected && nameBarBlob > tickTotal / 2) name = name + "|";
+        guiGraphics.drawString(HideawayPlus.client().font, name, nameBar.aX + 2, nameBar.aY + (sizingY / 4), Color.WHITE.getRGB(), true);
+        nameBarBlob++;
+        if (nameBarBlob >= tickTotal) nameBarBlob = 0;
 
-            nameBar.text = keyboardEvents.update(nameBar.text);
-
-            String name = nameBar.text;
-            if (nameBarSelected && nameBarBlob > tickTotal / 2) name = name + "|";
-
-            guiGraphics.drawString(HideawayPlus.client().font, name, nameBar.aX + 2, nameBar.aY + (sizingY / 4), Color.WHITE.getRGB(), true);
-            nameBarBlob++;
-            if (nameBarBlob >= tickTotal) nameBarBlob = 0;
-        }
+        buttons.clear();
 
         // Save button
-        guiGraphics.fill(saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
+        if (thisOutfit == null && OutfitUtil.validOutfit(nameBar.text)) {
+            guiGraphics.fill(saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
+            if (!buttons.contains(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY)))
+                buttons.add(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY));
+        }
 
-        // Cancel button
-        guiGraphics.fill(deleteBtn, xPos, deleteBtn - sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
+        if (thisOutfit != null) {
+            // Delete button
+            guiGraphics.fill(deleteBtn, xPos, deleteBtn - sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
+            if (!buttons.contains(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY)))
+                buttons.add(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY));
+        }
 
 
     }
