@@ -1,5 +1,6 @@
 > [!IMPORTANT]  
-> Since October 7'th 2023's [commit](https://github.com/Voxxin/HideawayContinued/commit/7925d601529d495b2cdeea8d034d29354391f160). We've changed our lisenceing to All Rights Reserved. If you'd like to read more about what this intails, feel free to read our licensing information: [LISENCE](https://github.com/Voxxin/HideawayContinued/blob/main/LICENSE).
+> Since October 7'th 2023's [commit](https://github.com/Voxxin/HideawayContinued/commit/7925d601529d495b2cdeea8d034d29354391f160). 
+> We've changed our lisenceing to All Rights Reserved. If you'd like to read more about what this entails, feel free to read our licensing information: [LISENCE](https://github.com/Voxxin/HideawayContinued/blob/main/LICENSE).
 
 ![Hideaway+ Logo](https://i.imgur.com/JiSO1qN.png)
 
