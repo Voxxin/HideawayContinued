@@ -9,16 +9,18 @@ import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import continued.hideaway.mod.util.Constants;
 import continued.hideaway.mod.util.ParseItemName;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import static continued.hideaway.mod.util.StaticValues.newOutfit;
 import static continued.hideaway.mod.util.StaticValues.wardrobeOutfits;
 
 public class HideawayPlusConfig {
@@ -61,7 +63,6 @@ public class HideawayPlusConfig {
     private static void outfitFileWriter(JsonObject object, String fileName) {
         File file = new File(outfitsDir, fileName);
         try (FileWriter fileWriter = new FileWriter(file)) {
-
             gson.toJson(object, fileWriter);
         } catch (IOException e) {
             throw new RuntimeException("Error saving outfits file: " + e.getMessage());
@@ -78,42 +79,44 @@ public class HideawayPlusConfig {
     }
 
     private static void importOutfits(File file) throws IOException, CommandSyntaxException {
-        FileReader fileReader = new FileReader(file);
-        JsonObject JSONedFile = gson.fromJson(fileReader, JsonObject.class);
-        fileReader.close();
-        String name = JSONedFile.get("name").getAsString();
-        JsonObject outfit = JSONedFile.get("outfit").getAsJsonObject();
-        JsonObject headO = outfit.get("head").getAsJsonObject();
-        JsonObject chestO = outfit.get("chest").getAsJsonObject();
-        JsonObject off_handO = outfit.get("off_hand").getAsJsonObject();
+        WardrobeOutfit newFit = parseOutfit(file);
+        int casesFound = 0;
+        for (WardrobeOutfit thisOutfit : wardrobeOutfits) {
+            if (
+                    ParseItemName.getItemId(thisOutfit.head).equals(ParseItemName.getItemId(newFit.head))
+                    && ParseItemName.getItemId(thisOutfit.chest).equals(ParseItemName.getItemId(newFit.chest))
+                    && ParseItemName.getItemId(thisOutfit.holdable).equals(ParseItemName.getItemId(newFit.holdable))
+            ) {
+                System.out.println("Found duplicate outfit: " + file.getName() + " case: " + casesFound);
+                casesFound++;
+            }
+        }
 
-        ItemStack head = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(headO.get("registry").getAsString())).getDefaultInstance();
-        ItemStack chest = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(chestO.get("registry").getAsString())).getDefaultInstance();
-        ItemStack off_hand = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(off_handO.get("registry").getAsString())).getDefaultInstance();
-        if (!headO.get("nbt").getAsString().isEmpty()) head.setTag(TagParser.parseTag(headO.get("nbt").getAsString()));
-        if (!chestO.get("nbt").getAsString().isEmpty()) chest.setTag(TagParser.parseTag(chestO.get("nbt").getAsString()));
-        if (!off_handO.get("nbt").getAsString().isEmpty()) off_hand.setTag(TagParser.parseTag(off_handO.get("nbt").getAsString()));
+        if (casesFound > 1) {
+            file.delete();
+            return;
+        }
 
-//        if (wardrobeOutfits.stream().anyMatch(tOutfit -> tOutfit.fileName.equals(file.getName()))) return;
-        wardrobeOutfits.add(new WardrobeOutfit(name, file.getName(), "", head, chest, off_hand));
+        wardrobeOutfits.add(newFit);
     }
 
     public static void updateOutfits() {
         List<WardrobeOutfit> outfitsCopy = new ArrayList<>(wardrobeOutfits);
+        if (newOutfit != null) outfitsCopy = new ArrayList<>(Collections.singleton(newOutfit));
 
         for (WardrobeOutfit thisOutfit : outfitsCopy) {
+
+            boolean deleted = false;
             if ((thisOutfit.caseName.equals("remove") || thisOutfit.caseName.equals("delete")) && !thisOutfit.fileName.isEmpty() && outfitsDir.listFiles() != null) {
                 for (File outfitFiles : outfitsDir.listFiles()) {
                     if (outfitFiles.getName().equals(thisOutfit.fileName)) {
+                        deleted = true;
                         outfitFiles.delete();
                         init();
-                        break;
                     }
                 }
-                continue;
+                if (deleted) continue;
             }
-
-            if (outfitsCopy.stream().filter(o -> ParseItemName.getItemId(o.head).equals(ParseItemName.getItemId(thisOutfit.head)) && ParseItemName.getItemId(o.chest).equals(ParseItemName.getItemId(thisOutfit.chest)) && ParseItemName.getItemId(o.holdable).equals(ParseItemName.getItemId(thisOutfit.holdable))).count() > 1) continue;
 
             String fileName = !thisOutfit.fileName.isEmpty() ? thisOutfit.fileName : thisOutfit.title.toLowerCase() + ".json";
 
@@ -138,17 +141,46 @@ public class HideawayPlusConfig {
 
             JSONedFile.add("outfit", outfit);
 
-            if (head.get("nbt").getAsString().isEmpty() && chest.get("nbt").getAsString().isEmpty() && off_hand.get("nbt").getAsString().isEmpty()) continue;
+            if (head.get("nbt").getAsString().isEmpty() && chest.get("nbt").getAsString().isEmpty() && off_hand.get("nbt").getAsString().isEmpty())
+                continue;
 
-            int casesFound = 0;
-            for (File outfitFiles : outfitsDir.listFiles()) {
-                String name = outfitFiles.getName().replace(".json", "");
-                name = name.replaceAll("\\((\\d+)\\)[^(]*$", "");
-                if (name.equals(fileName.replace(".json", ""))) casesFound++;
+            String copyOfName = fileName.replaceAll("\\((\\d+)\\)[^(]*$", "");
+            String last3Chars = fileName.replaceAll(copyOfName, "");
+
+            if (last3Chars.isEmpty()) {
+
+                ArrayList<File> casesFoundFiles = new ArrayList<>();
+                for (File outfitFiles : outfitsDir.listFiles()) {
+                    String name = outfitFiles.getName().replace(".json", "");
+                    name = name.replaceAll("\\((\\d+)\\)[^(]*$", "");
+                    String cleanedFileName = fileName.replace(".json", "");
+
+                    if (name.equals(cleanedFileName)) {
+                        casesFoundFiles.add(outfitFiles);
+                    }
+                }
+
+                int highestNum = 0;
+
+                for (File file : casesFoundFiles) {
+                    String name = file.getName();
+                    int startPos = name.lastIndexOf("(");
+                    int endPos = name.lastIndexOf(")");
+                    if (startPos != -1 && endPos != -1) {
+                        try {
+                            int num = Integer.parseInt(name.substring(startPos + 1, endPos));
+                            if (num > highestNum) highestNum = num;
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
+                }
+
+                fileName = fileName.replace(".json", "");
+                fileName += "(" + (highestNum + 1) + ").json";
             }
 
-            if (casesFound > 0) fileName = fileName.replace(".json", "") + "(" + casesFound + ").json";
             outfitFileWriter(JSONedFile, fileName);
+            newOutfit = null;
             init();
         }
     }
@@ -179,5 +211,25 @@ public class HideawayPlusConfig {
 
         modConfigFileWriter(JSONedFile);
         init();
+    }
+
+    private static WardrobeOutfit parseOutfit(File file) throws IOException, CommandSyntaxException {
+        FileReader fileReader = new FileReader(file);
+        JsonObject JSONedFile = gson.fromJson(fileReader, JsonObject.class);
+        fileReader.close();
+        String name = JSONedFile.get("name").getAsString();
+        JsonObject outfit = JSONedFile.get("outfit").getAsJsonObject();
+        JsonObject headO = outfit.get("head").getAsJsonObject();
+        JsonObject chestO = outfit.get("chest").getAsJsonObject();
+        JsonObject off_handO = outfit.get("off_hand").getAsJsonObject();
+
+        ItemStack head = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(headO.get("registry").getAsString())).getDefaultInstance();
+        ItemStack chest = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(chestO.get("registry").getAsString())).getDefaultInstance();
+        ItemStack off_hand = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(off_handO.get("registry").getAsString())).getDefaultInstance();
+        if (!headO.get("nbt").getAsString().isEmpty()) head.setTag(TagParser.parseTag(headO.get("nbt").getAsString()));
+        if (!chestO.get("nbt").getAsString().isEmpty()) chest.setTag(TagParser.parseTag(chestO.get("nbt").getAsString()));
+        if (!off_handO.get("nbt").getAsString().isEmpty()) off_hand.setTag(TagParser.parseTag(off_handO.get("nbt").getAsString()));
+
+        return new WardrobeOutfit(name, file.getName(), "", head, chest, off_hand);
     }
 }

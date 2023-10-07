@@ -29,7 +29,6 @@
     "SoundEventMixin",
     "SplashRendererMixin",
     "TickMixin",
-    "TooltipRenderUtilMixin",
     "ext.GridLayoutAccessor",
     "ext.KeyBindingAccessor",
     "ext.SoundEventAccessor"

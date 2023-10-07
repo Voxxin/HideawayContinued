@@ -9,6 +9,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,11 +26,22 @@ public class AbstractClientPlayerMixin {
     @Shadow private @Nullable PlayerInfo playerInfo;
     @Unique
     private final AbstractClientPlayer player = (AbstractClientPlayer) (Object) this;
+
+    @Unique
+    private Vec3 oldPos = new Vec3(0, 0, 0);
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo ci) {
 
         if (HideawayPlus.client().player != null && Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID())) {
             playerInfo = HideawayPlus.player().connection.getPlayerInfo(HideawayPlus.player().getGameProfile().getId());
+        }
+
+
+        Vec3 emptyPos = new Vec3(0, 0, 0);
+        Vec3 playerPos = new Vec3(player.getX(), player.getY(), player.getZ());
+        if (Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID()) && (emptyPos.equals(oldPos) || !playerPos.equals(oldPos))) {
+            oldPos = playerPos;
+            Wardrobe.wardrobePlayer.setPos(oldPos.x, oldPos.y, oldPos.z);
         }
 
 

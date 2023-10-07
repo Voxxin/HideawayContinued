@@ -1,7 +1,9 @@
 package continued.hideaway.mod.feat.wardrobe;
 
+import continued.hideaway.mod.util.ParseItemName;
 import continued.hideaway.mod.util.StaticValues;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import static continued.hideaway.mod.util.ParseItemName.getItemId;
@@ -49,6 +51,30 @@ public class OutfitUtil {
                 )
                 .findFirst()
                 .orElse(null);
+    }
+
+    public static boolean itemExists(ItemStack item) {
+        if (item.getItem() == Items.AIR) return true;
+        for (ItemStack itemStack : Wardrobe.headWear) {
+            if (ParseItemName.getItemId(itemStack).equals(ParseItemName.getItemId(item))) {
+                return true;
+            }
+        }
+
+        for (ItemStack itemStack : Wardrobe.chestWear) {
+            if (ParseItemName.getItemId(itemStack).equals(ParseItemName.getItemId(item))) {
+                return true;
+            }
+        }
+
+        for (ItemStack itemStack : Wardrobe.holdable) {
+            if (ParseItemName.getItemId(itemStack).equals(ParseItemName.getItemId(item))) {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 
 }

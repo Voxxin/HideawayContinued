@@ -72,9 +72,7 @@ public class RotationSliderWidget extends AbstractWidget {
 
         if (tutDisplay > 0) {
             String tut = Component.translatable("widget.model_slider.tutorial").getString();
-            int startingPos = width/2;
-
-            guiGraphics.drawCenteredString(HideawayPlus.client().font, tut, startingPos, maxY - 10, Color.WHITE.getRGB());
+            guiGraphics.drawCenteredString(HideawayPlus.client().font, tut,  HideawayPlus.client().screen.width/2, maxY - 10, Color.WHITE.getRGB());
             tutDisplay--;
         } else if (tutDisplay == 0) tutDisplay = -2;
 
