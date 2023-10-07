@@ -99,22 +99,6 @@ public class OutfitItemsWidget extends AbstractWidget {
             }
         }
 
-        switch (selectedItemCategory) {
-            case "head" -> {
-                for (ItemStack itemStack : Wardrobe.headWear) {
-                }
-                break;
-            }
-            case "chest" -> {
-                for (ItemStack itemStack : Wardrobe.chestWear) {
-                }
-            }
-            case "holdable" -> {
-                for (ItemStack itemStack : Wardrobe.holdable) {
-                }
-            }
-        }
-
         if (slots.stream().anyMatch(slot -> slot.isOverlaying(mouseX, mouseY)) || categories.stream().anyMatch(category -> category.isOverlaying(mouseX, mouseY)))
             isHovered = true;
         if (slots.stream().noneMatch(slot -> slot.isOverlaying(mouseX, mouseY)) && categories.stream().noneMatch(category -> category.isOverlaying(mouseX, mouseY)))
@@ -233,7 +217,6 @@ public class OutfitItemsWidget extends AbstractWidget {
                 int[] pos = button.getPos();
                 if (button.type.equals("save")) {
                     WardrobeOutfit copyOfOutfit = OutfitUtil.getOutfit();
-                    System.out.println(copyOfOutfit != null ? copyOfOutfit.fileName : "");
 
                     if (OutfitUtil.validOutfit(newOutfitBar.text)) {
                         StaticValues.newOutfit =
@@ -433,15 +416,16 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         WardrobeOutfit thisOutfit = OutfitUtil.outfitExists() ? OutfitUtil.getOutfit() : null;
 
-
         if (thisOutfit != null) {
             if (oldOutfit == null || thisOutfit != oldOutfit) {
                 oldOutfit = thisOutfit;
+                
                 if (nameBar != null) nameBar.text = thisOutfit.title;
             }
         }
 
-        if (thisOutfit == null && nameBar != null) {
+        if ((thisOutfit == null && oldOutfit != null)) {
+            oldOutfit = null;
             nameBar.text = Component.translatable("widget.outfit_editor.basic_outfit_name").getString();
         }
 
