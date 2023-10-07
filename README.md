@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> Since October 7'th 2023's [commit](https://github.com/Voxxin/HideawayContinued/commit/7925d601529d495b2cdeea8d034d29354391f160). We've changed our lisenceing to All Rights Reserved. If you'd like to read more about what this intails, feel free to read our licensing information: [LISENCE](https://github.com/Voxxin/HideawayContinued/blob/main/LICENSE).
+
 ![Hideaway+ Logo](https://i.imgur.com/JiSO1qN.png)
 
 # Features
@@ -20,5 +23,5 @@
 </details>
 
 # Downloads
-<a href="https://modrinth.com/mods/hideaway"><img src="assets/modrinth_logo.png" alt="Modrinth Logo" style="width:200px;filter:drop-shadow(0 0 1.7rem white);"/></a>
+<a href="https://modrinth.com/mod/hideaway"><img src="assets/modrinth_logo.png" alt="Modrinth Logo" style="width:200px;filter:drop-shadow(0 0 1.7rem white);"/></a>
 <a href="https://www.curseforge.com/minecraft/mc-mods/hideaway"><img src="assets/curseforge_logo.png" alt="Curseforge Logo" style="width:200px;filter:drop-shadow(0 0 1.7rem white);"/></a>
