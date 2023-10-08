@@ -1,8 +1,8 @@
 package continued.hideaway.mod.feat.rendering.screen;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.rendering.screen.util.ButtonScreenWidget;
-import continued.hideaway.mod.feat.rendering.screen.util.RotationSliderWidget;
+import continued.hideaway.mod.feat.rendering.screen.widget.ButtonScreenWidget;
+import continued.hideaway.mod.feat.rendering.screen.widget.RotationSliderWidget;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import net.minecraft.client.Minecraft;

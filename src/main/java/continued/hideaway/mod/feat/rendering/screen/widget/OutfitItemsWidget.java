@@ -1,8 +1,7 @@
-package continued.hideaway.mod.feat.rendering.screen.util;
+package continued.hideaway.mod.feat.rendering.screen.widget;
 
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.keyboard.KeyboardEventInstance;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
 import continued.hideaway.mod.feat.wardrobe.WardrobeUtil;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
@@ -15,7 +14,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.players.StoredUserEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

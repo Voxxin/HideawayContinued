@@ -45,7 +45,7 @@ public class KeyboardManager {
             }
         } else if (newString.equals(Space)) {
             text += " ";
-        } else if (newString.matches("[a-zA-Z0-9]")) {
+        } else if (newString.matches("[a-zA-Z0-9]") || newString.matches("(\\:\\\\\\/\\?\\-\\=\\+\\(\\)\\&\\%\\!\\@\\#\\$\\\\\\^\\[\\]\\\\\\:\\,\\.\\>\\<)")) {
             newString = newString.toLowerCase(Locale.ROOT);
             if (isKeyDown(GLFW_KEY_LEFT_SHIFT)) newString = newString.toUpperCase(Locale.ROOT);
 

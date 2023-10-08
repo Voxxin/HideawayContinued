@@ -1,8 +1,7 @@
-package continued.hideaway.mod.feat.rendering.screen.util;
+package continued.hideaway.mod.feat.rendering.screen.widget;
 
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
-import continued.hideaway.mod.util.GuiUtils;
 import continued.hideaway.mod.util.WidgetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

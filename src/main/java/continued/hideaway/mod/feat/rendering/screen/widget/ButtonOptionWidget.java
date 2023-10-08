@@ -1,4 +1,4 @@
-package continued.hideaway.mod.feat.rendering.screen.util;
+package continued.hideaway.mod.feat.rendering.screen.widget;
 
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;

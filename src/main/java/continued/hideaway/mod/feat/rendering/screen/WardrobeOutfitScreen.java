@@ -3,15 +3,10 @@ package continued.hideaway.mod.feat.rendering.screen;
 import com.mojang.blaze3d.platform.InputConstants;
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.rendering.screen.util.ButtonScreenWidget;
-import continued.hideaway.mod.feat.rendering.screen.util.OutfitItemsWidget;
-import continued.hideaway.mod.feat.rendering.screen.util.RotationSliderWidget;
-import continued.hideaway.mod.util.Constants;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.screens.ChatScreen;
+import continued.hideaway.mod.feat.rendering.screen.widget.OutfitItemsWidget;
+import continued.hideaway.mod.feat.rendering.screen.widget.RotationSliderWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.contents.KeybindContents;
 
 public class WardrobeOutfitScreen extends Screen {
     private int oldScreenHeight = HideawayPlus.client().screen.height;

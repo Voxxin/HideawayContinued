@@ -1,7 +1,6 @@
-package continued.hideaway.mod.feat.rendering.screen.util;
+package continued.hideaway.mod.feat.rendering.screen.widget;
 
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.config.model.WardrobeConfigModel;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
 import continued.hideaway.mod.util.WidgetUtil;
