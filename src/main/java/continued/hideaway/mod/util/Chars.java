@@ -48,17 +48,17 @@ public enum Chars {
     public final String tooltip;
     public final ChatFormatting color;
 
-    public void addBadge(MutableComponent newComponent) {
-        newComponent.append(" ").append(this.getComponent());
-    }
-
-    public void addBadgeWithTooltip(MutableComponent newMessage) {
-        Component component = ((MutableComponent) this.getComponent()).withStyle(Style.EMPTY.withHoverEvent(
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("").append(
-                        Component.translatable(this.tooltip).setStyle(Style.EMPTY.withColor(this.color))
-                ))
-        ));
-        newMessage.append(component);
+    public void addBadge(MutableComponent newComponent, boolean tooltip) {
+        if (tooltip) {
+            Component component = ((MutableComponent) this.getComponent()).withStyle(Style.EMPTY.withHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                            Component.translatable(this.tooltip).setStyle(Style.EMPTY.withColor(this.color)
+                    ))
+            ));
+            newComponent.append(component);
+        } else {
+            newComponent.append(this.getComponent());
+        }
     }
 
     public Component getComponent() {
