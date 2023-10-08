@@ -236,7 +236,7 @@ public class HideawayPlusConfig {
             JSONedFile.addProperty(config.name, config.value);
         }
 
-        outfitConfigFileWriter(JSONedFile);
+        modConfigFileWriter(JSONedFile);
         init();
     }
 
