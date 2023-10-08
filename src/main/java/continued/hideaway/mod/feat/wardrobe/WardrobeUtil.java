@@ -1,5 +1,7 @@
 package continued.hideaway.mod.feat.wardrobe;
 
+import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.util.ParseItemName;
 import continued.hideaway.mod.util.StaticValues;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -8,7 +10,7 @@ import net.minecraft.world.item.Items;
 
 import static continued.hideaway.mod.util.ParseItemName.getItemId;
 
-public class OutfitUtil {
+public class WardrobeUtil {
     public static void applyOutfit(int wardrobeIndex) {
         if (StaticValues.wardrobeOutfits.isEmpty()) return;
         WardrobeOutfit outfit = StaticValues.wardrobeOutfits.get(wardrobeIndex);
@@ -75,6 +77,10 @@ public class OutfitUtil {
 
 
         return false;
+    }
+
+    public static boolean isAtWardrobe() {
+        return HideawayPlus.location() == Location.WARDROBE_WHEEL;
     }
 
 }

@@ -32,6 +32,12 @@
     "config.hp-config.general.no_ambient_sounds": "Disable ambient sounds",
     "config.hp-config.general.no_activity_songs": "Disable activity songs",
 
+    "config.hp-config.wardrobe.title": "Wardrobe Configuration",
+
+    "config.hp-config.wardrobe.disable_wardrobe_song": "Disable wardrobe song",
+    "config.hp-config.wardrobe.disable_chat": "Disable chat while in Wardrobe",
+    "config.hp-config.wardrobe.disable_bossbar": "Disable bossbar while in Wardrobe",
+    "config.hp-config.wardrobe.stop_spinning": "Stop spinning outside of main screen",
 
     "narration.widget.model_slider": "Model Slider",
 

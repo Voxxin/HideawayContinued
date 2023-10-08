@@ -30,6 +30,7 @@ public class WardrobeOutfitScreen extends Screen {
         input = new OutfitItemsWidget(oldScreenWidth, oldScreenHeight, Component.translatable("widget.model_slider.title"));
         input.setResponder(this::onEdited);
 
+        this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 ,36, 170, 20, Component.translatable("widget.model_slider.title")));
         this.addRenderableWidget(input);
     }
 

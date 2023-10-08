@@ -4,7 +4,7 @@ import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.keyboard.KeyboardEventInstance;
 import continued.hideaway.mod.feat.keyboard.KeyboardManager;
-import continued.hideaway.mod.feat.wardrobe.OutfitUtil;
+import continued.hideaway.mod.feat.wardrobe.WardrobeUtil;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import continued.hideaway.mod.util.StaticValues;
@@ -216,9 +216,9 @@ public class OutfitItemsWidget extends AbstractWidget {
 
                 int[] pos = button.getPos();
                 if (button.type.equals("save")) {
-                    WardrobeOutfit copyOfOutfit = OutfitUtil.getOutfit();
+                    WardrobeOutfit copyOfOutfit = WardrobeUtil.getOutfit();
 
-                    if (OutfitUtil.validOutfit(newOutfitBar.text)) {
+                    if (WardrobeUtil.validOutfit(newOutfitBar.text)) {
                         StaticValues.newOutfit =
                                 new WardrobeOutfit(newOutfitBar.text,
                                         copyOfOutfit != null ? copyOfOutfit.fileName : "",
@@ -230,8 +230,8 @@ public class OutfitItemsWidget extends AbstractWidget {
                         scrollRowO = 0;
                     }
                 } else if (button.type.equals("delete")) {
-                    WardrobeOutfit copyOfOutfit = OutfitUtil.getOutfit();
-                    StaticValues.wardrobeOutfits.remove(OutfitUtil.getOutfit());
+                    WardrobeOutfit copyOfOutfit = WardrobeUtil.getOutfit();
+                    StaticValues.wardrobeOutfits.remove(WardrobeUtil.getOutfit());
                     StaticValues.newOutfit =
                             new WardrobeOutfit(copyOfOutfit.title,
                                     copyOfOutfit.fileName,
@@ -243,7 +243,7 @@ public class OutfitItemsWidget extends AbstractWidget {
                     scrollRowO = 0;
                     HideawayPlusConfig.updateOutfits();
                 } else if (button.type.equals("clear")) {
-                    OutfitUtil.clearOutfit();
+                    WardrobeUtil.clearOutfit();
                 }
                 guiGraphics.fill(pos[0], pos[1], pos[2], pos[3], 0x80C0C0C0);
             }
@@ -401,7 +401,7 @@ public class OutfitItemsWidget extends AbstractWidget {
 
                 guiGraphics.renderItem(itemStack, startX + xOffset, startY + yOffset, 42);
 
-                if (!OutfitUtil.itemExists(itemStack)) {
+                if (!WardrobeUtil.itemExists(itemStack)) {
                     guiGraphics.fill(startX + xOffset, startY + yOffset, startX + xOffset + sizeOfSlot, startY + yOffset + sizeOfSlot, 0x80FF0000);
                 }
             }
@@ -414,12 +414,12 @@ public class OutfitItemsWidget extends AbstractWidget {
                 .findFirst()
                 .orElseGet(() -> null);
 
-        WardrobeOutfit thisOutfit = OutfitUtil.outfitExists() ? OutfitUtil.getOutfit() : null;
+        WardrobeOutfit thisOutfit = WardrobeUtil.outfitExists() ? WardrobeUtil.getOutfit() : null;
 
         if (thisOutfit != null) {
             if (oldOutfit == null || thisOutfit != oldOutfit) {
                 oldOutfit = thisOutfit;
-                
+
                 if (nameBar != null) nameBar.text = thisOutfit.title;
             }
         }
@@ -469,14 +469,14 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         buttons.clear();
 
-        if ((!OutfitUtil.outfitExists() || (thisOutfit != null && !nameBar.text.equals(thisOutfit.title))) && OutfitUtil.validOutfit(nameBar.text)) {
+        if ((!WardrobeUtil.outfitExists() || (thisOutfit != null && !nameBar.text.equals(thisOutfit.title))) && WardrobeUtil.validOutfit(nameBar.text)) {
             guiGraphics.fill(saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
             if (!buttons.contains(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY))) {
                 buttons.add(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY));
             }
         }
 
-        if (OutfitUtil.outfitExists()) {
+        if (WardrobeUtil.outfitExists()) {
             guiGraphics.fill(deleteBtn, xPos, deleteBtn - sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
             if (!buttons.contains(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY))) {
                 buttons.add(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY));

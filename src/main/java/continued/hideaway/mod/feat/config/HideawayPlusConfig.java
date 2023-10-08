@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.WardrobeConfigModel;
 import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import continued.hideaway.mod.util.Constants;
 import continued.hideaway.mod.util.ParseItemName;
@@ -29,7 +30,6 @@ public class HideawayPlusConfig {
     private static final File outfitsDir = new File(modDir, "outfits");
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static continued.hideaway.mod.feat.config.model.ModConfigModel ModConfigModel;
 
     public HideawayPlusConfig() {
         init();
@@ -71,6 +71,15 @@ public class HideawayPlusConfig {
 
     private static void modConfigFileWriter(JsonObject object) {
         File file = new File(configDir, "mod.json");
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            gson.toJson(object, fileWriter);
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving mod config file: " + e.getMessage());
+        }
+    }
+
+    private static void outfitConfigFileWriter(JsonObject object) {
+        File file = new File(configDir, "outfit.json");
         try (FileWriter fileWriter = new FileWriter(file)) {
             gson.toJson(object, fileWriter);
         } catch (IOException e) {
@@ -203,13 +212,41 @@ public class HideawayPlusConfig {
         }
     }
 
+    private static void setupOutfitConfig(File file) {
+        try {
+            JsonObject JSONedFile = new JsonObject();
+            if (file != null) {
+                FileReader fileReader = new FileReader(file);
+                JSONedFile = gson.fromJson(fileReader, JsonObject.class);
+            }
+
+            for (WardrobeConfigModel config : WardrobeConfigModel.values()) {
+                if (JSONedFile.has(config.name)) {
+                    config.value = JSONedFile.get(config.name).getAsBoolean();
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error loading mod config file: " + e.getMessage());
+        }
+    }
+
     public static void updateModConfig() {
         JsonObject JSONedFile = new JsonObject();
-        for (ModConfigModel config : ModConfigModel.values()) {
+        for (WardrobeConfigModel config : WardrobeConfigModel.values()) {
             JSONedFile.addProperty(config.name, config.value);
         }
 
-        modConfigFileWriter(JSONedFile);
+        outfitConfigFileWriter(JSONedFile);
+        init();
+    }
+
+    public static void updateOutfitConfig() {
+        JsonObject JSONedFile = new JsonObject();
+        for (WardrobeConfigModel config : WardrobeConfigModel.values()) {
+            JSONedFile.addProperty(config.name, config.value);
+        }
+
+        outfitConfigFileWriter(JSONedFile);
         init();
     }
 
