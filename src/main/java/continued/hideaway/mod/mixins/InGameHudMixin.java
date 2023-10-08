@@ -44,7 +44,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
             guiGraphics.drawString(
                     Minecraft.getInstance().font,
                     Component.empty()
-                            .append(Chars.disc())
+                            .append(Chars.DISC.getComponent())
                             .append(Component.literal("Now playing: " + HideawayPlus.jukebox().currentTrack.name)),
                     10, 10, 0xffffff, true
             );

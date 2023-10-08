@@ -5,7 +5,6 @@ import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.util.Chars;
 import continued.hideaway.mod.util.DisplayNameUtil;
 import continued.hideaway.mod.util.StaticValues;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.network.chat.Component;
@@ -35,17 +34,12 @@ public abstract class EntityRendererMixin <T extends Entity>{
             MutableComponent newName = MutableComponent.create(ComponentContents.EMPTY);
             newName.append(entity.getDisplayName().getString());
 
-            if (StaticValues.friendsUsernames.contains(playerName))
-                Chars.addBadge(newName, Chars.friendBadge());
+            if (StaticValues.friendsUsernames.contains(playerName)) Chars.FRIEND.addBadge(newName);
 
-            if (StaticValues.devs.contains(playerID))
-                Chars.addBadge(newName, Chars.devBadge());
-            else if (StaticValues.teamMembers.contains(playerID))
-                Chars.addBadge(newName, Chars.teamBadge());
-            else if (StaticValues.translators.contains(playerID))
-                Chars.addBadge(newName, Chars.translatorBadge());
-            else if (StaticValues.users.containsKey(playerID))
-                Chars.addBadge(newName, Chars.userBadge());
+            if (StaticValues.devs.contains(playerID)) Chars.DEV.addBadge(newName);
+            else if (StaticValues.teamMembers.contains(playerID)) Chars.TEAM.addBadge(newName);
+            else if (StaticValues.translators.contains(playerID)) Chars.TRANSLATOR.addBadge(newName);
+            else if (StaticValues.users.containsKey(playerID)) Chars.USER.addBadge(newName);
 
             if (newName.getString().equals(playerName)) newName = (MutableComponent) entity.getDisplayName();
 
