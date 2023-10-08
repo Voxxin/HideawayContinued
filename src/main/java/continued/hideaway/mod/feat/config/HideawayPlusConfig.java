@@ -45,6 +45,9 @@ public class HideawayPlusConfig {
             if (Arrays.stream(configs).anyMatch(file -> file.getName().equals("mod.json"))) {
                 setupModConfig(Arrays.stream(configs).filter(file -> file.getName().equals("mod.json")).findFirst().orElse(null));
             } else updateModConfig();
+            if (Arrays.stream(configs).anyMatch(file -> file.getName().equals("outfit.json"))) {
+                setupOutfitConfig(Arrays.stream(configs).filter(file -> file.getName().equals("outfit.json")).findFirst().orElse(null));
+            } else updateOutfitConfig();
 
             File[] outfitsFiles = outfitsDir.listFiles();
             assert outfitsFiles != null;
@@ -226,7 +229,7 @@ public class HideawayPlusConfig {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error loading mod config file: " + e.getMessage());
+            throw new RuntimeException("Error loading outfit config file: " + e.getMessage());
         }
     }
 
