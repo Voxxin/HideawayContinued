@@ -32,8 +32,6 @@ public abstract class AbstractContainerScreenMixin implements AbstractContainerS
 
     @Shadow protected int topPos;
 
-    @Shadow public abstract void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick);
-
     @Inject(at = @At("TAIL"), method = "render")
     public void renderSlotRarity(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (HideawayPlus.connected() && ModConfigModel.INVENTORY_RARITIES.value) {
