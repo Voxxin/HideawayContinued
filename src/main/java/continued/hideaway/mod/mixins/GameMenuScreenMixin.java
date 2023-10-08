@@ -53,7 +53,7 @@ public abstract class GameMenuScreenMixin extends Screen {
         if (gridLayout != null && Constants.MOD_MENU_PRESENT) {
             final List<LayoutElement> buttons = ((GridLayoutAccessor) gridLayout).getChildren();
             if (HideawayPlus.connected()) {
-                buttons.add(Button.builder(Chars.settingsIcon(), button -> {
+                buttons.add(Button.builder(Chars.SETTINGS.getComponent(), button -> {
                             this.minecraft.setScreen(new ConfigUI(null));
                         })
                         .bounds(x, y, 20, 20)

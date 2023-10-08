@@ -5,7 +5,6 @@ import continued.hideaway.mod.feat.wardrobe.WardrobeUtil;
 import continued.hideaway.mod.util.Chars;
 import continued.hideaway.mod.util.DisplayNameUtil;
 import continued.hideaway.mod.util.StaticValues;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
@@ -24,19 +23,12 @@ public class ChatComponentMixin {
         String playerID = DisplayNameUtil.modPlayerID(DisplayNameUtil.nameFromChatMessage(message.getString()));
         String playerName = DisplayNameUtil.nameFromChatMessage(message.getString());
 
-        if (StaticValues.friendsUsernames.contains(playerName))
-            Chars.addBadgeWithTooltip(newMessage, Chars.friendBadge(), "tooltip.hp.friend", ChatFormatting.GOLD);
+        if (StaticValues.friendsUsernames.contains(playerName)) Chars.FRIEND.addBadgeWithTooltip(newMessage);
 
-        if (StaticValues.devs.contains(playerID))
-            Chars.addBadgeWithTooltip(newMessage, Chars.devBadge(), "tooltip.hp.developer", ChatFormatting.YELLOW);
-        else if (StaticValues.teamMembers.contains(playerID)) {
-            System.out.println(playerID);
-            Chars.addBadgeWithTooltip(newMessage, Chars.teamBadge(), "tooltip.hp.teamMember", ChatFormatting.LIGHT_PURPLE);
-        }
-        else if (StaticValues.translators.contains(playerID))
-            Chars.addBadgeWithTooltip(newMessage, Chars.translatorBadge(), "tooltip.hp.translator", ChatFormatting.GREEN);
-        else if (StaticValues.users.containsKey(playerID))
-            Chars.addBadgeWithTooltip(newMessage, Chars.userBadge(), "tooltip.hp.user", ChatFormatting.WHITE);
+        if (StaticValues.devs.contains(playerID)) Chars.DEV.addBadgeWithTooltip(newMessage);
+        else if (StaticValues.teamMembers.contains(playerID)) Chars.TEAM.addBadgeWithTooltip(newMessage);
+        else if (StaticValues.translators.contains(playerID)) Chars.TRANSLATOR.addBadgeWithTooltip(newMessage);
+        else if (StaticValues.users.containsKey(playerID)) Chars.USER.addBadgeWithTooltip(newMessage);
 
         newMessage.append(message);
         return newMessage;

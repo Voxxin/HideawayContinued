@@ -26,17 +26,12 @@ public class DisplayNameMixin {
             MutableComponent newName = MutableComponent.create(ComponentContents.EMPTY);
             newName.append(name);
 
-            if (StaticValues.friendsUsernames.contains(username))
-                Chars.addBadge(newName, Chars.friendBadge());
+            if (StaticValues.friendsUsernames.contains(username)) Chars.FRIEND.addBadge(newName);
 
-            if (StaticValues.devs.contains(playerID))
-                Chars.addBadge(newName, Chars.devBadge());
-            else if (StaticValues.teamMembers.contains(playerID))
-                Chars.addBadge(newName, Chars.teamBadge());
-            else if (StaticValues.translators.contains(playerID))
-                Chars.addBadge(newName, Chars.translatorBadge());
-            else if (StaticValues.users.containsKey(playerID))
-                Chars.addBadge(newName, Chars.userBadge());
+            if (StaticValues.devs.contains(playerID)) Chars.DEV.addBadge(newName);
+            else if (StaticValues.teamMembers.contains(playerID)) Chars.TEAM.addBadge(newName);
+            else if (StaticValues.translators.contains(playerID)) Chars.TRANSLATOR.addBadge(newName);
+            else if (StaticValues.users.containsKey(playerID)) Chars.USER.addBadge(newName);
 
             if (!newName.toString().equals(username)) cir.setReturnValue(newName);
         }
