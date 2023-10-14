@@ -31,6 +31,6 @@
     "text.config.hp-config.option.autoSell": "Remplir automatiquement l'écran de la boutique",
     "text.config.hp-config.option.autoEnableEditor": "Activer automatiquement l'éditeur",
     "text.config.hp-config.option.jukebox": "Utiliser le jukebox",
-    "text.config.hp-config.option.noAmbientSounds": "Autoriser les sons ambiants",
-    "text.config.hp-config.option.noActivitySongs": "Autoriser les musiques d'activité"
+    "text.config.hp-config.option.noAmbientSounds": "Désactiver les sons ambiants",
+    "text.config.hp-config.option.noActivitySongs": "Désactiver les musiques d'activité"
 }
