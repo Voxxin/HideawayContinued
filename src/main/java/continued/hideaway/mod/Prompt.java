@@ -21,7 +21,7 @@ public class Prompt {
         Minecraft.getInstance().player.sendSystemMessage(
             MutableComponent.create(ComponentContents.EMPTY)
                 .append(Component.literal("[").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
-                .append(Chars.userBadge())
+                .append(Chars.USER.getComponent())
                 .append(Component.literal("] ").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
                 .append(Component.literal(message).setStyle(Style.EMPTY.withColor(ChatFormatting.RED)))
         );
@@ -32,7 +32,7 @@ public class Prompt {
             Minecraft.getInstance().player.sendSystemMessage(
                 MutableComponent.create(ComponentContents.EMPTY)
                     .append(Component.literal("[").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
-                    .append(Chars.userBadge())
+                    .append(Chars.USER.getComponent())
                     .append(Component.literal(" Debug").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)))
                     .append(Component.literal("] ").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
                     .append(Component.literal(message).setStyle(Style.EMPTY.withColor(ChatFormatting.LIGHT_PURPLE)))
@@ -45,7 +45,7 @@ public class Prompt {
             Minecraft.getInstance().player.sendSystemMessage(
                     MutableComponent.create(ComponentContents.EMPTY)
                             .append(Component.literal("[").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
-                            .append(Chars.userBadge())
+                            .append(Chars.USER.getComponent())
                             .append(Component.literal(" Debug").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)))
                             .append(Component.literal("] ").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
                             .append(MutableComponent.create(message.getContents()))
@@ -58,7 +58,7 @@ public class Prompt {
             Minecraft.getInstance().player.sendSystemMessage(
                     MutableComponent.create(ComponentContents.EMPTY)
                             .append(Component.literal("[").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
-                            .append(Chars.userBadge())
+                            .append(Chars.USER.getComponent())
                             .append(Component.literal("Debug").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)))
                             .append(Component.literal("] ").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)))
                             .append(MutableComponent.create(message.getContents()))

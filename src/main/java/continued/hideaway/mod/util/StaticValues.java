@@ -1,5 +1,7 @@
 package continued.hideaway.mod.util;
 
+import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,4 +22,9 @@ public class StaticValues {
 
     public static ArrayList<String> wardrobeEntity = new ArrayList<>();
     public static ArrayList<String> wardrobeArmourStand = new ArrayList<>();
+
+    public static ArrayList<WardrobeOutfit> wardrobeOutfits = new ArrayList<>();
+    public static WardrobeOutfit newOutfit = null;
+
+    public static boolean playerRotationSet = false;
 }

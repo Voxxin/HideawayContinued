@@ -19,7 +19,6 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
     maven { url "https://maven.shedaniel.me/" }
-    maven { url 'https://maven.wispforest.io' }
     maven { url = "https://maven.isxander.dev/releases" }
     maven { url = 'https://maven.quiltmc.org/repository/release' }
     maven { url = 'https://maven.quiltmc.org/repository/snapshot' }
@@ -39,12 +38,8 @@ dependencies {
         it.officialMojangMappings()
     }
     modImplementation libs.fabric.loader
-    modImplementation (libs.bundles.fabric)
 
-    modRuntimeOnly ("com.terraformersmc:modmenu:7.2.2")
-
-    annotationProcessor modImplementation("io.wispforest:owo-lib:${libs.versions.owolib.get()}")
-    include("io.wispforest:owo-sentinel:${libs.versions.owolib.get()}")
+    modImplementation ("com.terraformersmc:modmenu:7.2.2")
 
     implementation include('org.json:json:20220320')
     implementation include("io.github.CDAGaming:DiscordIPC:0.8.1")

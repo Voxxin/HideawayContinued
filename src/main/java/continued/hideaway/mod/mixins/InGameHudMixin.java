@@ -1,7 +1,10 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
+import continued.hideaway.mod.feat.location.Location;
+import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.util.Chars;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -35,14 +38,23 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void onRender(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
+        if (Wardrobe.wardrobePlayer != null) overlayMessageString = Component.empty();
+
         if (HideawayPlus.jukebox() != null && HideawayPlus.jukebox().currentTrack != null) {
             guiGraphics.drawString(
                     Minecraft.getInstance().font,
                     Component.empty()
-                            .append(Chars.disc())
+                            .append(Chars.DISC.getComponent())
                             .append(Component.literal("Now playing: " + HideawayPlus.jukebox().currentTrack.name)),
                     10, 10, 0xffffff, true
             );
+        }
+    }
+
+    @Inject(at = @At("HEAD"), method = "renderExperienceBar", cancellable = true)
+    public void renderExperienceBar(GuiGraphics guiGraphics, int x, CallbackInfo ci) {
+        if (HideawayPlus.connected() && HideawayPlus.location() == Location.WARDROBE_WHEEL) {
+            ci.cancel();
         }
     }
 
@@ -53,8 +65,8 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
                     from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I", ordinal = 1))
     )
     public void experienceBarPercent(GuiGraphics guiGraphics, int x, CallbackInfo ci, int i, String string, int textSize, int textPos) {
-        if (HideawayPlus.connected()) {
-            if (overlayMessageString == null || !overlayMessageString.getString().contains("\uE2C3")) return;
+        if (HideawayPlus.connected() && ModConfigModel.EXP_PERCENT.value) {
+            if (overlayMessageString != null && !overlayMessageString.getString().contains("\uE2C3")) return;
 
             string = (Math.round(this.minecraft.player.experienceProgress * 10000) / 100.0) + "%";
             textSize = (this.screenWidth - this.getFont().width(string)) / 2;
