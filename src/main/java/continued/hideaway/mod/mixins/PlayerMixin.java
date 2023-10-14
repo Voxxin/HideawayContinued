@@ -63,8 +63,6 @@ public abstract class PlayerMixin implements EntityAccessor {
 
         if (Wardrobe.wardrobePlayer != null && !setLooking && HideawayPlus.client().screen == null) {
             HideawayPlus.player().lookAt(EntityAnchorArgument.Anchor.EYES, Wardrobe.wardrobePlayer.position());
-            setLooking = true;
-            System.out.println("Set looking");
         }
         else if (Wardrobe.wardrobePlayer == null && setLooking && HideawayPlus.client().screen == null) setLooking = false;
         if (!StaticValues.playerRotationSet && Wardrobe.wardrobePlayer != null && Wardrobe.wardrobePlayer.getStringUUID().equals(player.getStringUUID())) ((EntityAccessor)Wardrobe.wardrobePlayer).hp$addRot(2.5F);

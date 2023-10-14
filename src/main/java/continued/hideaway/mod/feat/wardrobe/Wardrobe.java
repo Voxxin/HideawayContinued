@@ -5,6 +5,7 @@ import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.feat.rendering.screen.WardrobeScreen;
 import continued.hideaway.mod.util.GuiUtils;
 import continued.hideaway.mod.util.StaticValues;
+import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -313,6 +314,8 @@ public class Wardrobe {
                 Slot slotPaper = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("Close")).findFirst().orElse(null);
                 GuiUtils.pressSlot(GuiUtils.getContainerScreen(), slotPaper);
             }
+
+            HideawayPlus.client().options.keyShift.setDown(true);
         }
     }
 

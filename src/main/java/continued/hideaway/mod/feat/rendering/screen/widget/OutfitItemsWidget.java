@@ -575,13 +575,6 @@ public class OutfitItemsWidget extends AbstractWidget {
         this.responder = responder;
     }
 
-    private void onValueChange(String newText) {
-        if (this.responder != null) {
-            this.responder.accept(newText);
-        }
-
-    }
-
     public void setValue(String value) {
         try {
             this.scroll = Double.parseDouble(value);

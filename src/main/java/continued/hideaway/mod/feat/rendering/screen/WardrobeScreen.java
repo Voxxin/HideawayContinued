@@ -27,9 +27,8 @@ public class WardrobeScreen extends Screen {
         int ScreenButtonsSize = 40;
 
         this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 , HideawayPlus.client().screen.height - 15, 170, 20, Component.translatable("widget.model_slider.title")));
-        this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2, ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeOutfitScreen()));
-        this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2 + (ScreenButtonsSize * 2), ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeSkinScreen()));
-        this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2 - (ScreenButtonsSize * 2), ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeConfigScreen()));
+        this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2 + (ScreenButtonsSize), ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeOutfitScreen()));
+        this.addRenderableWidget(new ButtonScreenWidget(HideawayPlus.client().screen.width - 20 - ScreenButtonsSize, HideawayPlus.client().screen.height / 2 - (ScreenButtonsSize), ScreenButtonsSize, ScreenButtonsSize, "widget.model_slider.title", new WardrobeConfigScreen()));
     }
 
     @Override
@@ -39,9 +38,7 @@ public class WardrobeScreen extends Screen {
 
     @Override
     public void onClose() {
-//        HideawayPlus.player().connection.send(new ServerboundPlayerInputPacket(0, 0, false, true));
         HideawayPlus.client().setScreen(null);
-        Player wardrobePlayer = Wardrobe.wardrobePlayer;
         Wardrobe.outfit = new WardrobeOutfit("","", "", Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.HEAD), Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.CHEST), Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.OFFHAND));
         Wardrobe.applyOutfit();
     }

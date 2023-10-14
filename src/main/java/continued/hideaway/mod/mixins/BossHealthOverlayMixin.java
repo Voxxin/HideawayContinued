@@ -1,8 +1,6 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.config.model.WardrobeConfigModel;
 import continued.hideaway.mod.feat.ext.BossHealthOverlayAccessor;
 import continued.hideaway.mod.feat.location.Location;
 import net.minecraft.client.gui.GuiGraphics;

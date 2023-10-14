@@ -3,6 +3,8 @@ package continued.hideaway.mod.feat.ui;
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.rendering.screen.widget.ButtonOptionWidget;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -29,6 +31,12 @@ public class ConfigUI extends Screen {
             spacing++;
         }
 
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderDirtBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
