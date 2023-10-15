@@ -5,12 +5,15 @@ import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.feat.wardrobe.Wardrobe;
+import continued.hideaway.mod.util.Activity;
 import continued.hideaway.mod.util.Chars;
+import continued.hideaway.mod.util.TimeUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FastColor;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,12 +45,25 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
         if (HideawayPlus.jukebox() != null && HideawayPlus.jukebox().currentTrack != null) {
             guiGraphics.drawString(
-                    Minecraft.getInstance().font,
+                    minecraft.font,
                     Component.empty()
                             .append(Chars.DISC.getComponent())
                             .append(Component.literal("Now playing: " + HideawayPlus.jukebox().currentTrack.name)),
                     10, 10, 0xffffff, true
             );
+        }
+
+        if (ModConfigModel.ACTIVITY_TIMER.value && !minecraft.options.renderDebug) {
+            int color = FastColor.ARGB32.color(100, 0, 0, 0);
+            int intTime = TimeUtil.getGameTime((int) minecraft.player.level().getDayTime());
+            int padding = 3;
+            Activity activity = Activity.getNext(intTime);
+            Font font = minecraft.font;
+            Component text = Component.empty()
+                    .append(activity.getIcon())
+                    .append(Component.literal(" " + activity.name + " in " + TimeUtil.getTimeUntil(intTime, activity.time)));
+            guiGraphics.fill(0, 30 - padding, 10 + padding + font.width(text), 30 + padding - 1 + font.lineHeight, color);
+            guiGraphics.drawString(font, text, 10,30, 0xffffff);
         }
     }
 

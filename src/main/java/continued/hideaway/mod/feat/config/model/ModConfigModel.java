@@ -13,6 +13,10 @@ public enum ModConfigModel {
             true,
             "config.hp-config.general.xp_percent"
     ),
+    ACTIVITY_TIMER (
+            true,
+            "config.hp-config.general.activity_timer"
+    ),
     INVENTORY_RARITIES (
             true,
             "config.hp-config.general.inventory_rarities"

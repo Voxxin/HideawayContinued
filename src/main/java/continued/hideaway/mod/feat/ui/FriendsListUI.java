@@ -3,9 +3,11 @@ package continued.hideaway.mod.feat.ui;
 import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import continued.hideaway.mod.util.StaticValues;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.commands.arguments.ArgumentSignatures;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.LastSeenMessages;
 import net.minecraft.network.protocol.game.ServerboundChatCommandPacket;
 import net.minecraft.world.inventory.ChestMenu;
@@ -26,15 +28,17 @@ public class FriendsListUI {
     private static boolean calledProper = false;
 
     public static void tick() {
-        if (HideawayPlus.client().screen != null && HideawayPlus.client().screen instanceof ContainerScreen && ((ContainerScreen) HideawayPlus.client().screen).getMenu().getItems().stream().filter(itemStack -> itemStack.getItem() == Items.PLAYER_HEAD).count() > StaticValues.friendsUsernames.size() - 1)
+        Minecraft client = HideawayPlus.client();
+
+        if (client.screen instanceof ContainerScreen && ((ContainerScreen) client.screen).getMenu().getItems().stream().filter(itemStack -> itemStack.getItem() == Items.PLAYER_HEAD).count() > StaticValues.friendsUsernames.size() - 1)
             StaticValues.friendsCheck = false;
 
-        if (!StaticValues.friendsUUID.contains(HideawayPlus.client().player.getStringUUID()))
-            StaticValues.friendsUUID.add(HideawayPlus.client().player.getStringUUID());
-        if (!StaticValues.friendsUsernames.contains(HideawayPlus.client().player.getName().getString()))
-            StaticValues.friendsUsernames.add(HideawayPlus.client().player.getName().getString());
+        if (!StaticValues.friendsUUID.contains(client.player.getStringUUID()))
+            StaticValues.friendsUUID.add(client.player.getStringUUID());
+        if (!StaticValues.friendsUsernames.contains(client.player.getName().getString()))
+            StaticValues.friendsUsernames.add(client.player.getName().getString());
         if (StaticValues.friendsCheck) return;
-        if (HideawayPlus.client().screen instanceof ContainerScreen abstractContainerScreen) {
+        if (client.screen instanceof ContainerScreen abstractContainerScreen) {
             ChestMenu menu = abstractContainerScreen.getMenu();
             calledProper = true;
             if (oldMenu != null && oldMenu == menu) return;
@@ -50,11 +54,14 @@ public class FriendsListUI {
                         List<ItemStack> newAllItems = new ArrayList<>(allItems);
                         for (ItemStack itemStack : newAllItems) {
                             if (itemStack.getItem() == Items.PLAYER_HEAD) {
-                                if (itemStack.getTag().toString().contains("Left click to Accept")) continue;
-                                int[] uuidIntArray = itemStack.getTag().getCompound("SkullOwner").getIntArray("Id");
+                                CompoundTag tag = itemStack.getTag();
+                                CompoundTag skull = tag.getCompound("SkullOwner");
+
+                                if (tag.toString().contains("Left click to Accept")) continue;
+                                int[] uuidIntArray = skull.getIntArray("Id");
                                 String uuid = UUIDUtil.uuidFromIntArray(uuidIntArray).toString();
                                 if (!StaticValues.friendsUUID.contains(uuid)) StaticValues.friendsUUID.add(uuid);
-                                String name = itemStack.getTag().getCompound("SkullOwner").getString("Name");
+                                String name = skull.getString("Name");
                                 if (!StaticValues.friendsUsernames.contains(name))
                                     StaticValues.friendsUsernames.add(name);
                             }
@@ -64,7 +71,7 @@ public class FriendsListUI {
 
             if (!hasMorePages) {
                 StaticValues.friendsCheck = true;
-                HideawayPlus.client().setScreen(null);
+                client.setScreen(null);
             } else {
                 Slot paperSlot = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("→")).findFirst().orElse(null);
                 ((AbstractContainerScreenAccessor) abstractContainerScreen).hp$slotChange(paperSlot, 0, 0, ClickType.PICKUP);
@@ -72,9 +79,8 @@ public class FriendsListUI {
         } else {
             if (ticker >= 200 && !calledProper) {
                 LastSeenMessages.Update messages = new LastSeenMessages.Update(0, new BitSet());
-
                 Instant now = Instant.now();
-                HideawayPlus.client().player.connection.send(
+                client.player.connection.send(
                         new ServerboundChatCommandPacket(
                                 "friend",
                                 now,

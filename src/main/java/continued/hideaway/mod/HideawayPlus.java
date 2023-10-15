@@ -21,6 +21,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.player.LocalPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,7 +98,7 @@ public class HideawayPlus implements ClientModInitializer {
                     }
                 }, 0))
                 .add(Task.of(() -> {
-                    if (HideawayPlus.connected() && (!friendsCheck || client().screen == null || friendsUUID.isEmpty())) {
+                    if (HideawayPlus.connected() && (!friendsCheck || friendsUUID.isEmpty()) && client().screen == null) {
                         FriendsListUI.tick();
                     }
                 }, 0))
@@ -128,8 +129,9 @@ public class HideawayPlus implements ClientModInitializer {
     }
 
     public static boolean connected() {
-        if (Minecraft.getInstance().getCurrentServer() != null) {
-            return Minecraft.getInstance().getCurrentServer().ip.endsWith("playhideaway.com");
+        ServerData server = Minecraft.getInstance().getCurrentServer();
+        if (server != null) {
+            return server.ip.endsWith("playhideaway.com");
         } else return false;
     }
 
