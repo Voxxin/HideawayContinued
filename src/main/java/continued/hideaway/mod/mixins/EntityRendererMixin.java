@@ -28,7 +28,7 @@ public abstract class EntityRendererMixin <T extends Entity>{
             String playerName = DisplayNameUtil.ignFromDisplayName(entity.getDisplayName().getString());
             MutableComponent newName = DisplayNameUtil.withBadges((MutableComponent) entity.getDisplayName(), playerName, false);
             this.renderNameTag(entity, newName, poseStack, buffer, packedLight);
+            ci.cancel();
         }
-        ci.cancel();
     }
 }
