@@ -30,6 +30,7 @@
     "SplashRendererMixin",
     "TickMixin",
     "TooltipRenderUtilMixin",
+    "ext.ClientPacketListenerAccessor",
     "ext.GridLayoutAccessor",
     "ext.KeyBindingAccessor",
     "ext.SoundEventAccessor"
