@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class FriendsListUI {
     private static ChestMenu oldMenu = null;
-    private static int ticker = 175;
+    private static int ticker = 0;
     private static boolean calledProper = false;
 
     public static void tick() {
@@ -77,7 +77,7 @@ public class FriendsListUI {
                 ((AbstractContainerScreenAccessor) abstractContainerScreen).hp$slotChange(paperSlot, 0, 0, ClickType.PICKUP);
             }
         } else {
-            if (ticker >= 200 && !calledProper) {
+            if (ticker >= 100 && !calledProper) {
                 LastSeenMessages.Update messages = new LastSeenMessages.Update(0, new BitSet());
                 Instant now = Instant.now();
                 client.player.connection.send(
