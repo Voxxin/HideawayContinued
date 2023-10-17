@@ -11,6 +11,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -418,13 +419,17 @@ public class OutfitItemsWidget extends AbstractWidget {
             if (oldOutfit == null || thisOutfit != oldOutfit) {
                 oldOutfit = thisOutfit;
 
-                if (nameBar != null) nameBar.text = thisOutfit.title;
+                if (nameBar != null) {
+                    nameBar.text = thisOutfit.title;
+                }
             }
         }
 
         if ((thisOutfit == null && oldOutfit != null)) {
             oldOutfit = null;
-            nameBar.text = Component.translatable("widget.outfit_editor.basic_outfit_name").getString();
+            if (nameBar != null) {
+                nameBar.text = Component.translatable("widget.outfit_editor.basic_outfit_name").getString();
+            }
         }
 
         int sizeOfNameY = 128;
@@ -437,19 +442,21 @@ public class OutfitItemsWidget extends AbstractWidget {
         int deleteBtn = (screenWidth / 2 + sizeOfNameY / 2) - sizeOfNameY - spacing;
         int clearButton = startPosName + sizeOfNameY / 2;
 
-        guiGraphics.fill(startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY, 0x80FFFFFF);
-
-        if (nameBar == null) nameBar = nameBars.stream()
-                .filter(n -> n.title.equals("outfitName"))
-                .findFirst()
-                .orElseGet(() -> {
-                    NameBar newBar = new NameBar("outfitName", thisOutfit == null
-                            ? Component.translatable("widget.outfit_editor.basic_outfit_name").getString()
-                            : thisOutfit.title,
-                            startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
-                    if (!nameBars.contains(newBar)) nameBars.add(newBar);
-                    return newBar;
-                });
+        if (nameBar == null) {
+            nameBar = nameBars.stream()
+                    .filter(n -> n.title.equals("outfitName"))
+                    .findFirst()
+                    .orElseGet(() -> {
+                        NameBar newBar = new NameBar("outfitName", thisOutfit == null
+                                ? Component.translatable("widget.outfit_editor.basic_outfit_name").getString()
+                                : thisOutfit.title,
+                                startPosName, xPos, startPosName + sizeOfNameY, xPos + sizingY);
+                        if (!nameBars.contains(newBar)) {
+                            nameBars.add(newBar);
+                        }
+                        return newBar;
+                    });
+        }
 
         int tickTotal = 60;
         String name = nameBar.text;
@@ -467,15 +474,15 @@ public class OutfitItemsWidget extends AbstractWidget {
 
         buttons.clear();
 
-        if ((!WardrobeUtil.outfitExists() || (thisOutfit != null && !nameBar.text.equals(thisOutfit.title))) && WardrobeUtil.validOutfit(nameBar.text)) {
-            guiGraphics.fill(saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
+        if ((!WardrobeUtil.outfitExists() || (thisOutfit != null && !nameBar.text.equals(thisOutfit.title)) && WardrobeUtil.validOutfit(nameBar.text))) {
+            guiGraphics.blit(WIDGETS_LOCATION, saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 20, 4);
             if (!buttons.contains(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY))) {
                 buttons.add(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY));
             }
         }
 
         if (WardrobeUtil.outfitExists()) {
-            guiGraphics.fill(deleteBtn, xPos, deleteBtn - sizeOfButtons, xPos + sizingY, 0x80FFFFFF);
+            guiGraphics.blit(WIDGETS_LOCATION, deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY, 20, 4);
             if (!buttons.contains(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY))) {
                 buttons.add(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY));
             }
@@ -484,7 +491,7 @@ public class OutfitItemsWidget extends AbstractWidget {
         if (Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.HEAD).getItem() != Items.AIR ||
                 Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.CHEST).getItem() != Items.AIR ||
                 Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem() != Items.AIR) {
-            guiGraphics.fill(clearButton - (sizeOfButtons * 2), xPos + (sizeOfButtons * 2), clearButton + sizeOfButtons, xPos + (sizeOfButtons * 3), 0x80FFFFFF);
+            guiGraphics.blitNineSliced(WIDGETS_LOCATION, clearButton - (sizeOfButtons * 2), xPos + (sizeOfButtons * 2), sizeOfButtons, sizeOfButtons,20, 4, 0,0, sizeOfButtons);
             if (!buttons.contains(new Button("clear", clearButton - (sizeOfButtons * 2), xPos + (sizeOfButtons * 2), clearButton + sizeOfButtons, xPos + (sizeOfButtons * 3)))) {
                 buttons.add(new Button("clear", clearButton - (sizeOfButtons * 2), xPos + (sizeOfButtons * 2), clearButton + sizeOfButtons, xPos + (sizeOfButtons * 3)));
             }

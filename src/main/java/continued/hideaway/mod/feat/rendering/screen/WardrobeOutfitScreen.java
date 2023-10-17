@@ -5,6 +5,7 @@ import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.rendering.screen.widget.OutfitItemsWidget;
 import continued.hideaway.mod.feat.rendering.screen.widget.RotationSliderWidget;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -22,7 +23,7 @@ public class WardrobeOutfitScreen extends Screen {
         assert HideawayPlus.client().screen != null;
         HideawayPlusConfig.init();
 
-        input = new OutfitItemsWidget(oldScreenWidth, oldScreenHeight, Component.translatable("widget.model_slider.title"));
+        input = new OutfitItemsWidget(oldScreenWidth, oldScreenHeight, Component.translatable("widget.outfit_editor.title"));
         input.setResponder(this::onEdited);
 
         this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 ,36, 170, 20, Component.translatable("widget.model_slider.title")));

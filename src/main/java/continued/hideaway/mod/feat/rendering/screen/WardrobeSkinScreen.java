@@ -28,7 +28,7 @@ public class WardrobeSkinScreen extends Screen {
         assert HideawayPlus.client().screen != null;
         HideawayPlusConfig.init();
 
-        input = new SkinsBarWidget(this.width, this.height, Component.translatable("widget.model_slider.title"));
+        input = new SkinsBarWidget(this.width, this.height, Component.translatable("widget.skin_bar.title"));
         input.setResponder(this::onEdited);
 
         this.addRenderableWidget(new RotationSliderWidget(HideawayPlus.client().screen.width/2 ,36, 170, 20, Component.translatable("widget.model_slider.title")));

@@ -7,6 +7,8 @@ import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.feat.wardrobe.WardrobeOutfit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.EditServerScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
