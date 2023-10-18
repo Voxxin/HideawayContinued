@@ -52,7 +52,6 @@ public class FriendsListUI {
             } else {
                 Slot paperSlot = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("→")).findFirst().orElse(null);
                 ((AbstractContainerScreenAccessor) abstractContainerScreen).hp$slotChange(paperSlot, 0, 0, ClickType.PICKUP);
-                tick();
             }
         } else if (client.getConnection() != null) {
             ((ClientPacketListenerAccessor) client.getConnection()).hp$sendCommand("friend");

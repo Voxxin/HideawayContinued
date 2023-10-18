@@ -433,8 +433,8 @@ public class OutfitItemsWidget extends AbstractWidget {
         }
 
         int sizeOfNameY = 128;
-        int sizeOfButtons = 16;
-        int sizingY = 16;
+        int sizeOfButtons = 20;
+        int sizingY = 20;
         int spacing = 16;
         int xPos = screenHeight - startingPosItems[1] - 32;
         int startPosName = screenWidth / 2 - sizeOfNameY / 2;
@@ -475,17 +475,15 @@ public class OutfitItemsWidget extends AbstractWidget {
         buttons.clear();
 
         if ((!WardrobeUtil.outfitExists() || (thisOutfit != null && !nameBar.text.equals(thisOutfit.title)) && WardrobeUtil.validOutfit(nameBar.text))) {
-            guiGraphics.blit(WIDGETS_LOCATION, saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY, 20, 4);
-            if (!buttons.contains(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY))) {
-                buttons.add(new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY));
-            }
+            this.renderButton(guiGraphics, saveBtn, xPos, sizeOfButtons);
+            Button saveButton = new Button("save", saveBtn, xPos, saveBtn + sizeOfButtons, xPos + sizingY);
+            if (!buttons.contains(saveButton)) buttons.add(saveButton);
         }
 
         if (WardrobeUtil.outfitExists()) {
-            guiGraphics.blit(WIDGETS_LOCATION, deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY, 20, 4);
-            if (!buttons.contains(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY))) {
-                buttons.add(new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY));
-            }
+            this.renderButton(guiGraphics, deleteBtn - sizeOfButtons, xPos, sizeOfButtons);
+            Button deleteButton = new Button("delete", deleteBtn - sizeOfButtons, xPos, deleteBtn, xPos + sizingY);
+            if (!buttons.contains(deleteButton)) buttons.add(deleteButton);
         }
 
         if (Wardrobe.wardrobePlayer.getItemBySlot(EquipmentSlot.HEAD).getItem() != Items.AIR ||
@@ -717,5 +715,11 @@ public class OutfitItemsWidget extends AbstractWidget {
         public boolean isOverlaying(int mouseX, int mouseY) {
             return mouseX >= aX && mouseX <= bX && mouseY >= aY && mouseY <= bY;
         }
+    }
+
+    private void renderButton(GuiGraphics guiGraphics, int x, int y, int width) {
+        guiGraphics.blit(WIDGETS_LOCATION, x, y, 0, 66, 2, 20);
+        guiGraphics.blit(WIDGETS_LOCATION, x + 2, y, 2, 66, width - 4, 20);
+        guiGraphics.blit(WIDGETS_LOCATION, x + width - 2, y, 198, 66, 2, 20);
     }
 }
