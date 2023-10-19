@@ -28,6 +28,7 @@ public class HideawayPlusConfig {
     private static final File modDir = FabricLoader.getInstance().getConfigDir().resolve(Constants.MOD_ID).toFile();
     private static final File configDir = new File(modDir, "configs");
     private static final File outfitsDir = new File(modDir, "outfits");
+    private static final File skinsDir = new File(modDir, "skins");
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

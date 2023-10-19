@@ -19,7 +19,6 @@
       "height": 7,
       "ascent": 7
     },
-
     {
       "type": "bitmap",
       "file": "hideaway_plus:badge/user.png",
@@ -27,7 +26,6 @@
       "height": 10,
       "ascent": 9
     },
-
     {
       "type": "bitmap",
       "file": "hideaway_plus:badge/user.png",
@@ -63,11 +61,22 @@
       "height": 8,
       "ascent": 7
     },
-
     {
       "type": "bitmap",
       "file": "hideaway_plus:disc.png",
       "chars": [ "\uE010" ],
+      "height": 8,
+      "ascent": 7
+    },
+    {
+      "type": "bitmap",
+      "file": "hideaway_plus:activities.png",
+      "chars": [
+        "\uE011",
+        "\uE012",
+        "\uE013",
+        "\uE014"
+      ],
       "height": 8,
       "ascent": 7
     }
