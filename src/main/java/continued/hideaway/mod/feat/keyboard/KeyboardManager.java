@@ -1,13 +1,12 @@
 package continued.hideaway.mod.feat.keyboard;
 
 import continued.hideaway.mod.HideawayPlus;
-import net.minecraft.client.gui.components.AbstractScrollWidget;
-import net.minecraft.client.gui.screens.ChatScreen;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Locale;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 public class KeyboardManager {
 
@@ -45,7 +44,7 @@ public class KeyboardManager {
             }
         } else if (newString.equals(Space)) {
             text += " ";
-        } else if (newString.matches("[a-zA-Z0-9]") || newString.matches("(\\:\\\\\\/\\?\\-\\=\\+\\(\\)\\&\\%\\!\\@\\#\\$\\\\\\^\\[\\]\\\\\\:\\,\\.\\>\\<)")) {
+        } else if (newString.matches("[a-zA-Z0-9]") || newString.matches("(:\\\\/\\?-=\\+\\(\\)&%!@#\\$\\\\\\^\\[]\\\\:,\\.><)")) {
             newString = newString.toLowerCase(Locale.ROOT);
             if (isKeyDown(GLFW_KEY_LEFT_SHIFT)) newString = newString.toUpperCase(Locale.ROOT);
 

@@ -26,7 +26,7 @@ public class FriendsListUI {
     private static boolean calledProper = false;
 
     public static void tick() {
-        if (HideawayPlus.client().screen != null && HideawayPlus.client().screen instanceof ContainerScreen && ((ContainerScreen) HideawayPlus.client().screen).getMenu().getItems().stream().filter(itemStack -> itemStack.getItem() == Items.PLAYER_HEAD).count() > StaticValues.friendsUsernames.size() - 1)
+        if (HideawayPlus.client().screen != null && HideawayPlus.client().screen instanceof ContainerScreen containerScreen && containerScreen.getMenu().getItems().stream().filter(itemStack -> itemStack.getItem() == Items.PLAYER_HEAD).count() > StaticValues.friendsUsernames.size() - 1)
             StaticValues.friendsCheck = false;
 
         if (!StaticValues.friendsUUID.contains(HideawayPlus.client().player.getStringUUID()))
