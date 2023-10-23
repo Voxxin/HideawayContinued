@@ -10,9 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class StaticValues {
     public static int shopIterationNum = 0;
     public static boolean shopScreenWasFilled = false;
-
-    public static List<String> friendsUUID = new ArrayList<>();
-    public static List<String> friendsUsernames = new ArrayList<>();
+    public static List<String> friends = new ArrayList<>();
     public static boolean friendsCheck = false;
 
     public static Map<String, String> users = new ConcurrentHashMap<>();

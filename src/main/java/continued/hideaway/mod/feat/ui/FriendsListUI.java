@@ -6,7 +6,6 @@ import continued.hideaway.mod.mixins.ext.ClientPacketListenerAccessor;
 import continued.hideaway.mod.util.StaticValues;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
@@ -15,43 +14,40 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import java.util.List;
-
 public class FriendsListUI {
+    private static ChestMenu oldMenu = null;
     public static void tick() {
         if (StaticValues.friendsCheck) return;
         Minecraft client = HideawayPlus.client();
 
         if (client.screen instanceof ContainerScreen abstractContainerScreen) {
             ChestMenu menu = abstractContainerScreen.getMenu();
+            if (oldMenu != null && oldMenu == menu) return;
+            oldMenu = menu;
 
-            List<ItemStack> items = menu.getItems();
-            boolean hasMorePages = false;
+            Slot nextPage = null;
+            for (Slot slot : menu.slots) {
+                ItemStack itemStack = slot.getItem();
+                CompoundTag tag = itemStack.getTag();
 
-            System.out.println("Friends list size: " + StaticValues.friendsUsernames.size());
-            for (ItemStack itemStack : items) {
-                Item item = itemStack.getItem();
-                if (item == Items.PLAYER_HEAD) {
-                    CompoundTag tag = itemStack.getTag();
-                    if (tag.toString().contains("Left click to Accept")) continue;
-
-                    CompoundTag skull = tag.getCompound("SkullOwner");
-                    int[] uuidIntArray = skull.getIntArray("Id");
-                    String uuid = UUIDUtil.uuidFromIntArray(uuidIntArray).toString();
-                    String name = skull.getString("Name");
-                    if (!StaticValues.friendsUUID.contains(uuid)) StaticValues.friendsUUID.add(uuid);
-                    if (!StaticValues.friendsUsernames.contains(name)) StaticValues.friendsUsernames.add(name);
-                } else if (item == Items.PAPER && itemStack.getTag().getAsString().contains("→")) {
-                    hasMorePages = true;
+                if (tag != null) {
+                    Item item = itemStack.getItem();
+                    String tagStr = tag.toString();
+                    if (item == Items.PLAYER_HEAD && !tagStr.contains("Left click to Accept")) {
+                        CompoundTag skull = tag.getCompound("SkullOwner");
+                        String name = skull.getString("Name");
+                        if (!StaticValues.friends.contains(name)) StaticValues.friends.add(name);
+                    } else if (item == Items.PAPER && tagStr.contains("→")) {
+                        nextPage = slot;
+                    }
                 }
             }
 
-            if (!hasMorePages) {
-                StaticValues.friendsCheck = true;
+            if (nextPage == null) {
                 client.setScreen(null);
+                StaticValues.friendsCheck = true;
             } else {
-                Slot paperSlot = menu.slots.stream().filter(slot -> slot.getItem().getItem() == Items.PAPER && slot.getItem().getTag().getAsString().contains("→")).findFirst().orElse(null);
-                ((AbstractContainerScreenAccessor) abstractContainerScreen).hp$slotChange(paperSlot, 0, 0, ClickType.PICKUP);
+                ((AbstractContainerScreenAccessor) abstractContainerScreen).hp$slotChange(nextPage, 0, 0, ClickType.PICKUP);
             }
         } else if (client.getConnection() != null) {
             ((ClientPacketListenerAccessor) client.getConnection()).hp$sendCommand("friend");

@@ -28,9 +28,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
-import static continued.hideaway.mod.util.StaticValues.friendsCheck;
-import static continued.hideaway.mod.util.StaticValues.friendsUUID;
-
 @Environment(EnvType.CLIENT)
 public class HideawayPlus implements ClientModInitializer {
     private static final Logger LOGGER = LogManager.getLogger(Constants.MOD_NAME);
@@ -98,10 +95,10 @@ public class HideawayPlus implements ClientModInitializer {
                     }
                 }, 0))
                 .add(Task.of(() -> {
-                    if (HideawayPlus.connected() && (!friendsCheck || friendsUUID.isEmpty()) && client().screen == null) {
+                    if (HideawayPlus.connected()) {
                         FriendsListUI.tick();
                     }
-                }, 0))
+                }, 20))
                 .add(Task.of(() -> {
                     if (HideawayPlus.connected()) {
                         API.enabled = true;
