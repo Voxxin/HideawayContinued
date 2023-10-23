@@ -4,7 +4,6 @@ import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
 import continued.hideaway.mod.feat.location.Location;
-import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.util.Activity;
 import continued.hideaway.mod.util.Chars;
 import continued.hideaway.mod.util.TimeUtil;
@@ -41,8 +40,6 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void onRender(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
-        if (Wardrobe.wardrobePlayer != null) overlayMessageString = Component.empty();
-
         if (HideawayPlus.jukebox() != null && HideawayPlus.jukebox().currentTrack != null) {
             guiGraphics.drawString(
                     minecraft.font,

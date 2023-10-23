@@ -12,7 +12,6 @@ import continued.hideaway.mod.feat.lifecycle.Task;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.feat.shop.Shop;
 import continued.hideaway.mod.feat.ui.FriendsListUI;
-import continued.hideaway.mod.feat.wardrobe.Wardrobe;
 import continued.hideaway.mod.util.Constants;
 import continued.hideaway.mod.util.StaticValues;
 import net.fabricmc.api.ClientModInitializer;
@@ -44,7 +43,7 @@ public class HideawayPlus implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Initalize debug users (USE UUID)
+        // Initialize debug users (USE UUID)
         debugUsers.add("1228311667704193a92fc26a31a3455d"); // Bisou
         debugUsers.add("b344687bec74479a95401aa8ccb13e92"); // OliviaTheVampire
         debugUsers.add("8b484179e47e417b8ecad204aa796e79"); // Dragonostic
@@ -117,7 +116,6 @@ public class HideawayPlus implements ClientModInitializer {
                     }
                 }, 100))
                 .add(Task.of(API::modTeam, 50))
-                .add(Task.of(Wardrobe::tick, 0))
                 .add(Task.of(() -> {
                     if (HideawayPlus.connected()) {
                         KEYBINDS.tick();

@@ -7,7 +7,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "AbstractClientPlayerMixin",
     "AbstractContainerScreenMixin",
     "ArmourStandMobMixin",
     "BossHealthOverlayMixin",
@@ -24,10 +23,8 @@
     "LogoRendererMixin",
     "MinecraftClientMixin",
     "OptionsMixin",
-    "PlayerMixin",
     "PlayerRendererMixin",
     "SoundEventMixin",
-    "SplashRendererMixin",
     "TickMixin",
     "TooltipRenderUtilMixin",
     "ext.ClientPacketListenerAccessor",

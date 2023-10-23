@@ -46,6 +46,7 @@ public class FriendsListUI {
             if (nextPage == null) {
                 client.setScreen(null);
                 StaticValues.friendsCheck = true;
+                System.out.println(StaticValues.friends);
             } else {
                 ((AbstractContainerScreenAccessor) abstractContainerScreen).hp$slotChange(nextPage, 0, 0, ClickType.PICKUP);
             }

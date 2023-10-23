@@ -11,9 +11,4 @@ public class LogoRendererMixin {
     private int logoBlitHeight(int h) {
         return 64;
     }
-
-    @ModifyVariable(method = "renderLogo(Lnet/minecraft/client/gui/GuiGraphics;IFI)V", at = @At("HEAD"), ordinal = 1, argsOnly = true)
-    private int logoPositionHeight(int h) {
-        return 33;
-    }
 }
