@@ -11,7 +11,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -659,9 +658,9 @@ public class OutfitItemsWidget extends AbstractWidget {
         }
 
         public void render(GuiGraphics guiGraphics) {
-            guiGraphics.blit(WIDGETS_LOCATION, this.aX, this.aY, 0, 66, 2, 20);
-            guiGraphics.blit(WIDGETS_LOCATION, this.aX + 2, this.aY, 2, 66, this.bX - this.aX - 4, 20);
-            guiGraphics.blit(WIDGETS_LOCATION, this.bX - 2, this.aY, 198, 66, 2, 20);
+            int half = (this.bX - this.aX) / 2;
+            guiGraphics.blit(WIDGETS_LOCATION, this.aX, this.aY, 0, 66, half, 20);
+            guiGraphics.blit(WIDGETS_LOCATION, this.bX - half, this.aY, 200 - half, 66, half, 20);
         }
     }
 
@@ -720,11 +719,5 @@ public class OutfitItemsWidget extends AbstractWidget {
         public boolean isOverlaying(int mouseX, int mouseY) {
             return mouseX >= aX && mouseX <= bX && mouseY >= aY && mouseY <= bY;
         }
-    }
-
-    private void renderButton(GuiGraphics guiGraphics, int x, int y, int width) {
-        guiGraphics.blit(WIDGETS_LOCATION, x, y, 0, 66, 2, 20);
-        guiGraphics.blit(WIDGETS_LOCATION, x + 2, y, 2, 66, width - 4, 20);
-        guiGraphics.blit(WIDGETS_LOCATION, x + width - 2, y, 198, 66, 2, 20);
     }
 }

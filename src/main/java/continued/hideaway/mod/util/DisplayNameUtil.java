@@ -104,7 +104,7 @@ public class DisplayNameUtil {
             }
         }
 
-        if (StaticValues.friendsUsernames.contains(playerName)) Chars.FRIEND.addBadge(newComponent, tooltip);
+        if (StaticValues.friends.contains(playerName)) Chars.FRIEND.addBadge(newComponent, tooltip);
 
         if (StaticValues.devs.contains(playerID)) Chars.DEV.addBadge(newComponent, tooltip);
         else if (StaticValues.teamMembers.contains(playerID)) Chars.TEAM.addBadge(newComponent, tooltip);
