@@ -29,9 +29,9 @@
     "config.hp-config.general.xp_percent": "Experience %",
     "config.hp-config.general.activity_timer": "Activity Timer",
     "config.hp-config.general.inventory_rarities": "Inventory Rarities",
-    "config.hp-config.general.auto_sell": "Automatically fill shop screen",
-    "config.hp-config.general.no_ambient_sounds": "Disable ambient sounds",
-    "config.hp-config.general.no_activity_songs": "Disable activity songs",
+    "config.hp-config.general.auto_sell": "Auto-Fill Shops",
+    "config.hp-config.general.ambient_sounds": "Ambient Sounds",
+    "config.hp-config.general.activity_songs": "Activity Songs",
 
     "config.hp-config.wardrobe.title": "Wardrobe Configuration",
 

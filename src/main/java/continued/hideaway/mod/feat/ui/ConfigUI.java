@@ -1,36 +1,63 @@
 package continued.hideaway.mod.feat.ui;
 
-import continued.hideaway.mod.HideawayPlus;
+import continued.hideaway.mod.feat.config.HideawayPlusConfig;
 import continued.hideaway.mod.feat.config.model.ModConfigModel;
-import continued.hideaway.mod.feat.rendering.screen.widget.ButtonOptionWidget;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.MutableComponent;
+
+import java.util.*;
 
 public class ConfigUI extends Screen {
-    private final String title;
     private final Screen parent;
+
     public ConfigUI(Screen parent) {
         super(Component.translatable("config.hp-config.general.title"));
         this.parent = parent;
-        this.title = "config.hp-config.general.title";
     }
 
     @Override
     protected void init() {
-        super.init();
-        int spacing = 0;
-        for (ModConfigModel configModel : ModConfigModel.values()) {
-            assert HideawayPlus.client().screen != null;
+        List<ModConfigModel> options = Arrays.asList(ModConfigModel.values());
+        int spacingY = 25;
+        int spacingX = 5;
+        int startingY = 25;
+        int availableSpace = this.height - 20 - spacingY;
+        int totalHeight = options.size() * spacingY + startingY;
+        int rows = 1;
 
-            int startingPosX = 20;
-            int startingPosY = ((HideawayPlus.client().screen.height) / 5) + (30 * spacing);
-
-            this.addRenderableWidget(new ButtonOptionWidget(startingPosX, startingPosY, 20, 20, configModel));
-            spacing++;
+        while (totalHeight / rows > availableSpace) {
+            rows++;
         }
 
+        int buttonWidth = this.width / (rows + 1) - spacingX;
+
+        int currentColumn = 0;
+        int currentRow = 0;
+        for (int i = 0; i < options.size(); i++) {
+            ModConfigModel configModel = options.get(i);
+            MutableComponent label = Component.translatable(configModel.name).append(": ");
+
+            if (currentColumn > (options.size() - 1) / rows) {
+                currentRow++;
+                currentColumn = 0;
+            }
+
+            int xPos = (rows > 1) ? this.width / (rows + 1) * (currentRow + 1) - buttonWidth / 2 : this.width / 2 - buttonWidth / 2;
+            int yPos = startingY + spacingY * currentColumn;
+
+            this.addRenderableWidget(Button.builder(label.copy().append(configModel.value ? "ON" : "OFF"), button -> {
+                configModel.value = !configModel.value;
+                HideawayPlusConfig.updateModConfig();
+                button.setMessage(label.copy().append(configModel.value ? "ON" : "OFF"));
+            }).bounds(xPos, yPos, buttonWidth, 20).build());
+
+            currentColumn++;
+        }
+        this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), button -> this.minecraft.setScreen(this.parent))
+                .pos(this.width / 2 - 75, this.height - 20 - spacingY).build());
     }
 
     @Override
@@ -41,6 +68,6 @@ public class ConfigUI extends Screen {
 
     @Override
     public void onClose() {
-        HideawayPlus.client().setScreen(parent);
+        this.minecraft.setScreen(parent);
     }
 }

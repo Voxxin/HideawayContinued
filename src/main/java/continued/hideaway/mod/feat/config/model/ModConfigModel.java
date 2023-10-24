@@ -25,13 +25,13 @@ public enum ModConfigModel {
             false,
             "config.hp-config.general.auto_sell"
     ),
-    NO_AMBIENT_SOUNDS (
-            false,
-            "config.hp-config.general.no_ambient_sounds"
+    AMBIENT_SOUNDS (
+            true,
+            "config.hp-config.general.ambient_sounds"
     ),
-    NO_ACTIVITY_SONGS (
-            false,
-            "config.hp-config.general.no_activity_songs"
+    ACTIVITY_SONGS (
+            true,
+            "config.hp-config.general.activity_songs"
     );
 
     public Boolean value;

@@ -18,11 +18,11 @@ public class SoundEventMixin {
         boolean isAmbient = location.getPath().split("\\.")[0].contains("ambient");
         boolean isActivity = location.getPath().split("\\.")[0].contains("activities");
 
-        if (isAmbient && ModConfigModel.NO_AMBIENT_SOUNDS.value) {
+        if (isAmbient && !ModConfigModel.AMBIENT_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isActivity && ModConfigModel.NO_ACTIVITY_SONGS.value) {
+        if (isActivity && !ModConfigModel.ACTIVITY_SONGS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
     }
