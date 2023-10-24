@@ -19,6 +19,7 @@
     "EntityRendererMixin",
     "GameMenuScreenMixin",
     "InGameHudMixin",
+    "ItemRendererMixin",
     "KeyMappingsMixin",
     "LogoRendererMixin",
     "MinecraftClientMixin",
@@ -30,7 +31,6 @@
     "ext.ClientPacketListenerAccessor",
     "ext.GridLayoutAccessor",
     "ext.KeyBindingAccessor",
-    "ext.SoundEventAccessor",
-    "PlayerMixin"
+    "ext.SoundEventAccessor"
   ]
 }
