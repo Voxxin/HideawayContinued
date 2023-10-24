@@ -68,6 +68,6 @@ public class ConfigUI extends Screen {
 
     @Override
     public void onClose() {
-        this.minecraft.setScreen(parent);
+        this.minecraft.setScreen(this.parent);
     }
 }

@@ -64,6 +64,9 @@ public class HideawayPlusConfig {
 
     public static void updateModConfig() {
         JsonObject JSONedFile = new JsonObject();
+        for (ModConfigModel config : ModConfigModel.values()) {
+            JSONedFile.addProperty(config.name, config.value);
+        }
         modConfigFileWriter(JSONedFile);
         init();
     }
