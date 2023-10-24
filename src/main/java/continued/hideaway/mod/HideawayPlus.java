@@ -128,7 +128,8 @@ public class HideawayPlus implements ClientModInitializer {
     public static boolean connected() {
         ServerData server = Minecraft.getInstance().getCurrentServer();
         if (server != null) {
-            return server.ip.endsWith("playhideaway.com");
+            String serverIp = server.ip.toLowerCase();
+            return serverIp.endsWith("playhideaway.com");
         } else return false;
     }
 
