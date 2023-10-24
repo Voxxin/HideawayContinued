@@ -30,6 +30,7 @@
     "ext.ClientPacketListenerAccessor",
     "ext.GridLayoutAccessor",
     "ext.KeyBindingAccessor",
-    "ext.SoundEventAccessor"
+    "ext.SoundEventAccessor",
+    "PlayerMixin"
   ]
 }
