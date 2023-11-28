@@ -6,6 +6,8 @@ import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import continued.hideaway.mod.feat.keyboard.model.KeybindModel;
 import continued.hideaway.mod.feat.ui.FriendsListUI;
 import continued.hideaway.mod.util.StaticValues;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ChestMenu;
@@ -23,14 +25,15 @@ public class Shop {
     private static boolean fill;
     public String oldShopName = null;
     public void tick() {
-        if (HideawayPlus.client().screen == null || !(HideawayPlus.client().screen instanceof ContainerScreen containerScreen)) return;
+        Minecraft client = HideawayPlus.client();
+        if (client.screen == null || !(client.screen instanceof ContainerScreen containerScreen)) return;
 
-        if (getShopName() == null) {
+        String shopName = getShopName(client.screen);
+
+        if (shopName == null) {
             oldShopName = null;
             return;
         }
-
-        String shopName = getShopName();
 
         if (KeybindModel.AUTO_SELL.isDown()) {
             fill = true;
@@ -43,7 +46,7 @@ public class Shop {
             List<Slot> playerEmptySlots = new ArrayList<>();
             ChestMenu chestMenu = containerScreen.getMenu();
 
-            for (Slot slot : chestMenu.slots) {
+            for (Slot slot : chestMenu.slots.subList(0, chestMenu.slots.size() - 3)) {
                 if (slot.getItem().getItem() != Items.AIR) {
                     if (slot.container instanceof Inventory) {
                         playerEmptySlots.add(slot);
@@ -74,9 +77,9 @@ public class Shop {
         }
     }
 
-    private String getShopName() {
-        ChestMenu screen = ((ContainerScreen) HideawayPlus.client().screen).getMenu();
-        String screenName = HideawayPlus.client().screen.getTitle().getString();
+    private String getShopName(Screen menu) {
+        ChestMenu screen = ((ContainerScreen) menu).getMenu();
+        String screenName = menu.getTitle().getString();
         if (screenName.contains("\uE00C") || screenName.contains("\uE010")) { FriendsListUI.tick(); return null; }
 
 

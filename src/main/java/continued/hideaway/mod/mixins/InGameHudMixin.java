@@ -50,7 +50,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
             );
         }
 
-        if (ModConfigModel.ACTIVITY_TIMER.value && !minecraft.options.renderDebug) {
+        if (ModConfigModel.ACTIVITY_TIMER.value && !minecraft.options.renderDebug && HideawayPlus.connected()) {
             int color = FastColor.ARGB32.color(100, 0, 0, 0);
             int intTime = TimeUtil.getGameTime((int) minecraft.player.level().getDayTime());
             int padding = 3;

@@ -1,7 +1,6 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.rendering.CustomChestLayer;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -21,8 +20,6 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 
     @Inject(at = @At("TAIL"), method = "<init>")
     private void constructor(EntityRendererProvider.Context context, boolean useSlimModel, CallbackInfo ci) {
-        if (HideawayPlus.connected() && !ModConfigModel.HIDE_COSMETIC.value) {
-            this.addLayer(new CustomChestLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>(this, context.getModelSet(), context.getItemInHandRenderer()));
-        }
+        if (HideawayPlus.connected()) this.addLayer(new CustomChestLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>(this, context.getModelSet(), context.getItemInHandRenderer()));
     }
 }

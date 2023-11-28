@@ -15,7 +15,6 @@
     "ClientAdvancementsMixin",
     "ContainerScreenMixin",
     "DisplayNameMixin",
-    "EntityMixin",
     "EntityRendererMixin",
     "GameMenuScreenMixin",
     "InGameHudMixin",

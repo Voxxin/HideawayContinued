@@ -5,6 +5,10 @@ public enum ModConfigModel {
             false,
             "config.hp-config.general.hide_cosmetics"
     ),
+    HIDE_LEFT_HAND (
+            false,
+            "config.hp-config.general.hide_left_hand"
+    ),
     DISCORD_RPC (
             true,
             "config.hp-config.general.discord_rpc"
