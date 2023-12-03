@@ -222,10 +222,10 @@ public enum Location {
                 else if (boardNames.contains("\ue524")) HideawayPlus.setLocation(VOLLEYBALL);
             }
             // Bossbar-based
-            else if ((bossBarName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).getBossBarName()) != null) {
+            else if ((bossBarName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).hp$getBossBarName()) != null) {
                 if (bossBarName.contains("\uE612 | Editor Mode is")) HideawayPlus.setLocation(HOTEL_ROOM_SELF);
                 else if (bossBarName.contains("\uE293 ") && bossBarName.contains("'s Room")) {
-                    String visitingPlayerName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).getBossBarName().split(" ")[0];
+                    String visitingPlayerName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).hp$getBossBarName().split(" ")[0];
                     visitingPlayerName = visitingPlayerName.replace("'s", "");
 
                     Location.HOTEL_ROOM_OTHER.name = "In " + visitingPlayerName + "'s room";

@@ -50,7 +50,7 @@ public class BossHealthOverlayMixin implements BossHealthOverlayAccessor {
     }
 
     @Override
-    public String getBossBarName() {
+    public String hp$getBossBarName() {
         return bossBarName;
     }
 }
