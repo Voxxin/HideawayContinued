@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ArmorStand.class)
-public abstract class ArmourStandMobMixin {
+public abstract class ArmorStandMobMixin {
 
     @Shadow
     public abstract void kill();

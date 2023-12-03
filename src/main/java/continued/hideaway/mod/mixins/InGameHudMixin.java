@@ -5,13 +5,14 @@ import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import continued.hideaway.mod.feat.ext.InGameHudAccessor;
 import continued.hideaway.mod.feat.location.Location;
 import continued.hideaway.mod.util.Activity;
-import continued.hideaway.mod.util.Chars;
-import continued.hideaway.mod.util.TimeUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -40,27 +41,28 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void onRender(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
-        if (HideawayPlus.jukebox() != null && HideawayPlus.jukebox().currentTrack != null) {
-            guiGraphics.drawString(
-                    minecraft.font,
-                    Component.empty()
-                            .append(Chars.DISC.getComponent())
-                            .append(Component.literal("Now playing: " + HideawayPlus.jukebox().currentTrack.name)),
-                    10, 10, 0xffffff, true
-            );
-        }
-
         if (ModConfigModel.ACTIVITY_TIMER.value && !minecraft.options.renderDebug && HideawayPlus.connected()) {
             int color = FastColor.ARGB32.color(100, 0, 0, 0);
-            int intTime = TimeUtil.getGameTime((int) minecraft.player.level().getDayTime());
             int padding = 3;
-            Activity activity = Activity.getNext(intTime);
+            Activity activity = Activity.getNext();
             Font font = minecraft.font;
             Component text = Component.empty()
                     .append(activity.getIcon())
-                    .append(Component.literal(" " + activity.name + " in " + TimeUtil.getTimeUntil(intTime, activity.time)));
+                    .append(Component.literal(" " + activity.name + " in " + activity.timeUntil()));
             guiGraphics.fill(0, 30 - padding, 10 + padding + font.width(text), 30 + padding - 1 + font.lineHeight, color);
             guiGraphics.drawString(font, text, 10,30, 0xffffff);
+        }
+
+        if (!minecraft.options.renderDebug && HideawayPlus.connected() && minecraft.player.getInventory().getFreeSlot() == -1) {
+            int color = FastColor.ARGB32.color(100, 0, 0, 0);
+            int padding = 3;
+            int yLevel = ModConfigModel.ACTIVITY_TIMER.value ? 45 : 30;
+            Font font = minecraft.font;
+            Component text = Component.empty()
+                    .append(Component.literal("\uE015").setStyle(Style.EMPTY.withFont(new ResourceLocation("hideaway_plus:text"))))
+                    .append(Component.literal(" Full inventory").withStyle(ChatFormatting.RED));
+            guiGraphics.fill(0, yLevel - padding, 10 + padding + font.width(text), yLevel + padding - 1 + font.lineHeight, color);
+            guiGraphics.drawString(font, text, 10,yLevel, 0xffffff);
         }
     }
 

@@ -25,7 +25,7 @@ public class BossHealthOverlayMixin implements BossHealthOverlayAccessor {
     @Shadow @Final Map<UUID, LerpingBossEvent> events;
     @Unique private String bossBarName;
 
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "render", at = @At("HEAD"))
     private void renderBossBarName(GuiGraphics guiGraphics, CallbackInfo ci) {
         Iterator<LerpingBossEvent> var4 = this.events.values().iterator();
         if (var4.hasNext()) {

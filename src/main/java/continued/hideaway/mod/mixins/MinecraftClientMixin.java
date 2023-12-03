@@ -11,11 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public class MinecraftClientMixin {
-    @Inject(at = @At("HEAD"), method = "close")
-    public void close(CallbackInfo ci) {
-        // HideawayPlus.ws().end();
-    }
-
     @Inject(at = @At("HEAD"), method = "setScreen", cancellable = true)
     public void hideAdvancements(Screen screen, CallbackInfo ci) {
         if (HideawayPlus.connected() && screen instanceof AdvancementsScreen) {

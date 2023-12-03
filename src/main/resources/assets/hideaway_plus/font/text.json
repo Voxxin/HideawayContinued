@@ -70,12 +70,13 @@
     },
     {
       "type": "bitmap",
-      "file": "hideaway_plus:activities.png",
+      "file": "hideaway_plus:gui.png",
       "chars": [
         "\uE011",
         "\uE012",
         "\uE013",
-        "\uE014"
+        "\uE014",
+        "\uE015"
       ],
       "height": 8,
       "ascent": 7

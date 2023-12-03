@@ -4,7 +4,6 @@ import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.keyboard.model.KeybindCategoryModel;
 import continued.hideaway.mod.feat.keyboard.model.KeybindModel;
 import continued.hideaway.mod.feat.ui.InventorySlotsUI;
-import continued.hideaway.mod.feat.ui.JukeboxUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.arguments.ArgumentSignatures;
 import net.minecraft.network.chat.LastSeenMessages;
@@ -27,7 +26,6 @@ public class HPKeybinds {
     public void tick() {
         Minecraft client = HideawayPlus.client();
 
-        while (KeybindModel.JUKEBOX.keyMapping.consumeClick()) client.setScreen(new JukeboxUI());
         while (KeybindModel.LUGGAGE.keyMapping.consumeClick()) InventorySlotsUI.clickSlot(1, client);
         while (KeybindModel.WARDROBE.keyMapping.consumeClick()) InventorySlotsUI.clickSlot(2, client);
         while (KeybindModel.PROFILE.keyMapping.consumeClick()) InventorySlotsUI.clickSlot(3, client);

@@ -8,40 +8,35 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
 public enum Chars {
-    DISC (
-        "\uE010",
-        null,
+    USER (
+        "\uE001",
+        "tooltip.hp.user",
         ChatFormatting.WHITE
     ),
-    USER (
-            "\uE001",
-            "tooltip.hp.user",
-            ChatFormatting.WHITE
-    ),
     FRIEND (
-            "\uE002",
-            "tooltip.hp.friend",
-            ChatFormatting.GOLD
+        "\uE002",
+        "tooltip.hp.friend",
+        ChatFormatting.GOLD
     ),
     DEV (
-            "\uE003",
-            "tooltip.hp.developer",
-            ChatFormatting.YELLOW
+        "\uE003",
+        "tooltip.hp.developer",
+        ChatFormatting.YELLOW
     ),
     TRANSLATOR (
-            "\uE004",
-            "tooltip.hp.translator",
-            ChatFormatting.GREEN
+        "\uE004",
+        "tooltip.hp.translator",
+        ChatFormatting.GREEN
     ),
     TEAM (
-            "\uE005",
-            "tooltip.hp.teamMember",
-            ChatFormatting.LIGHT_PURPLE
+        "\uE005",
+        "tooltip.hp.teamMember",
+        ChatFormatting.LIGHT_PURPLE
     ),
     SETTINGS (
-            "\uEF01",
-            null,
-            ChatFormatting.WHITE
+        "\uEF01",
+        null,
+        ChatFormatting.WHITE
     );
 
     public final String character;

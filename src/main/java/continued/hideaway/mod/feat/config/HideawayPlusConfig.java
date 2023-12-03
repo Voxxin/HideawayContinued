@@ -22,14 +22,13 @@ public class HideawayPlusConfig {
 
     public static void init() {
         try {
-            configDir.mkdirs();
-
-            File[] configs = configDir.listFiles();
-            assert configs != null;
-            if (Arrays.stream(configs).anyMatch(file -> file.getName().equals("mod.json"))) {
-                setupModConfig(Arrays.stream(configs).filter(file -> file.getName().equals("mod.json")).findFirst().orElse(null));
-            } else updateModConfig();
-
+            if (configDir.mkdirs()) {
+                File[] configs = configDir.listFiles();
+                assert configs != null;
+                if (Arrays.stream(configs).anyMatch(file -> file.getName().equals("mod.json"))) {
+                    setupModConfig(Arrays.stream(configs).filter(file -> file.getName().equals("mod.json")).findFirst().orElse(null));
+                } else updateModConfig();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

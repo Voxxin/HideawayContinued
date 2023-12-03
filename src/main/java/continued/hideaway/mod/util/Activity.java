@@ -5,29 +5,34 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+
 public enum Activity {
     BREAKFAST (
-            8000,
+            20,
             "Breakfast",
             "\uE013"
     ),
     MINIGAME (
-            10000,
+            25,
             "Random minigame",
             "\uE011"
     ),
     POOL_PARTY (
-            12000,
+            30,
             "Pool Party",
             "\uE014"
     ),
     MINIGAME2 (
-            14000,
+            35,
             "Random minigame",
             "\uE011"
     ),
     BONFIRE (
-            20000,
+            50,
             "Bonfire",
             "\uE012"
     );
@@ -41,25 +46,40 @@ public enum Activity {
         return values[(this.ordinal() + 1) % values.length];
     }
 
-    public static Activity getNext(int time) {
-        int distance = Math.abs(values[0].time - time);
+    public static Activity getNext() {
+        int minutes = Instant.now().atZone(ZoneOffset.UTC).getMinute();
+        int distance = Math.abs(values[0].time - minutes);
         int idx = 0;
-        for(int c = 1; c < values.length; c++){
-            int cdistance = Math.abs(values[c].time - time);
+        for (int c = 1; c < values.length; c++){
+            int cdistance = Math.abs(values[c].time - minutes);
             if (cdistance < distance) {
                 idx = c;
                 distance = cdistance;
             }
         }
-        if (values[idx].time <= time) {
+        if (values[idx].time <= minutes) {
             return values[idx].getFollowing();
+        } else {
+            return values[idx];
         }
-        return values[idx];
     }
+
     public Component getIcon() {
         return Component.literal(this.character).setStyle(Style.EMPTY.withFont(
                 new ResourceLocation("hideaway_plus:text")
         )).withStyle(ChatFormatting.WHITE);
+    }
+
+    public String timeUntil() {
+        Duration left;
+        ZonedDateTime now = Instant.now().atZone(ZoneOffset.UTC);
+
+        if (now.getMinute() > this.time) {
+            left = Duration.between(now.withMinute(0), now.withMinute(this.time).withSecond(0));
+        } else {
+            left = Duration.between(now, now.withMinute(this.time).withSecond(0));
+        }
+        return left.toMinutes() + "m " + left.toSecondsPart() + "s";
     }
 
     Activity(int time, String name, String character) {
