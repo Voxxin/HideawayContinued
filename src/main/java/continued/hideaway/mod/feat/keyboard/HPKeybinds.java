@@ -4,13 +4,8 @@ import continued.hideaway.mod.HideawayPlus;
 import continued.hideaway.mod.feat.keyboard.model.KeybindCategoryModel;
 import continued.hideaway.mod.feat.keyboard.model.KeybindModel;
 import continued.hideaway.mod.feat.ui.InventorySlotsUI;
+import continued.hideaway.mod.mixins.ext.ClientPacketListenerAccessor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.commands.arguments.ArgumentSignatures;
-import net.minecraft.network.chat.LastSeenMessages;
-import net.minecraft.network.protocol.game.ServerboundChatCommandPacket;
-
-import java.time.Instant;
-import java.util.BitSet;
 
 public class HPKeybinds {
     public HPKeybinds() {
@@ -33,16 +28,8 @@ public class HPKeybinds {
         while (KeybindModel.JOURNAL.keyMapping.consumeClick()) InventorySlotsUI.clickSlot(43, client);
         while (KeybindModel.PALM_PLATE.keyMapping.consumeClick()) InventorySlotsUI.clickSlot(44, client);
         while (KeybindModel.MAIL.keyMapping.consumeClick()) {
-            LastSeenMessages.Update messages = new LastSeenMessages.Update(0, new BitSet());
-            Instant now = Instant.now();
-            if (client.player != null) {
-                client.player.connection.send(new ServerboundChatCommandPacket(
-                        "mail",
-                        now,
-                        0L,
-                        ArgumentSignatures.EMPTY,
-                        messages
-                ));
+            if (client.getConnection() != null) {
+                ((ClientPacketListenerAccessor) client.getConnection()).hp$sendCommand("mail");
             }
         }
     }
