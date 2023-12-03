@@ -39,7 +39,6 @@ public class BossHealthOverlayMixin implements BossHealthOverlayAccessor {
         } else {
             this.bossBarName = null;
         }
-
     }
 
     @Inject(at = @At("HEAD"), method = "update", cancellable = true)
