@@ -50,7 +50,7 @@ public class ConfigUI extends Screen {
 
             this.addRenderableWidget(Button.builder(label.copy().append(configModel.value ? "ON" : "OFF"), button -> {
                 configModel.value = !configModel.value;
-                HideawayPlusConfig.updateModConfig();
+                HideawayPlusConfig.write();
                 button.setMessage(label.copy().append(configModel.value ? "ON" : "OFF"));
             }).bounds(xPos, yPos, buttonWidth, 20).build());
 
