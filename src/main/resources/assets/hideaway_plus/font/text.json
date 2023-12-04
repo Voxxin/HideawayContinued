@@ -63,13 +63,6 @@
     },
     {
       "type": "bitmap",
-      "file": "hideaway_plus:disc.png",
-      "chars": [ "\uE010" ],
-      "height": 8,
-      "ascent": 7
-    },
-    {
-      "type": "bitmap",
       "file": "hideaway_plus:gui.png",
       "chars": [
         "\uE011",

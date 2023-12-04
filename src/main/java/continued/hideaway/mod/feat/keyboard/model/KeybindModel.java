@@ -6,12 +6,6 @@ import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
 public enum KeybindModel {
-    JUKEBOX(
-            "key.hp.jukebox",
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_J,
-            KeybindCategoryModel.HIDEAWAY_PLUS.translationString
-    ),
     AUTO_SELL(
             "key.hp.autoSell",
             InputConstants.Type.KEYSYM,
