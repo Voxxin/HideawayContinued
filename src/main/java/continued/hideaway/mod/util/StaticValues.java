@@ -14,4 +14,7 @@ public class StaticValues {
     public static List<String> devs = new ArrayList<>();
     public static List<String> teamMembers = new ArrayList<>();
     public static List<String> translators = new ArrayList<>();
+
+    public static ArrayList<String> wardrobeEntity = new ArrayList<>();
+    public static ArrayList<String> wardrobeArmourStand = new ArrayList<>();
 }

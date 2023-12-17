@@ -1,6 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.util.StaticValues;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.AdvancementTree;
@@ -25,9 +26,10 @@ public class AbstractClientPlayerMixin {
 
     @Inject(at = @At("TAIL"), method = "update")
     private void update(ClientboundUpdateAdvancementsPacket packet, CallbackInfo ci) {
-        this.advancements.getAllAdvancements().forEach((advancement) -> {
-            if (advancement.getDisplay() == null) return;
-            if (advancement.getDisplay().getTitle().getString().contains("\uE256") && advancement.getDisplay().getTitle().getString().contains("Added")) StaticValues.friendsCheck = false;
+        this.tree.nodes().forEach((advancement) -> {
+            Advancement advancement1 = advancement.advancement();
+            if (advancement1.display().isEmpty()) return;
+            if (advancement1.display().get().getTitle().getString().contains("\uE256") && advancement1.display().get().getTitle().getString().contains("Added")) StaticValues.friendsCheck = false;
         });
     }
 }

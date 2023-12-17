@@ -1,7 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -12,7 +12,8 @@ import net.minecraft.util.FastColor;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static continued.hideaway.mod.util.ParseItemName.getItemId;
@@ -24,7 +25,7 @@ public abstract class TooltipRenderUtilMixin {
     private static void renderFrameRarity(GuiGraphics guiGraphics, int x, int y, int width, int height, int z, int topColor, int bottomColor, CallbackInfo ci) {
         Screen screen = HideawayPlus.client().screen;
 
-        if (screen instanceof AbstractContainerScreen && ModConfigModel.INVENTORY_RARITIES.value) {
+        if (screen instanceof AbstractContainerScreen && Boolean.parseBoolean(GeneralConfigModel.INVENTORY_RARITIES.value)) {
             AbstractContainerScreenAccessor containerScreen = (AbstractContainerScreenAccessor) screen;
             Slot slot = containerScreen.hp$getHoveredSlot();
 

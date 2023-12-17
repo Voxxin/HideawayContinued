@@ -3,7 +3,8 @@ package continued.hideaway.mod.feat.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
+import continued.hideaway.mod.feat.config.model.SoundConfigModel;
 import continued.hideaway.mod.util.Constants;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -28,9 +29,17 @@ public class HideawayPlusConfig {
             FileReader fileReader = new FileReader(configFile);
             JsonObject JSONedFile = gson.fromJson(fileReader, JsonObject.class);
 
-            for (ModConfigModel config : ModConfigModel.values()) {
-                if (JSONedFile.has(config.name)) {
-                    config.value = JSONedFile.get(config.name).getAsBoolean();
+            JsonObject main = JSONedFile.getAsJsonObject("main");
+            for (GeneralConfigModel config : GeneralConfigModel.values()) {
+                if (main.has(config.name)) {
+                    config.value = main.get(config.name).getAsString();
+                }
+            }
+
+            JsonObject sounds = JSONedFile.getAsJsonObject("sounds");
+            for (SoundConfigModel config : SoundConfigModel.values()) {
+                if (sounds.has(config.name)) {
+                    config.value = sounds.get(config.name).getAsString();
                 }
             }
         } catch (Exception e) {
@@ -40,9 +49,19 @@ public class HideawayPlusConfig {
 
     public static void write() {
         JsonObject JSONedFile = new JsonObject();
-        for (ModConfigModel config : ModConfigModel.values()) {
-            JSONedFile.addProperty(config.name, config.value);
+
+        JsonObject general = new JsonObject();
+        for (GeneralConfigModel config : GeneralConfigModel.values()) {
+            general.addProperty(config.name, config.value);
         }
+
+        JsonObject sounds = new JsonObject();
+        for (SoundConfigModel config : SoundConfigModel.values()) {
+            sounds.addProperty(config.name, config.value);
+        }
+
+        JSONedFile.add("general", general);
+        JSONedFile.add("sounds", sounds);
 
         try (FileWriter fileWriter = new FileWriter(configFile)) {
             gson.toJson(JSONedFile, fileWriter);

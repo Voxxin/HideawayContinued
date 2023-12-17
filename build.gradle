@@ -34,12 +34,12 @@ dependencies {
     minecraft libs.minecraft
     mappings loom.layered {
         it.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:intermediary-v2")
-        it.parchment("org.parchmentmc.data:parchment-1.20.1:${libs.versions.parchment.get()}@zip")
+        it.parchment("org.parchmentmc.data:parchment-1.20.2:${libs.versions.parchment.get()}@zip")
         it.officialMojangMappings()
     }
     modImplementation libs.fabric.loader
 
-    modImplementation ("com.terraformersmc:modmenu:7.2.2")
+    modImplementation ("com.terraformersmc:modmenu:8.0.0")
 
     implementation include('org.json:json:20220320')
     implementation include("io.github.CDAGaming:DiscordIPC:0.8.1")

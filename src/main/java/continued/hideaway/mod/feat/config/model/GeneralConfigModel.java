@@ -1,47 +1,39 @@
 package continued.hideaway.mod.feat.config.model;
 
-public enum ModConfigModel {
+public enum GeneralConfigModel {
     HIDE_COSMETIC (
-            false,
+            "false",
             "config.hp-config.general.hide_cosmetics"
     ),
     HIDE_LEFT_HAND (
-            false,
+            "false",
             "config.hp-config.general.hide_left_hand"
     ),
     DISCORD_RPC (
-            true,
+            "true",
             "config.hp-config.general.discord_rpc"
     ),
     EXP_PERCENT (
-            true,
+            "true",
             "config.hp-config.general.xp_percent"
     ),
     ACTIVITY_TIMER (
-            true,
+            "true",
             "config.hp-config.general.activity_timer"
     ),
     INVENTORY_RARITIES (
-            true,
+            "true",
             "config.hp-config.general.inventory_rarities"
     ),
     AUTO_SELL (
-            false,
+            "false",
             "config.hp-config.general.auto_sell"
-    ),
-    AMBIENT_SOUNDS (
-            true,
-            "config.hp-config.general.ambient_sounds"
-    ),
-    ACTIVITY_SONGS (
-            true,
-            "config.hp-config.general.activity_songs"
     );
 
-    public Boolean value;
+    public String value;
     public final String name;
 
-    ModConfigModel(boolean value, String name) {
+    GeneralConfigModel(String value, String name) {
         this.name = name;
         this.value = value;
     }

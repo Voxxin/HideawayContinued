@@ -2,7 +2,7 @@ package continued.hideaway.mod;
 
 import continued.hideaway.mod.feat.api.API;
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
 import continued.hideaway.mod.feat.discord.DiscordManager;
 import continued.hideaway.mod.feat.keyboard.HPKeybinds;
 import continued.hideaway.mod.feat.lifecycle.Lifecycle;
@@ -54,7 +54,7 @@ public class HideawayPlus implements ClientModInitializer {
         // initialization should be initialized here.
 
         try {
-            if (ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER = new DiscordManager().start();
+            if (Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) DISCORD_MANAGER = new DiscordManager().start();
         } catch (Error err) {
             HideawayPlus.logger().info(err);
             return;
@@ -68,8 +68,8 @@ public class HideawayPlus implements ClientModInitializer {
                 .add(Task.of(() -> {
                     try {
                         if (DiscordManager.active) DISCORD_MANAGER.update();
-                        if (DiscordManager.active && !ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.stop();
-                        if (!DiscordManager.active && ModConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.start();
+                        if (DiscordManager.active && !Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) DISCORD_MANAGER.stop();
+                        if (!DiscordManager.active && Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) DISCORD_MANAGER.start();
                     } catch (Error err) {
                         HideawayPlus.logger().error(err);
                     }

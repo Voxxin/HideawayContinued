@@ -2,7 +2,7 @@ package continued.hideaway.mod.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -24,7 +24,7 @@ public abstract class CustomHeadLayerMixin<T extends LivingEntity, M extends Ent
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-        if (HideawayPlus.connected() && ModConfigModel.HIDE_COSMETIC.value) {
+        if (HideawayPlus.connected() && Boolean.parseBoolean(GeneralConfigModel.HIDE_COSMETIC.value)) {
             ci.cancel();
         }
     }

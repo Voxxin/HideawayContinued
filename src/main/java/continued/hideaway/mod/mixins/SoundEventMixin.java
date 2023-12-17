@@ -1,6 +1,6 @@
 package continued.hideaway.mod.mixins;
 
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.SoundConfigModel;
 import continued.hideaway.mod.mixins.ext.SoundEventAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -17,12 +17,27 @@ public class SoundEventMixin {
     private static void newSoundEvent(ResourceLocation location, Optional<Float> range, CallbackInfoReturnable<SoundEvent> cir) {
         boolean isAmbient = location.getPath().split("\\.")[0].contains("ambient");
         boolean isActivity = location.getPath().split("\\.")[0].contains("activities");
+        boolean isUI = location.getPath().split("\\.")[0].contains("ui");
+        boolean isCharacter = location.getPath().split("\\.")[0].contains("character");
+        boolean isDialogue = location.getPath().split("\\.")[0].contains("dialogue");
 
-        if (isAmbient && !ModConfigModel.AMBIENT_SOUNDS.value) {
+        if (isAmbient && !Boolean.parseBoolean(SoundConfigModel.AMBIENT_SOUNDS.value)) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isActivity && !ModConfigModel.ACTIVITY_SONGS.value) {
+        if (isActivity && !Boolean.parseBoolean(SoundConfigModel.ACTIVITY_SONGS.value)) {
+            cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
+        }
+
+        if (isUI && !Boolean.parseBoolean(SoundConfigModel.UI_SOUNDS.value)) {
+            cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
+        }
+
+        if (isCharacter && !Boolean.parseBoolean(SoundConfigModel.CHARACTER_SOUNDS.value)) {
+            cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
+        }
+
+        if (isDialogue && !Boolean.parseBoolean(SoundConfigModel.DIALOGUE_SOUNDS.value)) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
     }
