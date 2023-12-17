@@ -7,55 +7,65 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 
-public class Chars {
-    public static Component disc() {
-        return Component.literal("\uE010").setStyle(Style.EMPTY.withFont(
+public enum Chars {
+    USER (
+        "\uE001",
+        "tooltip.hp.user",
+        ChatFormatting.WHITE
+    ),
+    FRIEND (
+        "\uE002",
+        "tooltip.hp.friend",
+        ChatFormatting.GOLD
+    ),
+    DEV (
+        "\uE003",
+        "tooltip.hp.developer",
+        ChatFormatting.YELLOW
+    ),
+    TRANSLATOR (
+        "\uE004",
+        "tooltip.hp.translator",
+        ChatFormatting.GREEN
+    ),
+    TEAM (
+        "\uE005",
+        "tooltip.hp.teamMember",
+        ChatFormatting.LIGHT_PURPLE
+    ),
+    SETTINGS (
+        "\uEF01",
+        null,
+        ChatFormatting.WHITE
+    );
+
+    public final String character;
+    public final String tooltip;
+    public final ChatFormatting color;
+
+    public void addBadge(MutableComponent newComponent, boolean tooltip) {
+        if (tooltip) {
+            Component component = ((MutableComponent) this.getComponent()).withStyle(Style.EMPTY.withHoverEvent(
+                    new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                            Component.translatable(this.tooltip).setStyle(Style.EMPTY.withColor(this.color)
+                    ))
+            ));
+            newComponent.append(component);
+        } else {
+            newComponent.append(this.getComponent());
+        }
+    }
+
+    public Component getComponent() {
+        return Component.literal(this.character).setStyle(Style.EMPTY.withFont(
                 new ResourceLocation("hideaway_plus:text")
         )).withStyle(ChatFormatting.WHITE);
     }
 
-    public static Component friendBadge() {
-        return Component.literal("\uE002").setStyle(Style.EMPTY.withFont(
-                new ResourceLocation("hideaway_plus:text")
-        )).withStyle(ChatFormatting.WHITE);
-    }
-    public static Component userBadge() {
-        return Component.literal("\uE001").setStyle(Style.EMPTY.withFont(
-                new ResourceLocation("hideaway_plus:text")
-        )).withStyle(ChatFormatting.WHITE);
-    }
-    public static Component devBadge() {
-        return Component.literal("\uE003").setStyle(Style.EMPTY.withFont(
-                new ResourceLocation("hideaway_plus:text")
-        )).withStyle(ChatFormatting.WHITE);
-    }
-    public static Component translatorBadge() {
-        return Component.literal("\uE004").setStyle(Style.EMPTY.withFont(
-                new ResourceLocation("hideaway_plus:text")
-        )).withStyle(ChatFormatting.WHITE);
-    }
-    public static Component teamBadge() {
-        return Component.literal("\uE005").setStyle(Style.EMPTY.withFont(
-                new ResourceLocation("hideaway_plus:text")
-        )).withStyle(ChatFormatting.WHITE);
+    Chars(String character, String tooltip, ChatFormatting color) {
+        this.character = character;
+        this.tooltip = tooltip;
+        this.color = color;
     }
 
-    public static Component settingsIcon() {
-        return Component.literal("\uEF01").setStyle(Style.EMPTY.withFont(
-                new ResourceLocation("hideaway_plus:text")
-        )).withStyle(ChatFormatting.WHITE);
-    }
-
-    public static void addBadgeWithTooltip(MutableComponent newMessage, Component badge, String key, ChatFormatting formatting) {
-        Component component = ((MutableComponent) badge).withStyle(Style.EMPTY.withHoverEvent(
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("").append(
-                        Component.translatable(key).setStyle(Style.EMPTY.withColor(formatting))
-                ))
-        ));
-        newMessage.append(component);
-    }
-
-    public static void addBadge(MutableComponent newComponent, Component badge) {
-        newComponent.append(" ").append(badge);
-    }
 }

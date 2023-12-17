@@ -193,7 +193,7 @@ public enum Location {
         String bossBarName;
 
         // Location-based
-        if (location.closerThan(new Vec3(66.5f, 5f, -130.5f), 5)) HideawayPlus.setLocation(WARDROBE_WHEEL);
+        if (location.closerThan(new Vec3(71.5f, 5f, -135.5f), 5)) HideawayPlus.setLocation(WARDROBE_WHEEL);
         else if (location.closerThan(new Vec3(-77.5f, 6f, -263.5f), 7)) HideawayPlus.setLocation(MONKEY_BROTHERS);
         else if (location.closerThan(new Vec3(-28.5f, 5f, -120.5f), 20)) HideawayPlus.setLocation(FURNITURE_FUNCTIONATOR);
         else if (location.closerThan(new Vec3(54.5f, 5f, -119.5f), 20)) HideawayPlus.setLocation(ISLAND_EMPORIUM);
@@ -222,10 +222,10 @@ public enum Location {
                 else if (boardNames.contains("\ue524")) HideawayPlus.setLocation(VOLLEYBALL);
             }
             // Bossbar-based
-            else if ((bossBarName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).getBossBarName()) != null) {
+            else if ((bossBarName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).hp$getBossBarName()) != null) {
                 if (bossBarName.contains("\uE612 | Editor Mode is")) HideawayPlus.setLocation(HOTEL_ROOM_SELF);
                 else if (bossBarName.contains("\uE293 ") && bossBarName.contains("'s Room")) {
-                    String visitingPlayerName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).getBossBarName().split(" ")[0];
+                    String visitingPlayerName = ((BossHealthOverlayAccessor)client.gui.getBossOverlay()).hp$getBossBarName().split(" ")[0];
                     visitingPlayerName = visitingPlayerName.replace("'s", "");
 
                     Location.HOTEL_ROOM_OTHER.name = "In " + visitingPlayerName + "'s room";

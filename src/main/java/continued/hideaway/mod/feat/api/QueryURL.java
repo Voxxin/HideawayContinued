@@ -50,16 +50,22 @@ public class QueryURL {
                             switch (jsonObject.get("message").getAsString()) {
                                 case "User not alive" -> {
                                     API.living = false;
+                                    API.API_KEY = "";
+                                    API.checkingUser = false;
                                 }
                                 case "Invalid UUID or code" -> {
                                     HideawayPlus.logger().error("API Error: " + jsonObject.get("message").getAsString());
                                     API.living = false;
+                                    API.API_KEY = "";
+                                    API.checkingUser = false;
                                 }
                             }
                         }
                     }
                 }
             } catch (IOException | ParseException | JsonSyntaxException e) {
+                API.living = false;
+                API.API_KEY = "";
                 if (e instanceof IOException) {
                     HideawayPlus.logger().error("API Error: " + e.getMessage() + "\n"
                             + "Checking back in 30 seconds..." + "\n"
@@ -73,7 +79,6 @@ public class QueryURL {
     }
 
     public static void asyncCreateUser(String playerUUID, String userName) {
-        API.checkingUser = true;
         CompletableFuture.runAsync(() -> {
             try {
                 HttpGet request = new HttpGet(API_URL + "create/" + playerUUID + "/" + userName);
@@ -90,9 +95,10 @@ public class QueryURL {
                         String jsonContent = EntityUtils.toString(response.getEntity());
                         JsonObject jsonObject = JsonParser.parseString(jsonContent).getAsJsonObject();
                         if (jsonObject.has("error")) {
+                            API.checkingUser = false;
                             switch (jsonObject.get("message").getAsString()) {
                                 case "User already exists", "Invalid UUID or code" -> {
-                                    API.living = false;
+                                    API.living = true;
                                     HideawayPlus.logger().error("API Error: " + jsonObject.get("message").getAsString());
                                 }
                             }
@@ -106,12 +112,13 @@ public class QueryURL {
                     + "Error area: asyncCreateUser");
                     API.serverUnreachable = true;
                     API.living = false;
+                    API.checkingUser = false;
                 } else {
                     API.living = false;
+                    API.checkingUser = false;
                     e.printStackTrace();
                 }
             }
-            API.checkingUser = false;
         });
     }
 
@@ -193,20 +200,19 @@ public class QueryURL {
                         JsonArray translatorArray = teamObj.get("translator").getAsJsonArray();
                         JsonArray teamArray = teamObj.get("team").getAsJsonArray();
                         JsonArray devArray = teamObj.get("dev").getAsJsonArray();
-
-                        StaticValues.translators.clear();
-                        StaticValues.teamMembers.clear();
-                        StaticValues.devs.clear();
                         
                         for (int i = 0; i < translatorArray.size(); i++) {
+                            if (StaticValues.translators.contains(translatorArray.get(i).getAsString())) continue;
                             StaticValues.translators.add(translatorArray.get(i).getAsString());
                         }
 
                         for (int i = 0; i < teamArray.size(); i++) {
+                            if (StaticValues.teamMembers.contains(teamArray.get(i).getAsString())) continue;
                             StaticValues.teamMembers.add(teamArray.get(i).getAsString());
                         }
 
                         for (int i = 0; i < devArray.size(); i++) {
+                            if (StaticValues.devs.contains(devArray.get(i).getAsString())) continue;
                             StaticValues.devs.add(devArray.get(i).getAsString());
                         }
                     }

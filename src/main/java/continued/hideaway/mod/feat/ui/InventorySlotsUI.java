@@ -11,9 +11,9 @@ public class InventorySlotsUI {
         if (client.player != null && client.getConnection() != null) {
             AbstractContainerMenu abstractContainerMenu = client.player.containerMenu;
 
-            // The idea here was to close the menu (if open) so that you can quickly switch between menus
-            // without pushing esc/E and then pushing a hotkey again -- however, the keyboardmanager doesn't register
-            // our hotkeys while in a menu
+//            The idea here was to close the menu (if open) so that you can quickly switch between menus
+//            without pushing esc/E and then pushing a hotkey again -- however, the keyboardmanager doesn't register
+//            our hotkeys while in a menu
 //            client.getConnection().send(
 //                    new ServerboundContainerClosePacket(
 //                            abstractContainerMenu.containerId

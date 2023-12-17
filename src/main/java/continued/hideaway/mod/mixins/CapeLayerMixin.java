@@ -1,7 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import continued.hideaway.mod.util.StaticValues;
+import continued.hideaway.mod.feat.config.model.ModConfigModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,13 +18,11 @@ import continued.hideaway.mod.HideawayPlus;
 public class CapeLayerMixin {
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
-        if (HideawayPlus.connected() && !HideawayPlus.config().hideCosmetics()) {
-            ItemStack playerChestplate = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-            if (playerChestplate != ItemStack.EMPTY) {
-                info.cancel();
+        if (HideawayPlus.connected()) {
+            if (!ModConfigModel.HIDE_COSMETIC.value) {
+                ItemStack playerChestplate = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
+                if (playerChestplate != ItemStack.EMPTY) info.cancel();
             }
-        } else if (HideawayPlus.connected() && HideawayPlus.config().hideCosmetics() && StaticValues.wardrobeEntity.contains(livingEntity.getStringUUID())) {
-            if (!StaticValues.wardrobeArmourStand.isEmpty()) info.cancel();
         }
     }
 }

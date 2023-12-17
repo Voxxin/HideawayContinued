@@ -25,8 +25,9 @@ public class AbstractClientPlayerMixin {
 
     @Inject(at = @At("TAIL"), method = "update")
     private void update(ClientboundUpdateAdvancementsPacket packet, CallbackInfo ci) {
-        packet.getProgress().entrySet().forEach((advancement) -> {
-            if (advancement.getValue().getProgressText().getString().contains("\uE256") && advancement.getValue().getProgressText().getString().contains("Added")) StaticValues.friendsCheck = false;
+        this.advancements.getAllAdvancements().forEach((advancement) -> {
+            if (advancement.getDisplay() == null) return;
+            if (advancement.getDisplay().getTitle().getString().contains("\uE256") && advancement.getDisplay().getTitle().getString().contains("Added")) StaticValues.friendsCheck = false;
         });
     }
 }

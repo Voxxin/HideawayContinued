@@ -1,8 +1,13 @@
+> [!IMPORTANT]  
+> Since October 7th 2023's [commit](https://github.com/Voxxin/HideawayContinued/commit/7925d601529d495b2cdeea8d034d29354391f160), 
+> we've changed our licensing to All Rights Reserved. If you'd like to read more about what this entails, feel free to read our licensing information [here](https://github.com/Voxxin/HideawayContinued/blob/main/LICENSE).
+
 ![Hideaway+ Logo](https://i.imgur.com/JiSO1qN.png)
 
 # Features
 - Automatically dump inventory items into shops to sell!
 - Highlights items in your inventory with their rarity color!
+- A countdown timer for activities!
 - **Icons** for your friends and other Hideaway+ players in usernames!
 - **Discord Rich Presence** which displays your location on Hideaway as your status!
 - Fully customizeable **config & keybinds**!
@@ -20,5 +25,5 @@
 </details>
 
 # Downloads
-<a href="https://modrinth.com/mods/hideaway"><img src="assets/modrinth_logo.png" alt="Modrinth Logo" style="width:200px;filter:drop-shadow(0 0 1.7rem white);"/></a>
+<a href="https://modrinth.com/mod/hideaway"><img src="assets/modrinth_logo.png" alt="Modrinth Logo" style="width:200px;filter:drop-shadow(0 0 1.7rem white);"/></a>
 <a href="https://www.curseforge.com/minecraft/mc-mods/hideaway"><img src="assets/curseforge_logo.png" alt="Curseforge Logo" style="width:200px;filter:drop-shadow(0 0 1.7rem white);"/></a>
