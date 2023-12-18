@@ -1,7 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,7 +19,7 @@ public class CapeLayerMixin {
     @Inject(at = @At("HEAD"), method = "render", cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
         if (HideawayPlus.connected()) {
-            if (!ModConfigModel.HIDE_COSMETIC.value) {
+            if (!GeneralConfigModel.HIDE_COSMETIC.value) {
                 ItemStack playerChestplate = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
                 if (playerChestplate != ItemStack.EMPTY) info.cancel();
             }

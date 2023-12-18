@@ -1,63 +1,40 @@
 package continued.hideaway.mod.feat.ui;
 
 import continued.hideaway.mod.feat.config.HideawayPlusConfig;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
+import continued.hideaway.mod.feat.config.model.SoundConfigModel;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.components.tabs.GridLayoutTab;
+import net.minecraft.client.gui.components.tabs.TabManager;
+import net.minecraft.client.gui.components.tabs.TabNavigationBar;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.MutableComponent;
-
-import java.util.*;
+import org.jetbrains.annotations.Nullable;
 
 public class ConfigUI extends Screen {
     private final Screen parent;
+    private final TabManager tabManager = new TabManager(this::addRenderableWidget, guiEventListener -> this.removeWidget((GuiEventListener)guiEventListener));
+    @Nullable
+    private TabNavigationBar tabNavigationBar;
 
     public ConfigUI(Screen parent) {
-        super(Component.translatable("config.hp-config.general.title"));
+        super(Component.translatable("config.hp.general.title"));
         this.parent = parent;
     }
 
     @Override
     protected void init() {
-        List<ModConfigModel> options = Arrays.asList(ModConfigModel.values());
-        int spacingY = 25;
-        int spacingX = 5;
-        int startingY = 25;
-        int availableSpace = this.height - 20 - spacingY;
-        int totalHeight = options.size() * spacingY + startingY;
-        int rows = 1;
-
-        while (totalHeight / rows > availableSpace) {
-            rows++;
-        }
-
-        int buttonWidth = this.width / (rows + 1) - spacingX;
-
-        int currentColumn = 0;
-        int currentRow = 0;
-        for (int i = 0; i < options.size(); i++) {
-            ModConfigModel configModel = options.get(i);
-            MutableComponent label = Component.translatable(configModel.name).append(": ");
-
-            if (currentColumn > (options.size() - 1) / rows) {
-                currentRow++;
-                currentColumn = 0;
-            }
-
-            int xPos = (rows > 1) ? this.width / (rows + 1) * (currentRow + 1) - buttonWidth / 2 : this.width / 2 - buttonWidth / 2;
-            int yPos = startingY + spacingY * currentColumn;
-
-            this.addRenderableWidget(Button.builder(label.copy().append(configModel.value ? "ON" : "OFF"), button -> {
-                configModel.value = !configModel.value;
-                HideawayPlusConfig.write();
-                button.setMessage(label.copy().append(configModel.value ? "ON" : "OFF"));
-            }).bounds(xPos, yPos, buttonWidth, 20).build());
-
-            currentColumn++;
-        }
-        this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), button -> this.minecraft.setScreen(this.parent))
-                .pos(this.width / 2 - 75, this.height - 20 - spacingY).build());
+        this.tabNavigationBar = TabNavigationBar.builder(this.tabManager, this.width).addTabs(new GeneralTab(), new SoundsTab()).build();
+        this.addRenderableWidget(this.tabNavigationBar);
+        this.tabNavigationBar.selectTab(0, false);
+        this.repositionElements();
     }
 
     @Override
@@ -67,7 +44,68 @@ public class ConfigUI extends Screen {
     }
 
     @Override
+    public void tick() {
+        this.tabManager.tickCurrent();
+    }
+
+    @Override
     public void onClose() {
         this.minecraft.setScreen(this.parent);
+    }
+
+    @Override
+    public void repositionElements() {
+        if (this.tabNavigationBar == null) return;
+        this.tabNavigationBar.setWidth(this.width);
+        this.tabNavigationBar.arrangeElements();
+
+        int i = this.tabNavigationBar.getRectangle().bottom();
+        ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height);
+        this.tabManager.setTabArea(screenRectangle);
+    }
+
+
+    @Environment(value= EnvType.CLIENT)
+    static class GeneralTab
+            extends GridLayoutTab {
+        private static final Component TITLE = Component.translatable("config.hp.general.title");
+        GeneralTab() {
+            super(TITLE);
+            this.layout.defaultCellSetting().paddingHorizontal(5).paddingBottom(4).alignHorizontallyCenter();
+            GridLayout.RowHelper rowHelper = this.layout.createRowHelper(2);
+
+            for (GeneralConfigModel configModel : GeneralConfigModel.values()) {
+                MutableComponent label = Component.translatable(configModel.name).append(": ");
+
+                rowHelper.addChild(Button.builder(label.copy().append(configModel.value ? "ON" : "OFF"), button -> {
+                    configModel.value = !configModel.value;
+                    HideawayPlusConfig.write();
+                    button.setMessage(label.copy().append(configModel.value ? "ON" : "OFF"));
+                }).build());
+            }
+            this.layout.arrangeElements();
+        }
+    }
+
+    @Environment(value= EnvType.CLIENT)
+    static class SoundsTab
+            extends GridLayoutTab {
+        private static final Component TITLE = Component.translatable("config.hp.sounds.title");
+        SoundsTab() {
+            super(TITLE);
+            this.layout.defaultCellSetting().paddingHorizontal(5).paddingBottom(4).alignHorizontallyCenter();
+            GridLayout.RowHelper rowHelper = this.layout.createRowHelper(2);
+
+            for (SoundConfigModel configModel : SoundConfigModel.values()) {
+                MutableComponent label = Component.translatable(configModel.name).append(": ");
+
+                rowHelper.addChild(Button.builder(label.copy().append(configModel.value ? "ON" : "OFF"), button -> {
+                    configModel.value = !configModel.value;
+                    HideawayPlusConfig.write();
+                    button.setMessage(label.copy().append(configModel.value ? "ON" : "OFF"));
+                }).build());
+            }
+            this.layout.arrangeElements();
+        }
     }
 }

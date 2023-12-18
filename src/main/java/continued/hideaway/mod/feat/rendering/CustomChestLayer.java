@@ -2,7 +2,7 @@ package continued.hideaway.mod.feat.rendering;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -35,7 +35,7 @@ public class CustomChestLayer<T extends AbstractClientPlayer, M extends EntityMo
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (ModConfigModel.HIDE_COSMETIC.value) return;
+        if (GeneralConfigModel.HIDE_COSMETIC.value) return;
         ItemStack chestArmor = player.getItemBySlot(EquipmentSlot.CHEST);
         if (chestArmor.isEmpty()) return;
 

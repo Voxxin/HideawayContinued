@@ -1,7 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.HideawayPlus;
-import continued.hideaway.mod.feat.config.model.ModConfigModel;
+import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
 import continued.hideaway.mod.feat.ext.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -34,7 +34,7 @@ public abstract class AbstractContainerScreenMixin implements AbstractContainerS
 
     @Inject(method = "render", at = @At("TAIL"))
     public void renderSlotRarity(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
-        if (HideawayPlus.connected() && ModConfigModel.INVENTORY_RARITIES.value) {
+        if (HideawayPlus.connected() && GeneralConfigModel.INVENTORY_RARITIES.value) {
             for (int k = 0; k < (this.menu).slots.size(); ++k) {
                 Slot slot = (this.menu).slots.get(k);
                 ItemStack item = slot.getItem();
