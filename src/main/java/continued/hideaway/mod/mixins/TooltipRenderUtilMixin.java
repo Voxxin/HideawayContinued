@@ -25,7 +25,7 @@ public abstract class TooltipRenderUtilMixin {
     private static void renderFrameRarity(GuiGraphics guiGraphics, int x, int y, int width, int height, int z, int topColor, int bottomColor, CallbackInfo ci) {
         Screen screen = HideawayPlus.client().screen;
 
-        if (screen instanceof AbstractContainerScreen && Boolean.parseBoolean(GeneralConfigModel.INVENTORY_RARITIES.value)) {
+        if (screen instanceof AbstractContainerScreen && GeneralConfigModel.INVENTORY_RARITIES.value) {
             AbstractContainerScreenAccessor containerScreen = (AbstractContainerScreenAccessor) screen;
             Slot slot = containerScreen.hp$getHoveredSlot();
 

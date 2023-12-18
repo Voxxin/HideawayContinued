@@ -18,7 +18,7 @@ public class ItemRendererMixin {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(ItemStack itemStack, ItemDisplayContext displayContext, boolean leftHand, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, BakedModel model, CallbackInfo ci) {
-        if (displayContext == ItemDisplayContext.FIRST_PERSON_LEFT_HAND && HideawayPlus.connected() && Boolean.parseBoolean(GeneralConfigModel.HIDE_LEFT_HAND.value)) {
+        if (displayContext == ItemDisplayContext.FIRST_PERSON_LEFT_HAND && HideawayPlus.connected() && GeneralConfigModel.HIDE_LEFT_HAND.value) {
             ci.cancel();
         }
     }

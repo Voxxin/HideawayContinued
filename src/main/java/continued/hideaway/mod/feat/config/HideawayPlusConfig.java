@@ -11,7 +11,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import java.io.*;
 
 public class HideawayPlusConfig {
-    private static final File configFile = FabricLoader.getInstance().getConfigDir().resolve(Constants.MOD_ID + ".json").toFile();
+    private static final File configFile = FabricLoader.getInstance().getConfigDir().resolve(Constants.MOD_ID + "_" + Constants.VERSION + ".json").toFile();
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public HideawayPlusConfig() {
@@ -29,17 +29,17 @@ public class HideawayPlusConfig {
             FileReader fileReader = new FileReader(configFile);
             JsonObject JSONedFile = gson.fromJson(fileReader, JsonObject.class);
 
-            JsonObject main = JSONedFile.getAsJsonObject("main");
+            JsonObject general = JSONedFile.getAsJsonObject("general");
             for (GeneralConfigModel config : GeneralConfigModel.values()) {
-                if (main.has(config.name)) {
-                    config.value = main.get(config.name).getAsString();
+                if (general.has(config.name)) {
+                    config.value = general.get(config.name).getAsBoolean();
                 }
             }
 
             JsonObject sounds = JSONedFile.getAsJsonObject("sounds");
             for (SoundConfigModel config : SoundConfigModel.values()) {
                 if (sounds.has(config.name)) {
-                    config.value = sounds.get(config.name).getAsString();
+                    config.value = sounds.get(config.name).getAsBoolean();
                 }
             }
         } catch (Exception e) {

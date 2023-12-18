@@ -35,7 +35,7 @@ public class CustomChestLayer<T extends AbstractClientPlayer, M extends EntityMo
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (Boolean.parseBoolean(GeneralConfigModel.HIDE_COSMETIC.value)) return;
+        if (GeneralConfigModel.HIDE_COSMETIC.value) return;
         ItemStack chestArmor = player.getItemBySlot(EquipmentSlot.CHEST);
         if (chestArmor.isEmpty()) return;
 

@@ -18,18 +18,22 @@
     "tooltip.hp.teamMember": "Hideaway+ Team Member",
     "tooltip.hp.developer": "Hideaway+ Developer",
 
-    "jukebox.title": "Play a song",
-    "jukebox.stop_all_songs": "Stop all music",
+    "config.hp.general.title": "General",
+    "config.hp.sounds.title": "Sounds",
 
-    "config.hp-config.general.title": "Hideaway+ Configuration",
+    "config.hp.general.hide_cosmetics": "Hide Cosmetics",
+    "config.hp.general.hide_left_hand": "Hide Left Hand",
+    "config.hp.general.discord_rpc": "DiscordRPC",
+    "config.hp.general.xp_percent": "Experience %",
+    "config.hp.general.activity_timer": "Activity Timer",
+    "config.hp.general.inventory_rarities": "Inventory Rarities",
+    "config.hp.general.auto_sell": "Auto-Fill Shops",
 
-    "config.hp-config.general.hide_cosmetics": "Hide Cosmetics",
-    "config.hp-config.general.hide_left_hand": "Hide Left Hand",
-    "config.hp-config.general.discord_rpc": "DiscordRPC",
-    "config.hp-config.general.xp_percent": "Experience %",
-    "config.hp-config.general.activity_timer": "Activity Timer",
-    "config.hp-config.general.inventory_rarities": "Inventory Rarities",
-    "config.hp-config.general.auto_sell": "Auto-Fill Shops",
-    "config.hp-config.general.ambient_sounds": "Ambient Sounds",
-    "config.hp-config.general.activity_songs": "Activity Songs"
+    "config.hp.sounds.ambient_sounds": "Ambient Sounds",
+    "config.hp.sounds.activity_songs": "Activity Songs",
+    "config.hp.sounds.instrument_songs": "Instrument Songs",
+    "config.hp.sounds.ui_sounds": "UI Sounds",
+    "config.hp.sounds.npc_sounds": "NPC Sounds",
+    "config.hp.sounds.dialogue_sounds": "Dialogue",
+    "config.hp.sounds.item_pick_up_sound": "Pick Up Sound"
 }

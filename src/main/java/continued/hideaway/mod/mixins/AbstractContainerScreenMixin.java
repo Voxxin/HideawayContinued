@@ -34,7 +34,7 @@ public abstract class AbstractContainerScreenMixin implements AbstractContainerS
 
     @Inject(method = "render", at = @At("TAIL"))
     public void renderSlotRarity(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
-        if (HideawayPlus.connected() && Boolean.parseBoolean(GeneralConfigModel.INVENTORY_RARITIES.value)) {
+        if (HideawayPlus.connected() && GeneralConfigModel.INVENTORY_RARITIES.value) {
             for (int k = 0; k < (this.menu).slots.size(); ++k) {
                 Slot slot = (this.menu).slots.get(k);
                 ItemStack item = slot.getItem();

@@ -39,7 +39,7 @@ public class Shop {
             fill = true;
         }
 
-        if (("fruit".equals(shopName) || "fish".equals(shopName)) && (Boolean.parseBoolean(GeneralConfigModel.AUTO_SELL.value) || fill)) {
+        if (("fruit".equals(shopName) || "fish".equals(shopName)) && (GeneralConfigModel.AUTO_SELL.value || fill)) {
             if (oldShopName != null && !oldShopName.equals(shopName)) StaticValues.shopIterationNum = 0;
             oldShopName = shopName;
             List<Slot> emptyChestSlots = new ArrayList<>();

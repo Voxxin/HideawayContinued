@@ -24,7 +24,7 @@ public abstract class CustomHeadLayerMixin<T extends LivingEntity, M extends Ent
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
-        if (HideawayPlus.connected() && Boolean.parseBoolean(GeneralConfigModel.HIDE_COSMETIC.value)) {
+        if (HideawayPlus.connected() && GeneralConfigModel.HIDE_COSMETIC.value) {
             ci.cancel();
         }
     }

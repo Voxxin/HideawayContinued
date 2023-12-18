@@ -21,23 +21,23 @@ public class SoundEventMixin {
         boolean isCharacter = location.getPath().split("\\.")[0].contains("character");
         boolean isDialogue = location.getPath().split("\\.")[0].contains("dialogue");
 
-        if (isAmbient && !Boolean.parseBoolean(SoundConfigModel.AMBIENT_SOUNDS.value)) {
+        if (isAmbient && !SoundConfigModel.AMBIENT_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isActivity && !Boolean.parseBoolean(SoundConfigModel.ACTIVITY_SONGS.value)) {
+        if (isActivity && !SoundConfigModel.ACTIVITY_SONGS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isUI && !Boolean.parseBoolean(SoundConfigModel.UI_SOUNDS.value)) {
+        if (isUI && !SoundConfigModel.UI_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isCharacter && !Boolean.parseBoolean(SoundConfigModel.CHARACTER_SOUNDS.value)) {
+        if (isCharacter && !SoundConfigModel.CHARACTER_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isDialogue && !Boolean.parseBoolean(SoundConfigModel.DIALOGUE_SOUNDS.value)) {
+        if (isDialogue && !SoundConfigModel.DIALOGUE_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
     }

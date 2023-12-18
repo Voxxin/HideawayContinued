@@ -28,8 +28,8 @@ public abstract class ArmourStandMobMixin {
         if (hasCosmetic) oldHeadStack = armorStand.getItemBySlot(EquipmentSlot.HEAD);
 
         if (!StaticValues.wardrobeArmourStand.contains(armorStand.getStringUUID())) {
-          if (hasCosmetic && HideawayPlus.connected() && Boolean.parseBoolean(GeneralConfigModel.HIDE_COSMETIC.value)) this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-          if (!hasCosmetic && HideawayPlus.connected() && !Boolean.parseBoolean(GeneralConfigModel.HIDE_COSMETIC.value) && oldHeadStack != null) this.setItemSlot(EquipmentSlot.HEAD, oldHeadStack);
+          if (hasCosmetic && HideawayPlus.connected() && GeneralConfigModel.HIDE_COSMETIC.value) this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+          if (!hasCosmetic && HideawayPlus.connected() && !GeneralConfigModel.HIDE_COSMETIC.value && oldHeadStack != null) this.setItemSlot(EquipmentSlot.HEAD, oldHeadStack);
         }
     }
 

@@ -44,7 +44,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
 
     @Inject(at = @At("HEAD"), method = "render")
     public void onRender(GuiGraphics guiGraphics, float partialTick, CallbackInfo ci) {
-        if (Boolean.parseBoolean(GeneralConfigModel.ACTIVITY_TIMER.value) && !this.debugOverlay.showDebugScreen() && HideawayPlus.connected()) {
+        if (GeneralConfigModel.ACTIVITY_TIMER.value && !this.debugOverlay.showDebugScreen() && HideawayPlus.connected()) {
             int color = FastColor.ARGB32.color(100, 0, 0, 0);
             int padding = 3;
             Activity activity = Activity.getNext();
@@ -59,7 +59,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
         if (!this.debugOverlay.showDebugScreen() && HideawayPlus.connected() && minecraft.player.getInventory().getFreeSlot() == -1) {
             int color = FastColor.ARGB32.color(100, 0, 0, 0);
             int padding = 3;
-            int yLevel = Boolean.parseBoolean(GeneralConfigModel.ACTIVITY_TIMER.value) ? 45 : 30;
+            int yLevel = GeneralConfigModel.ACTIVITY_TIMER.value ? 45 : 30;
             Font font = minecraft.font;
             Component text = Component.empty()
                     .append(Component.literal("\uE015").setStyle(Style.EMPTY.withFont(new ResourceLocation("hideaway_plus:text"))))
@@ -83,7 +83,7 @@ public abstract class InGameHudMixin implements InGameHudAccessor {
                     from = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I", ordinal = 1))
     )
     public void experienceBarPercent(GuiGraphics guiGraphics, int x, CallbackInfo ci, int i, String string, int textSize, int textPos) {
-        if (HideawayPlus.connected() && Boolean.parseBoolean(GeneralConfigModel.EXP_PERCENT.value)) {
+        if (HideawayPlus.connected() && GeneralConfigModel.EXP_PERCENT.value) {
             if (overlayMessageString != null && !overlayMessageString.getString().contains("\uE2C3")) return;
 
             string = (Math.round(this.minecraft.player.experienceProgress * 10000) / 100.0) + "%";

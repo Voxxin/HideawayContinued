@@ -22,7 +22,7 @@ public class DiscordManager {
     private static Instant start;
 
     public DiscordManager start() {
-        if (!active && Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) {
+        if (!active && GeneralConfigModel.DISCORD_RPC.value) {
             HideawayPlus.logger().info("Starting Discord RPC client...");
             client = new IPCClient(1136888078510858323L);
             client.setListener(new IPCListener() {
@@ -78,7 +78,7 @@ public class DiscordManager {
     }
 
     public void update() {
-        if (active && Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) {
+        if (active && GeneralConfigModel.DISCORD_RPC.value) {
             Location loc = HideawayPlus.location();
             RichPresence.Builder builder = new RichPresence.Builder();
 

@@ -54,7 +54,7 @@ public class HideawayPlus implements ClientModInitializer {
         // initialization should be initialized here.
 
         try {
-            if (Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) DISCORD_MANAGER = new DiscordManager().start();
+            if (GeneralConfigModel.DISCORD_RPC.value) DISCORD_MANAGER = new DiscordManager().start();
         } catch (Error err) {
             HideawayPlus.logger().info(err);
             return;
@@ -68,8 +68,8 @@ public class HideawayPlus implements ClientModInitializer {
                 .add(Task.of(() -> {
                     try {
                         if (DiscordManager.active) DISCORD_MANAGER.update();
-                        if (DiscordManager.active && !Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) DISCORD_MANAGER.stop();
-                        if (!DiscordManager.active && Boolean.parseBoolean(GeneralConfigModel.DISCORD_RPC.value)) DISCORD_MANAGER.start();
+                        if (DiscordManager.active && !GeneralConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.stop();
+                        if (!DiscordManager.active && GeneralConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.start();
                     } catch (Error err) {
                         HideawayPlus.logger().error(err);
                     }
