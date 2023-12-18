@@ -28,6 +28,12 @@
     "config.hp.general.activity_timer": "Activity Timer",
     "config.hp.general.inventory_rarities": "Inventory Rarities",
     "config.hp.general.auto_sell": "Auto-Fill Shops",
-    "config.hp.general.ambient_sounds": "Ambient Sounds",
-    "config.hp.general.activity_songs": "Activity Songs"
+
+    "config.hp.sounds.ambient_sounds": "Ambient Sounds",
+    "config.hp.sounds.activity_songs": "Activity Songs",
+    "config.hp.sounds.instrument_songs": "Instrument Songs",
+    "config.hp.sounds.ui_sounds": "UI Sounds",
+    "config.hp.sounds.npc_sounds": "NPC Sounds",
+    "config.hp.sounds.dialogue_sounds": "Dialogue",
+    "config.hp.sounds.item_pick_up_sound": "Pick Up Sound"
 }
