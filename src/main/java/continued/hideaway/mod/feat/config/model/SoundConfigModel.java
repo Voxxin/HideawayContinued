@@ -2,31 +2,31 @@ package continued.hideaway.mod.feat.config.model;
 
 public enum SoundConfigModel {
     AMBIENT_SOUNDS (
-            false,
+            true,
             "config.hp.sounds.ambient_sounds"
     ),
     ACTIVITY_SONGS (
-            false,
+            true,
             "config.hp.sounds.activity_songs"
     ),
     INSTRUMENT_SOUNDS (
-            false,
+            true,
             "config.hp.sounds.instrument_songs"
     ),
     UI_SOUNDS (
-            false,
+            true,
             "config.hp.sounds.ui_sounds"
     ),
     CHARACTER_SOUNDS (
-            false,
+            true,
             "config.hp.sounds.npc_sounds"
     ),
     DIALOGUE_SOUNDS (
-            false,
+            true,
             "config.hp.sounds.dialogue_sounds"
     ),
     ITEM_PICK_UP_SOUNDS (
-            false,
+            true,
             "config.hp.sounds.item_pick_up_sound"
     );
 
