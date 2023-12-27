@@ -19,6 +19,7 @@
     "EntityRendererMixin",
     "GameMenuScreenMixin",
     "InGameHudMixin",
+    "InventorySlotMixin",
     "ItemRendererMixin",
     "KeyMappingsMixin",
     "LogoRendererMixin",
