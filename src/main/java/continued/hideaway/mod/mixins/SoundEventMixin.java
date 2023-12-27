@@ -1,6 +1,7 @@
 package continued.hideaway.mod.mixins;
 
 import continued.hideaway.mod.feat.config.model.GeneralConfigModel;
+import continued.hideaway.mod.feat.config.model.SoundConfigModel;
 import continued.hideaway.mod.mixins.ext.SoundEventAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -17,12 +18,27 @@ public class SoundEventMixin {
     private static void newSoundEvent(ResourceLocation location, Optional<Float> range, CallbackInfoReturnable<SoundEvent> cir) {
         boolean isAmbient = location.getPath().split("\\.")[0].contains("ambient");
         boolean isActivity = location.getPath().split("\\.")[0].contains("activities");
+        boolean isUI = location.getPath().split("\\.")[0].contains("ui");
+        boolean isCharacter = location.getPath().split("\\.")[0].contains("character");
+        boolean isDialogue = location.getPath().split("\\.")[0].contains("dialogue");
 
-        if (isAmbient && !GeneralConfigModel.AMBIENT_SOUNDS.value) {
+        if (isAmbient && !SoundConfigModel.AMBIENT_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
 
-        if (isActivity && !GeneralConfigModel.ACTIVITY_SONGS.value) {
+        if (isActivity && !SoundConfigModel.ACTIVITY_SONGS.value) {
+            cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
+        }
+
+        if (isUI && !SoundConfigModel.UI_SOUNDS.value) {
+            cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
+        }
+
+        if (isCharacter && !SoundConfigModel.CHARACTER_SOUNDS.value) {
+            cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
+        }
+
+        if (isDialogue && !SoundConfigModel.DIALOGUE_SOUNDS.value) {
             cir.setReturnValue(SoundEventAccessor.createSoundEvent(new ResourceLocation(""), 0, true));
         }
     }

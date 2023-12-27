@@ -28,14 +28,6 @@ public enum GeneralConfigModel {
     AUTO_SELL (
             false,
             "config.hp.general.auto_sell"
-    ),
-    AMBIENT_SOUNDS (
-            true,
-            "config.hp.general.ambient_sounds"
-    ),
-    ACTIVITY_SONGS (
-            true,
-            "config.hp.general.activity_songs"
     );
 
     public Boolean value;
