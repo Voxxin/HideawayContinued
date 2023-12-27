@@ -7,10 +7,9 @@
     "defaultRequire": 1
   },
   "client": [
-    "AbstractClientPlayerMixin",
+    "ClientAdvancementsMixin",
     "AbstractContainerScreenMixin",
     "ArmorStandMobMixin",
-    "ArmourStandMobMixin",
     "BossHealthOverlayMixin",
     "CapeLayerMixin",
     "ChatComponentMixin",
@@ -20,9 +19,9 @@
     "EntityRendererMixin",
     "GameMenuScreenMixin",
     "InGameHudMixin",
+    "InventorySlotMixin",
     "ItemRendererMixin",
     "KeyMappingsMixin",
-    "LevelRendererMixin",
     "LogoRendererMixin",
     "MinecraftClientMixin",
     "OptionsMixin",
@@ -34,9 +33,5 @@
     "ext.GridLayoutAccessor",
     "ext.KeyBindingAccessor",
     "ext.SoundEventAccessor"
-  ],
-  "mixins": [
-    "LivingEntityMixin",
-    "InventorySlotMixin"
   ]
 }
