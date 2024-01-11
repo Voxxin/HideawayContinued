@@ -1,0 +1,36 @@
+{
+    "categories.hp": "Hideaway+",
+
+    "key.hp.menu": "Otwórz menu Hideaway+",
+    "key.hp.jukebox": "Otwórz szafę grającą",
+    "key.hp.autoSell": "Automatycznie uzupełnij okno sprzedaży",
+    "key.hp.luggage": "Bagaż",
+    "key.hp.wardrobe": "Szafa",
+    "key.hp.profile": "Profil",
+    "key.hp.friends": "Lista znajomych",
+    "key.hp.journal": "Dziennik postępów",
+    "key.hp.palm_plate": "Palm Plate",
+    "key.hp.mail": "Wiadomości",
+    "key.hp.explore": "Eksploruj",
+
+    "tooltip.hp.friend": "Znajomy :)",
+    "tooltip.hp.user": "Użytkownik Hideaway+",
+    "tooltip.hp.translator": "Tłumacz Hideaway+",
+    "tooltip.hp.teamMember": "Członek zespołu Hideaway+",
+    "tooltip.hp.developer": "Deweloper Hideaway+",
+
+    "jukebox.title": "Puść muzykę",
+    "jukebox.stop_all_songs": "Przerwij muzykę",
+
+    "text.config.hp-config.title": "Konfiguracja Hideaway+",
+
+    "text.config.hp-config.option.pipNav": "Użyj nawigacji PiP",
+    "text.config.hp-config.option.hideCosmetics": "Ukryj elementy kosmetyczne",
+    "text.config.hp-config.option.inventoryRarities": "Kolor rzadkości przedmiotów",
+    "text.config.hp-config.option.discordRPC": "Używaj bogatego statusu aktywności (Rich Presence)",
+    "text.config.hp-config.option.autoSell": "Automatycznie wypełnij okno sprzedaży",
+    "text.config.hp-config.option.autoEnableEditor": "Automatycznie włącz tryb edytora",
+    "text.config.hp-config.option.jukebox": "Użyj szafy grającej",
+    "text.config.hp-config.option.noAmbientSounds": "Pozwalaj na dzwięki otoczenia",
+    "text.config.hp-config.option.noActivitySongs": "Pozwalaj na muzykę aktywności"
+}
