@@ -32,7 +32,7 @@ public class HideawayPlusConfig {
             JsonObject general = JSONedFile.getAsJsonObject("general");
             for (GeneralConfigModel config : GeneralConfigModel.values()) {
                 if (general.has(config.name)) {
-                    config.value = general.get(config.name).getAsBoolean();
+                    config.value = general.get(config.name).getAsString();
                 }
             }
 
@@ -52,7 +52,7 @@ public class HideawayPlusConfig {
 
         JsonObject general = new JsonObject();
         for (GeneralConfigModel config : GeneralConfigModel.values()) {
-            general.addProperty(config.name, config.value);
+            general.addProperty(config.name, config.asString());
         }
 
         JsonObject sounds = new JsonObject();

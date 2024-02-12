@@ -54,7 +54,7 @@ public class HideawayPlus implements ClientModInitializer {
         // initialization should be initialized here.
 
         try {
-            if (GeneralConfigModel.DISCORD_RPC.value) DISCORD_MANAGER = new DiscordManager().start();
+            if (GeneralConfigModel.DISCORD_RPC.asBoolean()) DISCORD_MANAGER = new DiscordManager().start();
         } catch (Error err) {
             HideawayPlus.logger().info(err);
             return;
@@ -63,13 +63,18 @@ public class HideawayPlus implements ClientModInitializer {
 
         // Lifecycle tasks should be initialized here.
         lifecycle()
-                .add(Task.of(() -> {if (!HideawayPlus.connected() && API.enabled) {API.end();}}, 0))
+                .add(Task.of(() -> {
+                    if (!HideawayPlus.connected()) {
+                        if (API.enabled) API.end();
+                        DISCORD_MANAGER.stop();
+                    }
+                }, 0))
                 .add(Task.of(Location::check, 20))
                 .add(Task.of(() -> {
                     try {
                         if (DiscordManager.active) DISCORD_MANAGER.update();
-                        if (DiscordManager.active && !GeneralConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.stop();
-                        if (!DiscordManager.active && GeneralConfigModel.DISCORD_RPC.value) DISCORD_MANAGER.start();
+                        if (DiscordManager.active && !GeneralConfigModel.DISCORD_RPC.asBoolean()) DISCORD_MANAGER.stop();
+                        if (!DiscordManager.active && GeneralConfigModel.DISCORD_RPC.asBoolean()) DISCORD_MANAGER.start();
                     } catch (Error err) {
                         HideawayPlus.logger().error(err);
                     }
@@ -85,9 +90,7 @@ public class HideawayPlus implements ClientModInitializer {
                     }
                 }, 0))
                 .add(Task.of(() -> {
-                    if (HideawayPlus.connected()) {
-                        FriendsListUI.tick();
-                    }
+                    if (HideawayPlus.connected()) FriendsListUI.tick();
                 }, 20))
                 .add(Task.of(() -> {
                     if (HideawayPlus.connected()) {
@@ -96,9 +99,7 @@ public class HideawayPlus implements ClientModInitializer {
                     }
                 }, 0))
                 .add(Task.of(() -> {
-                    if (HideawayPlus.connected()) {
-                        API.live();
-                    }
+                    if (HideawayPlus.connected()) API.live();
                 }, 50))
                 .add(Task.of(() -> {
                     if (HideawayPlus.connected() && API.serverUnreachable) {

@@ -81,8 +81,7 @@ public class ConfigUI extends Screen {
 
 
     @Environment(value= EnvType.CLIENT)
-    static class GeneralTab
-            extends GridLayoutTab {
+    static class GeneralTab extends GridLayoutTab {
         private static final Component TITLE = Component.translatable("config.hp.general.title");
         GeneralTab() {
             super(TITLE);
@@ -103,8 +102,7 @@ public class ConfigUI extends Screen {
     }
 
     @Environment(value= EnvType.CLIENT)
-    static class SoundsTab
-            extends GridLayoutTab {
+    static class SoundsTab extends GridLayoutTab {
         private static final Component TITLE = Component.translatable("config.hp.sounds.title");
         SoundsTab() {
             super(TITLE);
